@@ -4,8 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.example.demo.dao.ArticleDao">
-	<insert id="add">
+	<select id="getArticleById" resultType="Article">
+		select * from article where aid = #{aid}
+	</select>
+
+	<insert id="add" useGeneratedKeys="true" keyProperty="id">
 		insert into article set title=#{title}, `body`=#{body}, uid = ${1}, tag=${1}
 	</insert>
+	
+	<update id="update">
+		update article set title = #{title}, `body`=#{body}, updateDate=now() where aid = #{aid}
+	</update>
+	
+	<delete id="delete">
+		delete from article where aid = #{aid}
+	</delete>
 </mapper>
  
