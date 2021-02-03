@@ -14,7 +14,8 @@
 		</if>
 		<if test="type == 'tnb'">
 			and (title like concat('%', #{keyword}, '%') or
-			`body` like concat('%', #{keyword}, '%'))
+			`body` like
+			concat('%', #{keyword}, '%'))
 		</if>
 		order by aid desc
 
@@ -31,8 +32,19 @@
 	</insert>
 
 	<update id="update">
-		update article set title = #{title}, `body`=#{body},
-		updateDate=now() where aid = #{aid}
+		update article
+		<set>
+			<if test="title!=null || body!=null">
+				updateDate=now()
+			</if>
+			<if test="title!=null">
+				, title=#{title}
+			</if>
+			<if test="body!=null">
+				, `body`=#{body}
+			</if>
+		</set>
+		where aid = #{aid}
 	</update>
 
 	<delete id="delete">
