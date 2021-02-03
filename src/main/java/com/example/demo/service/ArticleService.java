@@ -17,9 +17,10 @@ public class ArticleService {
 	@Autowired
 	private ArticleDao ad;
 	
-	public List<Article> getArticles(String searchKeywordType, String searchKeyword){
-		
-		return ad.getArticles(searchKeywordType, searchKeyword);
+	public List<Article> getArticles(String type, String keyword){
+		System.out.println(type);
+		System.out.println(keyword);
+		return ad.getArticles(type, keyword);
 	}
 	
 	public Article getArticleById(int aid) {
@@ -30,7 +31,7 @@ public class ArticleService {
 	public ResultData add(Map<String, Object> param) {
 		ad.add(param);
 		
-		int aid = Util.getAsInt(param.get("id"));
+		int aid = Util.getAsInt(param.get("id"), 0);
 		
 		return new ResultData("S-1", "게시물이 등록되었습니다.");
 	}

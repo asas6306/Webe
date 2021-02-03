@@ -2,20 +2,39 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="com.example.demo.dao.ArticleDao">
+	<select id="getArticles" resultType="Article">
+		select * from article where 1
+		<if test="type == 'title'">
+			AND title like concat('%', #{keyword}, '%')
+		</if>
+		<if test="type == 'body'">
+			and `body` like concat('%', #{keyword}, '%')
+		</if>
+		<if test="type == 'tnb'">
+			and (title like concat('%', #{keyword}, '%') or
+			`body` like concat('%', #{keyword}, '%'))
+		</if>
+		order by aid desc
+
+	</select>
+
 	<select id="getArticleById" resultType="Article">
-		select * from article where aid = #{aid}
+		select * from article
+		where aid = #{aid}
 	</select>
 
 	<insert id="add" useGeneratedKeys="true" keyProperty="id">
-		insert into article set title=#{title}, `body`=#{body}, uid = ${1}, tag=${1}
+		insert into
+		article set title=#{title}, `body`=#{body}, uid = ${1}, tag=${1}
 	</insert>
-	
+
 	<update id="update">
-		update article set title = #{title}, `body`=#{body}, updateDate=now() where aid = #{aid}
+		update article set title = #{title}, `body`=#{body},
+		updateDate=now() where aid = #{aid}
 	</update>
-	
+
 	<delete id="delete">
 		delete from article where aid = #{aid}
 	</delete>

@@ -19,15 +19,15 @@ public class ArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public List<Article> list(String searchKeywordType, String searchKeyword) {
-		if (searchKeyword != null) {
-			searchKeyword.trim();
-			if (searchKeyword.length() == 0) {
-				searchKeyword = null;
+	public List<Article> list(String type, String keyword) {
+		if (keyword != null) {
+			keyword.trim();
+			if (keyword.length() == 0) {
+				keyword = null;
 			}
 		}
 		
-		return as.getArticles(searchKeywordType, searchKeyword);
+		return as.getArticles(type, keyword);
 	}
 
 	@RequestMapping("/usr/article/detail")

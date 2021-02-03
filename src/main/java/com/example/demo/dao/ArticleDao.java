@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,9 +12,9 @@ import com.example.demo.dto.Article;
 public interface ArticleDao {
 	public String a2();
 
-	public void add(Map<String, Object>);
+	public void add(Map<String, Object> param);
 
-	public List<Article> getArticles(@Param(value = "searchKeywordType") String searchKeywordType, @Param(value = "searchKeyword") String searchKeyword);
+	public List<Article> getArticles(@Param(value = "type") String type, @Param(value = "keyword") String keyword);
 
 	public Article getArticleById(@Param(value = "aid") int aid);
 
