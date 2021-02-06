@@ -70,4 +70,15 @@ public class MemberController {
 		
 		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
 	}
+	
+	@RequestMapping("/usr/member/logout")
+	@ResponseBody
+	public ResultData logout(HttpSession session) {
+		if(session.getAttribute("m")!=null) {
+			return new ResultData("S-2", "이미 로그아웃이 되어있습니다.");
+		}else {
+			session.removeAttribute("m");
+			return new ResultData("S-1", "로그아웃 되었습니다.");
+		}
+	}
 }
