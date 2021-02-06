@@ -18,8 +18,7 @@ public class ArticleService {
 	private ArticleDao ad;
 	
 	public List<Article> getArticles(String type, String keyword){
-		System.out.println(type);
-		System.out.println(keyword);
+		
 		return ad.getArticles(type, keyword);
 	}
 	

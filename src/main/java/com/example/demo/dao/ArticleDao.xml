@@ -6,17 +6,22 @@
 <mapper namespace="com.example.demo.dao.ArticleDao">
 	<select id="getArticles" resultType="Article">
 		select * from article where 1
-		<if test="type == 'title'">
-			AND title like concat('%', #{keyword}, '%')
+		<if test="keyword!=null">
+			<choose>
+				<when test="type == 'title'">
+					AND title like concat('%', #{keyword}, '%')
+				</when>
+				<when test="type == 'body'">
+					and `body` like concat('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					and (title like concat('%', #{keyword}, '%') or
+					`body` like
+					concat('%', #{keyword}, '%'))
+				</otherwise>
+			</choose>
 		</if>
-		<if test="type == 'body'">
-			and `body` like concat('%', #{keyword}, '%')
-		</if>
-		<if test="type == 'tnb'">
-			and (title like concat('%', #{keyword}, '%') or
-			`body` like
-			concat('%', #{keyword}, '%'))
-		</if>
+
 		order by aid desc
 
 	</select>
