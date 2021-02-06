@@ -68,8 +68,8 @@ public class MemberService {
 		return new ResultData("S-1", String.format("%s님의 회원가입이 완료되었습니다.", param.get("nickname")));
 	}
 	
-	public Member existCheck(String item, String itemIndex) {
-		return md.existCheck(item, itemIndex);
+	public Member getMember(String item, String itemIndex) {
+		return md.getMember(item, itemIndex);
 	}
 
 }

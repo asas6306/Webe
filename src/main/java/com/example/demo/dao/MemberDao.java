@@ -13,6 +13,6 @@ public interface MemberDao {
 
 	public void signup(Map<String, Object> param);
 
-	public Member existCheck(@Param(value = "item") String item, @Param(value = "itemIndex") String itemIndex);
+	public Member getMember(@Param(value = "item") String item, @Param(value = "itemIndex") String itemIndex);
 
 }

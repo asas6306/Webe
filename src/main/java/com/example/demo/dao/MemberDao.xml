@@ -11,7 +11,7 @@
 		email=#{email}, phoneNo=#{phoneNo}
 	</insert>
 	
-	<select id="existCheck" resultType="Member">
+	<select id="getMember" resultType="Member">
 		select * from member
 		<if test="itemIndex=='ID'">
 		where ID = #{item}
