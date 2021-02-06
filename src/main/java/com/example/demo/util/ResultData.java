@@ -1,8 +1,6 @@
-package com.example.demo.dto;
+package com.example.demo.util;
 
 import java.util.Map;
-
-import com.example.demo.util.Util;
 
 import lombok.Data;
 

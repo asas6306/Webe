@@ -31,7 +31,7 @@
 		where aid = #{aid}
 	</select>
 
-	<insert id="add" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" useGeneratedKeys="true" keyProperty="aid">
 		insert into
 		article set title=#{title}, `body`=#{body}, uid = ${1}, tag=${1}
 	</insert>

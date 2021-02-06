@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Article;
-import com.example.demo.dto.ResultData;
 import com.example.demo.service.ArticleService;
+import com.example.demo.util.ResultData;
 
 @Controller
 public class ArticleController {
@@ -44,7 +44,7 @@ public class ArticleController {
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		}
 		if (param.get("body") == null) {
-			return new ResultData("F-2", "내용을 입력해주세요.");
+			return new ResultData("F-1", "내용을 입력해주세요.");
 		}
 
 		return as.add(param);

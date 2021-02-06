@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.MemberDao">
+	<insert id="signup" useGeneratedKeys="true" keyProperty="uid">
+		insert
+		into
+		member set ID=#{ID}, PW=#{PW}, nickname=#{nickname},
+		email=#{email}, phoneNo=#{phoneNo}
+	</insert>
+	
+	<select id="existCheck" resultType="Member">
+		select * from member
+		<if test="itemIndex=='ID'">
+		where ID = #{item}
+		</if>
+		<if test="itemIndex=='nickname'">
+		where nickname = #{item}
+		</if>
+	</select>
+</mapper>

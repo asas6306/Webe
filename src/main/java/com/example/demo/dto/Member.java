@@ -1,0 +1,18 @@
+package com.example.demo.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Member {
+	int uid;
+	String ID;
+	String PW;
+	String nickname;
+	String regDate;
+	String email;
+	String phoneNo;
+}

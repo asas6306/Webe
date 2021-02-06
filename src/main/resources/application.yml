@@ -9,3 +9,7 @@ spring:
     password: 
 mybatis:
   type-aliases-package: com.example.demo.dto
+custom:
+  logging:
+    dir: LOG_PATH_IS_UNDEFINED
+    level: debug

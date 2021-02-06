@@ -18,12 +18,4 @@ public class Article {
 	int uid;
 	int hit = 0;
 	int like = 0;
-	
-	public Article(int aid, String title, String body, String regDate, String updateDate) {
-		this.aid = aid;
-		this.title = title;
-		this.body = body;
-		this.regDate = regDate;
-		this.updateDate = updateDate;
-	}
 }
