@@ -59,7 +59,7 @@ public class MemberController {
 		}
 
 		Member m = ms.getMember(ID, "ID");
-		
+
 		if (m == null) {
 			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
 		} else if (!m.getPW().equals(PW)) {
@@ -67,18 +67,35 @@ public class MemberController {
 		}
 
 		session.setAttribute("m", m);
-		
+
 		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
 	}
-	
+
 	@RequestMapping("/usr/member/logout")
 	@ResponseBody
 	public ResultData logout(HttpSession session) {
-		if(session.getAttribute("m")!=null) {
+		if (session.getAttribute("m") != null) {
 			return new ResultData("S-2", "이미 로그아웃이 되어있습니다.");
-		}else {
+		} else {
 			session.removeAttribute("m");
 			return new ResultData("S-1", "로그아웃 되었습니다.");
 		}
+	}
+
+	@RequestMapping("/usr/member/update")
+	@ResponseBody
+	public ResultData update(@RequestParam Map<String, Object> param, HttpSession session) {
+		if (session.getAttribute("m") == null) {
+			return new ResultData("F-1", "로그인 후 이용해주세요.");
+		} else {
+			if(param.isEmpty()) {
+				System.out.println(param.size());
+				return new ResultData("F-2", "변경 할 회원정보를 입력해주세요.");
+			}
+		}
+		Member m = (Member)session.getAttribute("m");
+		param.put("uid", m.getUid());
+		
+		return ms.update(param);
 	}
 }

@@ -10,14 +10,31 @@
 		member set ID=#{ID}, PW=#{PW}, nickname=#{nickname},
 		email=#{email}, phoneNo=#{phoneNo}
 	</insert>
-	
+
 	<select id="getMember" resultType="Member">
 		select * from member
 		<if test="itemIndex=='ID'">
-		where ID = #{item}
+			where ID = #{item}
 		</if>
 		<if test="itemIndex=='nickname'">
-		where nickname = #{item}
+			where nickname = #{item}
 		</if>
 	</select>
+
+	<update id="update">
+		update member set updateDate = now()
+		<if test="PW!=null">
+			, PW = #{PW}
+		</if>
+		<if test="nickname!=null">
+			, nickname = #{nickname}
+		</if>
+		<if test="email!=null">
+			, email = #{email}
+		</if>
+		<if test="phoneNo!=null">
+			, phoneNo = #{phoneNo}
+		</if>
+		where uid = #{uid}
+	</update>
 </mapper>

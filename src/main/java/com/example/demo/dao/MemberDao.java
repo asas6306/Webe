@@ -15,4 +15,6 @@ public interface MemberDao {
 
 	public Member getMember(@Param(value = "item") String item, @Param(value = "itemIndex") String itemIndex);
 
+	public void update(Map<String, Object> param);
+
 }
