@@ -22,22 +22,27 @@ public class ArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public List<Article> list(String type, String keyword) {
+	public ResultData list(String type, String keyword) {
 		if (keyword != null) {
 			keyword.trim();
-			if (keyword.length() == 0) {
+			if (keyword.length() == 0) 
 				keyword = null;
-			}
+			
 		}
-
-		return as.getArticles(type, keyword);
+		
+		if(as.getArticles(type, keyword)==null) 
+			return new ResultData("F-1", "해당 게시물이 없습니다.");
+		
+		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword));
 	}
 
 	@RequestMapping("/usr/article/detail")
 	@ResponseBody
-	public Article detail(int aid) {
-
-		return as.getArticleById(aid);
+	public ResultData detail(int aid) {
+		if(as.getArticleById(aid)==null) 
+			return new ResultData("F-1", "해당 게시물이 없습니다.", "aid", aid);
+		
+		return new ResultData("S-1", "성공", "Article", as.getArticleById(aid));
 	}
 
 	@RequestMapping("/usr/article/add")
