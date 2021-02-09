@@ -21,12 +21,13 @@ public class MemberService {
 
 		while (email1.length() <= lengthCnt) {
 			int asciiCode = (int) (Math.random() * 122);
-			
-			if((asciiCode>=48&&asciiCode<=57)||(asciiCode>=65&&asciiCode<=90)||(asciiCode>=97&&asciiCode<=122)) {
-				email1 = email1 + (char)asciiCode;
+
+			if ((asciiCode >= 48 && asciiCode <= 57) || (asciiCode >= 65 && asciiCode <= 90)
+					|| (asciiCode >= 97 && asciiCode <= 122)) {
+				email1 = email1 + (char) asciiCode;
 			}
 		}
-		
+
 		String email2 = "";
 		int emailIndex = (int) (Math.random() * 2);
 		if (emailIndex == 0) {
@@ -67,15 +68,19 @@ public class MemberService {
 
 		return new ResultData("S-1", String.format("%s님의 회원가입이 완료되었습니다.", param.get("nickname")));
 	}
-	
+
 	public Member getMember(String item, String itemIndex) {
 		return md.getMember(item, itemIndex);
 	}
 
 	public ResultData update(Map<String, Object> param) {
-			md.update(param);
-			
+		md.update(param);
+
 		return new ResultData("S-1", String.format("%s님의 회원정보가 수정되었습니다.", param.get("nickname")));
+	}
+
+	public boolean authorityCheck(int uid) {
+		return uid == 1;
 	}
 
 }

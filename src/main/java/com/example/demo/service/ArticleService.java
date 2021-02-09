@@ -16,6 +16,8 @@ public class ArticleService {
 
 	@Autowired
 	private ArticleDao ad;
+	@Autowired
+	private MemberService ms;
 	
 	public List<Article> getArticles(String type, String keyword){
 		
@@ -45,6 +47,15 @@ public class ArticleService {
 		ad.delete(aid);
 		
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
+	}
+	
+	public ResultData authorityCheck(int aid, int uid) {
+		if(ms.authorityCheck(uid))
+			return new ResultData("S-1", "관리자 권한 수행가능");
+		if(ad.getArticleById(aid).getUid()==uid)
+			return new ResultData("S-2", "해당 기능 수행가능");
+		
+		return null;
 	}
 	
 	

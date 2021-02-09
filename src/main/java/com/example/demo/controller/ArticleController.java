@@ -44,38 +44,47 @@ public class ArticleController {
 	@ResponseBody
 	public ResultData add(Map<String, Object> param, HttpSession session) {
 
-		if (session.getAttribute("m") == null) {
+		if (session.getAttribute("m") == null)
 			return new ResultData("F-2", "로그인이 필요한 기능입니다.");
-		} else {
-			Member m = (Member) session.getAttribute("m");
-			param.put("uid", m.getUid());
-		}
-		if (param.get("title") == null) {
+
+		if (param.get("title") == null)
 			return new ResultData("F-1", "제목을 입력해주세요.");
-		}
-		if (param.get("body") == null) {
+
+		if (param.get("body") == null)
 			return new ResultData("F-1", "내용을 입력해주세요.");
-		}
+
+		Member m = (Member) session.getAttribute("m");
+		param.put("uid", m.getUid());
 
 		return as.add(param);
 	}
 
 	@RequestMapping("/usr/article/update")
 	@ResponseBody
-	public ResultData update(Integer aid, String title, String body) {
-		if (aid == null) {
+	public ResultData update(Integer aid, String title, String body, HttpSession session) {
+		if (session.getAttribute("m") == null)
+			return new ResultData("F-2", "로그인이 필요한 기능입니다.");
+
+		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		}
+
+		if (as.authorityCheck((int) aid, ((Member) session.getAttribute("m")).getUid()) == null)
+			return new ResultData("F-3", "해당 게시물 수정 권한이 없습니다.");
 
 		return as.update(aid, title, body);
 	}
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public ResultData delete(Integer aid) {
-		if (aid == null) {
+	public ResultData delete(Integer aid, HttpSession session) {
+		if (session.getAttribute("m") == null)
+			return new ResultData("F-2", "로그인이 필요한 기능입니다.");
+
+		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		}
+		
+		if (as.authorityCheck((int) aid, ((Member) session.getAttribute("m")).getUid()) == null)
+			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 
 		return as.delete(aid);
 	}

@@ -89,10 +89,10 @@ public class MemberController {
 			return new ResultData("F-1", "로그인 후 이용해주세요.");
 		} else {
 			if(param.isEmpty()) {
-				System.out.println(param.size());
 				return new ResultData("F-2", "변경 할 회원정보를 입력해주세요.");
 			}
 		}
+		
 		Member m = (Member)session.getAttribute("m");
 		param.put("uid", m.getUid());
 		
