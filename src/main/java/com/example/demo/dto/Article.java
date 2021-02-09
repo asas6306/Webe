@@ -16,6 +16,7 @@ public class Article {
 	String regDate;
 	String updateDate;
 	int uid;
+	String nickname;
 	int hit = 0;
 	int like = 0;
 }

@@ -5,7 +5,9 @@
 
 <mapper namespace="com.example.demo.dao.ArticleDao">
 	<select id="getArticles" resultType="Article">
-		select * from article where 1
+	select article.*, `member`.nickname from article
+	left join member on article.uid = `member`.uid
+	where 1
 		<if test="keyword!=null">
 			<choose>
 				<when test="type == 'title'">
@@ -27,7 +29,8 @@
 	</select>
 
 	<select id="getArticleById" resultType="Article">
-		select * from article
+		select article.*, `member`.nickname from article
+		left join `member` on article.uid = `member`.uid
 		where aid = #{aid}
 	</select>
 

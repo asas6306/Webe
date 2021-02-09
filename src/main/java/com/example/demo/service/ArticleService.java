@@ -18,47 +18,45 @@ public class ArticleService {
 	private ArticleDao ad;
 	@Autowired
 	private MemberService ms;
-	
-	public List<Article> getArticles(String type, String keyword){
-		
+
+	public List<Article> getArticles(String type, String keyword) {
+
 		return ad.getArticles(type, keyword);
 	}
-	
+
 	public Article getArticleById(int aid) {
-		
+
 		return ad.getArticleById(aid);
 	}
-	
+
 	public ResultData add(Map<String, Object> param) {
 		ad.add(param);
-		
+
 		int aid = Util.getAsInt(param.get("aid"), 0);
-		
+
 		return new ResultData("S-1", "게시물이 등록되었습니다.");
 	}
-	
+
 	public ResultData update(int aid, String title, String body) {
 		ad.update(aid, title, body);
-		
+
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
 	}
-	
+
 	public ResultData delete(int aid) {
 		ad.delete(aid);
-		
+
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
 	}
-	
+
 	public ResultData authorityCheck(int aid, int uid) {
-		if(ms.authorityCheck(uid))
+		if (ms.authorityCheck(uid))
 			return new ResultData("S-1", "관리자 권한 수행가능");
-		if(ad.getArticleById(aid).getUid()==uid)
+		if (ad.getArticleById(aid).getUid() == uid)
 			return new ResultData("S-2", "해당 기능 수행가능");
-		
+
 		return null;
 	}
-	
-	
 
 	public String a1() {
 		return "a1";
