@@ -27,7 +27,6 @@ public class ArticleController {
 			keyword.trim();
 			if (keyword.length() == 0) 
 				keyword = null;
-			
 		}
 		
 		if(as.getArticles(type, keyword)==null) 
@@ -48,10 +47,6 @@ public class ArticleController {
 	@RequestMapping("/usr/article/add")
 	@ResponseBody
 	public ResultData add(Map<String, Object> param, HttpSession session) {
-
-		if (session.getAttribute("m") == null)
-			return new ResultData("F-2", "로그인이 필요한 기능입니다.");
-
 		if (param.get("title") == null)
 			return new ResultData("F-1", "제목을 입력해주세요.");
 
@@ -67,9 +62,6 @@ public class ArticleController {
 	@RequestMapping("/usr/article/update")
 	@ResponseBody
 	public ResultData update(Integer aid, String title, String body, HttpSession session) {
-		if (session.getAttribute("m") == null)
-			return new ResultData("F-2", "로그인이 필요한 기능입니다.");
-
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
 
@@ -82,9 +74,6 @@ public class ArticleController {
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public ResultData delete(Integer aid, HttpSession session) {
-		if (session.getAttribute("m") == null)
-			return new ResultData("F-2", "로그인이 필요한 기능입니다.");
-
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
 		

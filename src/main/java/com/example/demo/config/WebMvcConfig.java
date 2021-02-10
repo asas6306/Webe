@@ -14,15 +14,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Qualifier("beforeActionInterceptor")
 	HandlerInterceptor beforeActionInterceptor;
 
-//	// needToLoginInterceptor 인터셉터 불러오기
-//	@Autowired
-//	@Qualifier("needToLoginInterceptor")
-//	HandlerInterceptor needToLoginInterceptor;
-//
-//	// needToLogoutInterceptor 인터셉터 불러오기
-//	@Autowired
-//	@Qualifier("needToLogoutInterceptor")
-//	HandlerInterceptor needToLogoutInterceptor;
+	// needToLoginInterceptor 인터셉터 불러오기
+	@Autowired
+	@Qualifier("needToLoginInterceptor")
+	HandlerInterceptor needToLoginInterceptor;
+
+	// needToLogoutInterceptor 인터셉터 불러오기
+	@Autowired
+	@Qualifier("needToLogoutInterceptor")
+	HandlerInterceptor needToLogoutInterceptor;
 
 	// 이 함수는 인터셉터를 적용하는 역할을 합니다.
 	@Override
@@ -30,32 +30,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		// beforeActionInterceptor 인터셉터가 모든 액션 실행전에 실행되도록 처리
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
 
-//		// 로그인 필요
-//		registry.addInterceptor(needToLoginInterceptor)
-//			.addPathPatterns("/**")
-//			.excludePathPatterns("/")
-//			.excludePathPatterns("/resource/**")
-//			.excludePathPatterns("/usr/home/main")
-//			.excludePathPatterns("/usr/member/login")
-//			.excludePathPatterns("/usr/member/doLogin")
-//			.excludePathPatterns("/usr/member/join")
-//			.excludePathPatterns("/usr/member/doJoin")
-//			.excludePathPatterns("/usr/article/list")
-//			.excludePathPatterns("/usr/article/detail")
-//			.excludePathPatterns("/usr/member/findLoginId")
-//			.excludePathPatterns("/usr/member/doFindLoginId")
-//			.excludePathPatterns("/usr/member/findLoginPw")
-//			.excludePathPatterns("/usr/member/doFindLoginPw")
-//			.excludePathPatterns("/usr/file/test*")
-//			.excludePathPatterns("/usr/file/doTest*")
-//			.excludePathPatterns("/test/**")
-//			.excludePathPatterns("/error");
-//
-//		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
-//		registry.addInterceptor(needToLogoutInterceptor)
-//			.addPathPatterns("/usr/member/login")
-//			.addPathPatterns("/usr/member/doLogin")
-//			.addPathPatterns("/usr/member/join")
-//			.addPathPatterns("/usr/member/doJoin");
+		// 로그인 없이도 접속할 수 있는 URI 기술
+		registry.addInterceptor(needToLoginInterceptor)
+			.addPathPatterns("/**")
+			.excludePathPatterns("/")
+			.excludePathPatterns("/usr/main/*")
+			.excludePathPatterns("/usr/article/list")
+			.excludePathPatterns("/usr/article/detail")
+			.excludePathPatterns("/usr/member/signup")
+			.excludePathPatterns("/usr/member/login")
+			.excludePathPatterns("/error");
+
+		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
+		registry.addInterceptor(needToLogoutInterceptor)
+			.addPathPatterns("/usr/member/login")
+			.addPathPatterns("/usr/member/signup")
+			.addPathPatterns("/usr/member/join")
+			.addPathPatterns("/usr/member/doJoin");
 	}
 }
