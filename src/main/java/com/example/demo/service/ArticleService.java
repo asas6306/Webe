@@ -38,6 +38,9 @@ public class ArticleService {
 	}
 
 	public ResultData update(int aid, String title, String body) {
+		if(ad.getArticleById(aid) == null)
+			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.");
+		
 		ad.update(aid, title, body);
 
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
@@ -50,9 +53,12 @@ public class ArticleService {
 	}
 
 	public ResultData authorityCheck(int aid, int uid) {
+		Article a = ad.getArticleById(aid);
+		if (a == null)
+			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.");
 		if (ms.authorityCheck(uid))
 			return new ResultData("S-1", "관리자 권한 수행가능");
-		if (ad.getArticleById(aid).getUid() == uid)
+		if (a.getUid() == uid)
 			return new ResultData("S-2", "해당 기능 수행가능");
 
 		return null;
