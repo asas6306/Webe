@@ -13,6 +13,9 @@
 	<select id="getMember" resultType="Member">
 		select * from member
 		<choose>
+			<when test="itemIndex=='uid'">
+				where uid = #{item}
+			</when>
 			<when test="itemIndex=='ID'">
 				where ID = #{item}
 			</when>

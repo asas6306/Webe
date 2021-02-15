@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.dto.Article;
 import com.example.demo.dto.Member;
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.ResultData;
@@ -25,22 +23,24 @@ public class ArticleController {
 	public ResultData list(String type, String keyword) {
 		if (keyword != null) {
 			keyword.trim();
-			if (keyword.length() == 0) 
+			if (keyword.length() == 0)
 				keyword = null;
 		}
-		
-		if(as.getArticles(type, keyword)==null) 
+
+		if (as.getArticles(type, keyword) == null)
 			return new ResultData("F-1", "해당 게시물이 없습니다.");
-		
+
 		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword));
 	}
 
 	@RequestMapping("/usr/article/detail")
 	@ResponseBody
 	public ResultData detail(int aid) {
-		if(as.getArticleById(aid)==null) 
+		if (as.getArticleById(aid) == null)
 			return new ResultData("F-1", "해당 게시물이 없습니다.", "aid", aid);
-		
+
+		as.hitCnt(aid);
+
 		return new ResultData("S-1", "성공", "Article", as.getArticleById(aid));
 	}
 
@@ -76,11 +76,21 @@ public class ArticleController {
 	public ResultData delete(Integer aid, HttpSession session) {
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		
+
 		if (as.authorityCheck((int) aid, ((Member) session.getAttribute("m")).getUid()) == null)
 			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 
 		return as.delete(aid);
+	}
+
+	@RequestMapping("/usr/article/like")
+	@ResponseBody
+	public ResultData like(Integer aid, HttpSession session) {
+		if (aid == null) {
+			return new ResultData("F-1", "게시물 id를 입력해주세요");
+		}
+
+		return as.like(aid, ((Member) session.getAttribute("m")).getUid());
 	}
 
 	@RequestMapping("/usr/home/a1")

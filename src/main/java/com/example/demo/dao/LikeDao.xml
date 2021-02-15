@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.LikeDao">
+	<select id="getList" resultType="Like">
+		select * from `like` where aid = #{aid}
+	</select>
+	
+	<insert id="doLike">
+		insert `like` set aid = #{aid}, uid = #{uid}
+	</insert>
+	
+	<delete id="cancelLike">
+		delete from `like` where aid = #{aid} and uid = #{uid}
+	</delete>
+</mapper>

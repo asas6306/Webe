@@ -5,9 +5,10 @@
 
 <mapper namespace="com.example.demo.dao.ArticleDao">
 	<select id="getArticles" resultType="Article">
-	select article.*, `member`.nickname from article
-	left join member on article.uid = `member`.uid
-	where 1
+		select article.*, `member`.nickname from article
+		left join member on
+		article.uid = `member`.uid
+		where 1
 		<if test="keyword!=null">
 			<choose>
 				<when test="type == 'title'">
@@ -18,7 +19,8 @@
 				</when>
 				<otherwise>
 					and (title like concat('%', #{keyword}, '%') or
-					`body` like
+					`body`
+					like
 					concat('%', #{keyword}, '%'))
 				</otherwise>
 			</choose>
@@ -29,8 +31,10 @@
 	</select>
 
 	<select id="getArticleById" resultType="Article">
-		select article.*, `member`.nickname from article
-		left join `member` on article.uid = `member`.uid
+		select article.*,
+		`member`.nickname from article
+		left join `member` on article.uid =
+		`member`.uid
 		where aid = #{aid}
 	</select>
 
@@ -58,5 +62,22 @@
 	<delete id="delete">
 		delete from article where aid = #{aid}
 	</delete>
+
+	<update id="hitCnt">
+		update article set hit = hit + 1 where aid = #{aid}
+	</update>
+
+	<update id="like">
+		update article set
+		<choose>
+			<when test="action == 'up'">
+				`like` = `like` + 1
+			</when>
+			<when test="action == 'down'">
+				`like` = `like` - 1
+			</when>
+		</choose>
+		where aid = #{aid}
+	</update>
 </mapper>
  

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ArticleDao;
+import com.example.demo.dao.LikeDao;
 import com.example.demo.dto.Article;
+import com.example.demo.dto.Like;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
@@ -18,6 +21,8 @@ public class ArticleService {
 	private ArticleDao ad;
 	@Autowired
 	private MemberService ms;
+	@Autowired
+	private LikeDao ld;
 
 	public List<Article> getArticles(String type, String keyword) {
 
@@ -64,10 +69,31 @@ public class ArticleService {
 		return null;
 	}
 
+
+	public void hitCnt(int aid) {
+		ad.hitCnt(aid);
+	}
+
+	public ResultData like(int aid, int uid) {
+		Article a = ad.getArticleById(aid);
+		ArrayList<Like> al = ld.getList(aid);
+		
+		for (Like l : al) {
+			if (l.getUid() == uid) {
+				ld.cancelLike(aid, uid);
+				ad.like(aid, "down");
+				return new ResultData("S-2", "좋아요가 취소되었습니다.");
+			}
+		}
+		ld.doLike(aid, uid);
+		ad.like(aid, "up");
+		return new ResultData("S-1", "해당 게시물을 좋아요했습니다.");
+	}
+	
 	public String a1() {
 		return "a1";
 	}
-
+	
 	public String a2() {
 		return ad.a2();
 	}
