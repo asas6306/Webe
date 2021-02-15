@@ -45,4 +45,6 @@
 	<delete id="signout">
 		delete from member where uid = #{uid}
 	</delete>
+	
+	
 </mapper>
