@@ -81,4 +81,12 @@ public class MemberController {
 
 		return ms.update(param);
 	}
+	
+	@RequestMapping("/usr/member/signout")
+	@ResponseBody
+	public ResultData signout(HttpSession session) {
+		Member m = (Member) session.getAttribute("m");
+
+		return ms.signout(m.getUid());
+	}
 }

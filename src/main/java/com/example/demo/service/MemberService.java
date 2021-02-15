@@ -83,4 +83,10 @@ public class MemberService {
 		return uid == 1;
 	}
 
+	public ResultData signout(int uid) {
+		md.signout(uid);
+		
+		return  new ResultData("S-1", "회원탈퇴 완료");
+	}
+
 }

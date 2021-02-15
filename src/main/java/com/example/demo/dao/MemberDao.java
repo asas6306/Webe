@@ -17,4 +17,6 @@ public interface MemberDao {
 
 	public void update(Map<String, Object> param);
 
+	public void signout(@Param(value = "uid") int uid);
+
 }

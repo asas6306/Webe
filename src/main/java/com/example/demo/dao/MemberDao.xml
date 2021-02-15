@@ -41,4 +41,8 @@
 		</if>
 		where uid = #{uid}
 	</update>
+	
+	<delete id="signout">
+		delete from member where uid = #{uid}
+	</delete>
 </mapper>
