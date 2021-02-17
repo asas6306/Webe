@@ -24,7 +24,7 @@ public class MemberService {
 
 			if ((asciiCode >= 48 && asciiCode <= 57) || (asciiCode >= 65 && asciiCode <= 90)
 					|| (asciiCode >= 97 && asciiCode <= 122)) {
-				email1 = email1 + (char) asciiCode;
+				email1 += (char) asciiCode;
 			}
 		}
 
@@ -42,7 +42,7 @@ public class MemberService {
 		int phone2 = (int) (Math.random() * 10000);
 		String phone3 = String.valueOf(phone1);
 		String phone4 = String.valueOf(phone2);
-
+		
 		if (phone3.length() != 4) {
 			int num = 4 - phone3.length();
 
@@ -50,14 +50,9 @@ public class MemberService {
 				phone3 = "0" + phone3;
 			}
 		}
-
-		if (phone4.length() != 4) {
-			int num = 4 - phone4.length();
-
-			for (int i = 0; i < num; i++) {
+		while (phone4.length() < 4) 
+			for (int i = 0; i < (4 - phone4.length()); i++) 
 				phone4 = "0" + phone4;
-			}
-		}
 
 		String phoneNo = "010-" + phone3 + "-" + phone4;
 		param.put("phoneNo", phoneNo);

@@ -37,7 +37,7 @@
 
 	<insert id="add" useGeneratedKeys="true" keyProperty="aid">
 		insert into
-		article set title = #{title}, `body` = #{body}, uid = #{uid}, tag=${1}
+		article set title = #{title}, `body` = #{body}, uid = #{uid}, tag= 1
 	</insert>
 
 	<update id="update">

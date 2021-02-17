@@ -47,9 +47,9 @@ public class ArticleController {
 	@RequestMapping("/usr/article/add")
 	@ResponseBody
 	public ResultData add(Map<String, Object> param, HttpSession session) {
-		if (param.get("title") == null)
+		if (!param.containsKey("title"))
 			return new ResultData("F-1", "제목을 입력해주세요.");
-		if (param.get("body") == null)
+		if (!param.containsKey("body"))
 			return new ResultData("F-1", "내용을 입력해주세요.");
 
 		Member m = (Member) session.getAttribute("m");
