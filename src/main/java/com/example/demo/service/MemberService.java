@@ -79,9 +79,6 @@ public class MemberService {
 		return new ResultData("S-1", String.format("%s님의 회원정보가 수정되었습니다.", param.get("nickname")));
 	}
 
-	public boolean authorityCheck(int uid) {
-		return uid == 1;
-	}
 
 	public ResultData signout(int uid) {
 		md.signout(uid);
@@ -89,4 +86,7 @@ public class MemberService {
 		return  new ResultData("S-1", "회원탈퇴 완료");
 	}
 
+	public boolean authorityCheck(int uid) {
+		return uid == 1;
+	}
 }

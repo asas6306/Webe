@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import com.example.demo.dao.ArticleDao;
 import com.example.demo.dao.LikeDao;
 import com.example.demo.dto.Article;
 import com.example.demo.dto.Like;
+import com.example.demo.dto.Member;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
@@ -39,19 +42,25 @@ public class ArticleService {
 
 		int aid = Util.getAsInt(param.get("aid"), 0);
 
-		return new ResultData("S-1", "게시물이 등록되었습니다.");
+		return new ResultData("S-1", "게시물이 등록되었습니다.", "aid", aid);
 	}
 
-	public ResultData update(int aid, String title, String body) {
+	public ResultData update(int aid, String title, String body, int uid) {
 		if(ad.getArticleById(aid) == null)
-			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.");
+			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
+		if(this.authorityCheck(aid, uid) == null) 
+			return new ResultData("F-3", "해당 게시물 수정 권한이 없습니다.");
 		
 		ad.update(aid, title, body);
 
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
 	}
 
-	public ResultData delete(int aid) {
+	public ResultData delete(int aid, int uid) {
+		if (ad.getArticleById(aid) == null)
+			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
+		if (this.authorityCheck((int) aid, uid) == null)
+			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 		ad.delete(aid);
 
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
@@ -59,22 +68,22 @@ public class ArticleService {
 
 	public ResultData authorityCheck(int aid, int uid) {
 		Article a = ad.getArticleById(aid);
-		if (a == null)
-			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.");
 		if (ms.authorityCheck(uid))
 			return new ResultData("S-1", "관리자 권한 수행가능");
-		if (a.getUid() == uid)
+		else if (a.getUid() == uid)
 			return new ResultData("S-2", "해당 기능 수행가능");
-
-		return null;
+		else
+			return null;
 	}
-
 
 	public void hitCnt(int aid) {
 		ad.hitCnt(aid);
 	}
 
 	public ResultData like(int aid, int uid) {
+		if (ad.getArticleById(aid) == null)
+			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
+		
 		Article a = ad.getArticleById(aid);
 		ArrayList<Like> al = ld.getList(aid);
 		
@@ -97,4 +106,6 @@ public class ArticleService {
 	public String a2() {
 		return ad.a2();
 	}
+
+	
 }

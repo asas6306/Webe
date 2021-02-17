@@ -9,10 +9,10 @@
 		left join member on
 		article.uid = `member`.uid
 		where 1
-		<if test="keyword!=null">
+		<if test="keyword != null">
 			<choose>
 				<when test="type == 'title'">
-					AND title like concat('%', #{keyword}, '%')
+					and title like concat('%', #{keyword}, '%')
 				</when>
 				<when test="type == 'body'">
 					and `body` like concat('%', #{keyword}, '%')
@@ -20,14 +20,11 @@
 				<otherwise>
 					and (title like concat('%', #{keyword}, '%') or
 					`body`
-					like
-					concat('%', #{keyword}, '%'))
+					like concat('%', #{keyword}, '%'))
 				</otherwise>
 			</choose>
 		</if>
-
 		order by aid desc
-
 	</select>
 
 	<select id="getArticleById" resultType="Article">

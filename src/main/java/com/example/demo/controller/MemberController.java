@@ -24,22 +24,25 @@ public class MemberController {
 	public ResultData signup(@RequestParam Map<String, Object> param) {
 		if (param.get("ID") == null)
 			return new ResultData("F-1", "ID를 입력해주세요.");
-
 		if (param.get("PW") == null)
 			return new ResultData("F-1", "PW를 입력해주세요.");
-
 		if (param.get("nickname") == null)
 			return new ResultData("F-1", "nickname을 입력해주세요.");
 
-		Member existCheckOfID = ms.getMember(String.valueOf(param.get("ID")), "ID");
-		Member existCheckOfnickname = ms.getMember(String.valueOf(param.get("nickname")), "nickname");
-
-		if (existCheckOfID != null)
+		if (ms.getMember(String.valueOf(param.get("ID")), "ID") != null)
 			return new ResultData("F-2", "중복된 아이디입니다.");
-		else if (existCheckOfnickname != null)
+		else if (ms.getMember(String.valueOf(param.get("nickname")), "nickname") != null)
 			return new ResultData("F-2", "중복된 닉네임입니다.");
 
 		return ms.signup(param);
+	}
+	
+	@RequestMapping("/usr/member/signout")
+	@ResponseBody
+	public ResultData signout(HttpSession session) {
+		Member m = (Member) session.getAttribute("m");
+
+		return ms.signout(m.getUid());
 	}
 
 	@RequestMapping("/usr/member/login")
@@ -80,13 +83,5 @@ public class MemberController {
 		param.put("uid", m.getUid());
 
 		return ms.update(param);
-	}
-	
-	@RequestMapping("/usr/member/signout")
-	@ResponseBody
-	public ResultData signout(HttpSession session) {
-		Member m = (Member) session.getAttribute("m");
-
-		return ms.signout(m.getUid());
 	}
 }

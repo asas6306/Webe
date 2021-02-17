@@ -28,7 +28,7 @@ public class ArticleController {
 		}
 
 		if (as.getArticles(type, keyword) == null)
-			return new ResultData("F-1", "해당 게시물이 없습니다.");
+			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
 
 		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword));
 	}
@@ -37,7 +37,7 @@ public class ArticleController {
 	@ResponseBody
 	public ResultData detail(int aid) {
 		if (as.getArticleById(aid) == null)
-			return new ResultData("F-1", "해당 게시물이 없습니다.", "aid", aid);
+			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.", "aid", aid);
 
 		as.hitCnt(aid);
 
@@ -49,7 +49,6 @@ public class ArticleController {
 	public ResultData add(Map<String, Object> param, HttpSession session) {
 		if (param.get("title") == null)
 			return new ResultData("F-1", "제목을 입력해주세요.");
-
 		if (param.get("body") == null)
 			return new ResultData("F-1", "내용을 입력해주세요.");
 
@@ -64,11 +63,11 @@ public class ArticleController {
 	public ResultData update(Integer aid, String title, String body, HttpSession session) {
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
+		else if (title == null && body == null)
+			return new ResultData("F-1", "수정할 내용을 입력하세요.");
+		int uid = ((Member) session.getAttribute("m")).getUid();
 
-		if (as.authorityCheck((int) aid, ((Member) session.getAttribute("m")).getUid()) == null)
-			return new ResultData("F-3", "해당 게시물 수정 권한이 없습니다.");
-
-		return as.update(aid, title, body);
+		return as.update(aid, title, body, uid);
 	}
 
 	@RequestMapping("/usr/article/delete")
@@ -76,24 +75,20 @@ public class ArticleController {
 	public ResultData delete(Integer aid, HttpSession session) {
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
+		int uid = ((Member) session.getAttribute("m")).getUid();
 
-		if (as.authorityCheck((int) aid, ((Member) session.getAttribute("m")).getUid()) == null)
-			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
-
-		return as.delete(aid);
+		return as.delete(aid, uid);
 	}
 
 	@RequestMapping("/usr/article/like")
 	@ResponseBody
 	public ResultData like(Integer aid, HttpSession session) {
-		if (aid == null) {
+		if (aid == null) 
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		}
-
+		
 		return as.like(aid, ((Member) session.getAttribute("m")).getUid());
 	}
 
-	
 	@RequestMapping("/usr/home/a1")
 	@ResponseBody
 	public String a1() {
