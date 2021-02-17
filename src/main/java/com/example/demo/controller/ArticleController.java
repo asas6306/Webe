@@ -93,6 +93,7 @@ public class ArticleController {
 		return as.like(aid, ((Member) session.getAttribute("m")).getUid());
 	}
 
+	
 	@RequestMapping("/usr/home/a1")
 	@ResponseBody
 	public String a1() {
