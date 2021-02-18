@@ -60,6 +60,8 @@ public class MemberController {
 			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
 		else if (!m.getPW().equals(PW))
 			return new ResultData("F-2", "비밀번호가 일치하지 않습니다.");
+		if(m == null || !m.getPW().equals(PW))
+			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
 
 		session.setAttribute("m", m);
 
