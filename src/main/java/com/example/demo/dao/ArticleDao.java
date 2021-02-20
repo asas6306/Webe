@@ -15,7 +15,7 @@ public interface ArticleDao {
 	public void add(Map<String, Object> param);
 
 	public List<Article> getArticles(@Param(value = "type") String type, @Param(value = "keyword") String keyword,
-			@Param(value = "page") int page);
+			@Param(value = "page") int page, @Param(value = "pageCnt") int pageCnt);
 
 	public Article getArticleById(@Param(value = "aid") int aid);
 

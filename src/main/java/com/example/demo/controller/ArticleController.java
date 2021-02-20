@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Member;
@@ -20,22 +21,22 @@ public class ArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public ResultData list(String type, String keyword, Integer page) {
-		if (page == null)
-			page = 0;
-		else
-			page = (page - 1) * 10;
+	public ResultData list(String type, String keyword, @RequestParam(defaultValue = "1") int page) {
+		if (page < 1)
+			page = 1;
 
 		if (keyword != null) {
 			keyword.trim();
 			if (keyword.length() == 0)
 				keyword = null;
 		}
+		int pageCnt = 20;
 
-		if (as.getArticles(type, keyword, page) == null)
+		if (as.getArticles(type, keyword, page, pageCnt) == null)
 			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
 
-		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page));
+
+		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt));
 	}
 
 	@RequestMapping("/usr/article/detail")
