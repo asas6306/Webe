@@ -57,6 +57,8 @@ public class ArticleController {
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		if (!param.containsKey("body"))
 			return new ResultData("F-1", "내용을 입력해주세요.");
+		if (!param.containsKey("boardTag"))
+			return new ResultData("F-1", "게시판을 선택해주세요.");
 
 		Member m = (Member) session.getAttribute("m");
 		param.put("uid", m.getUid());
