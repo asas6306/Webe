@@ -24,6 +24,14 @@
 				</otherwise>
 			</choose>
 		</if>
+		<choose>
+				<when test="boardTag == 1">
+					and tag = 1
+				</when>
+				<when test="boardTag == 2">
+					and tag = 2
+				</when>
+			</choose>
 		order by aid desc
 		<if test="page != 0">
 		limit #{page}, 10;

@@ -21,7 +21,7 @@ public class ArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public ResultData list(String type, String keyword, @RequestParam(defaultValue = "1") int page) {
+	public ResultData list(String type, String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int boardTag) {
 		if (page < 1)
 			page = 1;
 
@@ -32,11 +32,11 @@ public class ArticleController {
 		}
 		int pageCnt = 20;
 
-		if (as.getArticles(type, keyword, page, pageCnt) == null)
+		if (as.getArticles(type, keyword, page, pageCnt, boardTag) == null)
 			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
 
 
-		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt));
+		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt, boardTag));
 	}
 
 	@RequestMapping("/usr/article/detail")
