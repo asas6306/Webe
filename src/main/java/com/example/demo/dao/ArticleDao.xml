@@ -25,6 +25,9 @@
 			</choose>
 		</if>
 		order by aid desc
+		<if test="page != 0">
+		limit #{page}, 10;
+		</if>
 	</select>
 
 	<select id="getArticleById" resultType="Article">

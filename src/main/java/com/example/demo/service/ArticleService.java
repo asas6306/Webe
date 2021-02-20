@@ -27,9 +27,9 @@ public class ArticleService {
 	@Autowired
 	private LikeDao ld;
 
-	public List<Article> getArticles(String type, String keyword) {
-
-		return ad.getArticles(type, keyword);
+	public List<Article> getArticles(String type, String keyword, int page) {
+		
+		return ad.getArticles(type, keyword, page);
 	}
 
 	public Article getArticleById(int aid) {
@@ -46,11 +46,11 @@ public class ArticleService {
 	}
 
 	public ResultData update(int aid, String title, String body, int uid) {
-		if(ad.getArticleById(aid) == null)
+		if (ad.getArticleById(aid) == null)
 			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
-		if(this.authorityCheck(aid, uid) == null) 
+		if (this.authorityCheck(aid, uid) == null)
 			return new ResultData("F-3", "해당 게시물 수정 권한이 없습니다.");
-		
+
 		ad.update(aid, title, body);
 
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
@@ -83,10 +83,10 @@ public class ArticleService {
 	public ResultData like(int aid, int uid) {
 		if (ad.getArticleById(aid) == null)
 			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
-		
+
 		Article a = ad.getArticleById(aid);
 		ArrayList<Like> al = ld.getList(aid);
-		
+
 		for (Like l : al) {
 			if (l.getUid() == uid) {
 				ld.cancelLike(aid, uid);
@@ -98,14 +98,13 @@ public class ArticleService {
 		ad.like(aid, "up");
 		return new ResultData("S-1", "해당 게시물을 좋아요했습니다.");
 	}
-	
+
 	public String a1() {
 		return "a1";
 	}
-	
+
 	public String a2() {
 		return ad.a2();
 	}
 
-	
 }

@@ -14,11 +14,13 @@ public interface ArticleDao {
 
 	public void add(Map<String, Object> param);
 
-	public List<Article> getArticles(@Param(value = "type") String type, @Param(value = "keyword") String keyword);
+	public List<Article> getArticles(@Param(value = "type") String type, @Param(value = "keyword") String keyword,
+			@Param(value = "page") int page);
 
 	public Article getArticleById(@Param(value = "aid") int aid);
 
-	public void update(@Param(value = "aid") int aid, @Param(value = "title") String title, @Param(value = "body") String body);
+	public void update(@Param(value = "aid") int aid, @Param(value = "title") String title,
+			@Param(value = "body") String body);
 
 	public void delete(@Param(value = "aid") int aid);
 

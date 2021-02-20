@@ -20,17 +20,22 @@ public class ArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public ResultData list(String type, String keyword) {
+	public ResultData list(String type, String keyword, Integer page) {
+		if (page == null)
+			page = 0;
+		else
+			page = (page - 1) * 10;
+
 		if (keyword != null) {
 			keyword.trim();
 			if (keyword.length() == 0)
 				keyword = null;
 		}
 
-		if (as.getArticles(type, keyword) == null)
+		if (as.getArticles(type, keyword, page) == null)
 			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
 
-		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword));
+		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page));
 	}
 
 	@RequestMapping("/usr/article/detail")
@@ -83,9 +88,9 @@ public class ArticleController {
 	@RequestMapping("/usr/article/like")
 	@ResponseBody
 	public ResultData like(Integer aid, HttpSession session) {
-		if (aid == null) 
+		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		
+
 		return as.like(aid, ((Member) session.getAttribute("m")).getUid());
 	}
 
