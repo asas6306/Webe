@@ -4,7 +4,7 @@ select concat('제목_', floor(rand()*1000)+1), CONCAT('내용_', FLOOR(RAND()*1
 
 select count(*) from article; */
 
-
+/* 게시판태그 */
 CREATE TABLE boardtag (
 bid INT(5) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 tag INT(3) UNSIGNED UNIQUE,
@@ -13,3 +13,13 @@ tagname CHAR(20) NOT NULL
 
 INSERT INTO boardtag SET tag=1, tagname='공지사항';
 INSERT INTO boardtag SET tag=2, tagname='자유게시판';
+
+/* 댓글 */
+CREATE TABLE `comment`(
+cid INT(5) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+uid INT(5) UNSIGNED NOT NULL,
+aid INT(5) UNSIGNED NOT NULL,
+regDate DATE DEFAULT NOW(),
+`body` TEXT,
+commentreply INT(5)
+);

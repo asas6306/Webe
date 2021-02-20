@@ -86,5 +86,9 @@
 		</choose>
 		where aid = #{aid}
 	</update>
+	
+	<insert id="addComment">
+		insert into comment set aid = #{aid}, uid = #{uid}, body = #{body}
+	</insert>
 </mapper>
  

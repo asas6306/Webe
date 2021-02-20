@@ -27,4 +27,6 @@ public interface ArticleDao {
 	public void hitCnt(@Param(value = "aid") int aid);
 
 	public void like(@Param(value = "aid") int aid, @Param(value = "action") String action);
+
+	public void addComment(@Param(value = "aid") int aid, @Param(value = "uid") int uid, @Param(value = "body") String body);
 }
