@@ -25,17 +25,15 @@
 			</choose>
 		</if>
 		<choose>
-				<when test="boardTag == 1">
-					and tag = 1
-				</when>
-				<when test="boardTag == 2">
-					and tag = 2
-				</when>
-			</choose>
+			<when test="boardTag == 1">
+				and tag = 1
+			</when>
+			<when test="boardTag == 2">
+				and tag = 2
+			</when>
+		</choose>
 		order by aid desc
-		<if test="page != 0">
 		limit #{page}, 10;
-		</if>
 	</select>
 
 	<select id="getArticleById" resultType="Article">
@@ -48,7 +46,8 @@
 
 	<insert id="add" useGeneratedKeys="true" keyProperty="aid">
 		insert into
-		article set title = #{title}, `body` = #{body}, uid = #{uid}, tag = #{boardTag}
+		article set title = #{title}, `body` = #{body}, uid = #{uid}, tag =
+		#{boardTag}
 	</insert>
 
 	<update id="update">
