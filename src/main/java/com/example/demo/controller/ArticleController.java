@@ -22,7 +22,7 @@ public class ArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public ResultData list(String type, String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int boardTag) {
+	public ResultData list(String type, String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int board) {
 		if (page < 1)
 			page = 1;
 
@@ -33,11 +33,11 @@ public class ArticleController {
 		}
 		int pageCnt = 20;
 
-		if (as.getArticles(type, keyword, page, pageCnt, boardTag) == null)
+		if (as.getArticles(type, keyword, page, pageCnt, board) == null)
 			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
 
 
-		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt, boardTag));
+		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt, board));
 	}
 
 	@RequestMapping("/usr/article/detail")
@@ -96,20 +96,6 @@ public class ArticleController {
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
 
 		return as.like(aid, ((Member) session.getAttribute("m")).getUid());
-	}
-
-	@RequestMapping("/usr/article/addComment")
-	@ResponseBody
-	public ResultData addComment(Integer aid, String body, HttpSession session) {
-		if(aid == null)
-			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		if(body == null)
-			return new ResultData("F-1", "댓글 내용을 입력해주세요");
-		
-		Member m = (Member)session.getAttribute("m");
-		int uid = m.getUid();
-		
-		return as.addComment(aid, uid, body);
 	}
 	
 	@RequestMapping("/usr/home/a1")

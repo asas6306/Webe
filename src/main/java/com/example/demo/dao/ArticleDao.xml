@@ -25,10 +25,10 @@
 			</choose>
 		</if>
 		<choose>
-			<when test="boardTag == 1">
+			<when test="board == 1">
 				and tag = 1
 			</when>
-			<when test="boardTag == 2">
+			<when test="board == 2">
 				and tag = 2
 			</when>
 		</choose>
@@ -46,8 +46,8 @@
 
 	<insert id="add" useGeneratedKeys="true" keyProperty="aid">
 		insert into
-		article set title = #{title}, `body` = #{body}, uid = #{uid}, tag =
-		#{boardTag}
+		article set title = #{title}, `body` = #{body}, uid = #{uid}, board =
+		#{board}
 	</insert>
 
 	<update id="update">
@@ -86,9 +86,5 @@
 		</choose>
 		where aid = #{aid}
 	</update>
-	
-	<insert id="addComment">
-		insert into comment set aid = #{aid}, uid = #{uid}, body = #{body}
-	</insert>
 </mapper>
  

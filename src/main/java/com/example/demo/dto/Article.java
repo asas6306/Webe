@@ -19,5 +19,5 @@ public class Article {
 	String nickname;
 	int hit;
 	int like;
-	int tag;
+	int board;
 }

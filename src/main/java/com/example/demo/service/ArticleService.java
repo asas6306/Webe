@@ -27,10 +27,10 @@ public class ArticleService {
 	@Autowired
 	private LikeDao ld;
 
-	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int boardTag) {
+	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int board) {
 		page = (page - 1) * pageCnt;
 
-		return ad.getArticles(type, keyword, page, pageCnt, boardTag);
+		return ad.getArticles(type, keyword, page, pageCnt, board);
 	}
 
 	public Article getArticleById(int aid) {
@@ -98,14 +98,6 @@ public class ArticleService {
 		ld.doLike(aid, uid);
 		ad.like(aid, "up");
 		return new ResultData("S-1", "해당 게시물을 좋아요했습니다.");
-	}
-	
-	public ResultData addComment(int aid, int uid, String body) {
-		if(ad.getArticleById(aid)==null)
-			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.");
-		
-		ad.addComment(aid, uid, body);
-		return new ResultData("S-1", "댓글이 등록되었습니다.");
 	}
 
 	public String a1() {

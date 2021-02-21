@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
-	private int cid;
+public class Reply {
+	private int rid;
 	private int uid;
-	private int aid;
-	private String nickname;
+	private String body;
+	private String relTypeCode;
+	private int relid;
 	private String regDate;
 	private String updateDate;
-	private String body;
-	private int commentReply;
+	private String nickname;
 }
