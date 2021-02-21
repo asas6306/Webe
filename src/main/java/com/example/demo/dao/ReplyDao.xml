@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.demo.dao.replyDao">
+<mapper namespace="com.example.demo.dao.ReplyDao">
 
 	<insert id="addComment">
 		insert into comment set relTypeCode = #{relTypeCode}, relid = #{relid} uid = #{uid},

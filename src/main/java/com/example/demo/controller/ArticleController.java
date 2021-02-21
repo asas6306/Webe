@@ -33,8 +33,8 @@ public class ArticleController {
 		}
 		int pageCnt = 20;
 
-		if (as.getArticles(type, keyword, page, pageCnt, board) == null)
-			return new ResultData("F-1", "해당 게시물이 존재하지 않습니다.");
+		if (as.getArticles(type, keyword, page, pageCnt, board).size() == 0)
+			return new ResultData("F-1", "해당하는 게시물이 존재하지 않습니다.");
 
 
 		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt, board));
