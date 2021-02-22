@@ -25,11 +25,11 @@
 			</choose>
 		</if>
 		<choose>
-			<when test="board == 1">
-				and tag = 1
+			<when test="boardCode == 1">
+				and boardCode = 1
 			</when>
-			<when test="board == 2">
-				and tag = 2
+			<when test="boardCode == 2">
+				and boardCode = 2
 			</when>
 		</choose>
 		order by aid desc
@@ -46,8 +46,9 @@
 
 	<insert id="add" useGeneratedKeys="true" keyProperty="aid">
 		insert into
-		article set title = #{title}, `body` = #{body}, uid = #{uid}, board =
-		#{board}
+		article set title = #{title}, `body` = #{body}, uid = #{uid},
+		boardCode =
+		#{boardCode}
 	</insert>
 
 	<update id="update">

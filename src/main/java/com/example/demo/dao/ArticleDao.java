@@ -15,7 +15,7 @@ public interface ArticleDao {
 	public void add(Map<String, Object> param);
 
 	public List<Article> getArticles(@Param(value = "type") String type, @Param(value = "keyword") String keyword,
-			@Param(value = "page") int page, @Param(value = "pageCnt") int pageCnt, @Param(value = "board") int board);
+			@Param(value = "page") int page, @Param(value = "pageCnt") int pageCnt, @Param(value = "boardCode") int boardCode);
 
 	public Article getArticleById(@Param(value = "aid") int aid);
 
@@ -27,6 +27,4 @@ public interface ArticleDao {
 	public void hitCnt(@Param(value = "aid") int aid);
 
 	public void like(@Param(value = "aid") int aid, @Param(value = "action") String action);
-
-	public void addComment(@Param(value = "aid") int aid, @Param(value = "uid") int uid, @Param(value = "body") String body);
 }

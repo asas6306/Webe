@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class MemberController {
 
 		return ms.signup(param);
 	}
-	
+
 	@RequestMapping("/usr/member/signout")
 	@ResponseBody
 	public ResultData signout(HttpSession session) {
@@ -47,7 +48,7 @@ public class MemberController {
 
 	@RequestMapping("/usr/member/login")
 	@ResponseBody
-	public ResultData login(String ID, String PW, HttpSession session) {
+	public ResultData login(String ID, String PW, HttpServletRequest req) {
 		if (ID == null)
 			return new ResultData("F-1", "ID를 입력해주세요.");
 
@@ -63,7 +64,7 @@ public class MemberController {
 //		if(m == null || !m.getPW().equals(PW))
 //			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
 
-		session.setAttribute("m", m);
+		req.setAttribute("m", m);
 
 		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
 	}
@@ -77,11 +78,11 @@ public class MemberController {
 
 	@RequestMapping("/usr/member/update")
 	@ResponseBody
-	public ResultData update(@RequestParam Map<String, Object> param, HttpSession session) {
+	public ResultData update(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		if (param.isEmpty())
 			return new ResultData("F-2", "변경 할 회원정보를 입력해주세요.");
 
-		Member m = (Member) session.getAttribute("m");
+		Member m = (Member) req.getAttribute("m");
 		param.put("uid", m.getUid());
 
 		return ms.update(param);

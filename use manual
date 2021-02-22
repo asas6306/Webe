@@ -1,0 +1,7 @@
+게시판 코드 : article > boardCode
+1 : 공지사항
+2 : 자유게시판
+
+
+댓글 relTypeCode
+게시판 : article

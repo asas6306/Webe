@@ -4,10 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.dao.ReplyDao">
+	<select id="getReplies" resultType="Reply">
+	select * from reply
+	left join member on reply.uid = member.uid
+	where relTypeCode = #{relTypeCode} and relId = #{relId}
+	order by rid desc
+	</select>
 
-	<insert id="addComment">
-		insert into comment set relTypeCode = #{relTypeCode}, relid = #{relid} uid = #{uid},
+	<insert id="add">
+		insert into reply set relTypeCode = #{relTypeCode},
+		relId = #{relId}, uid = #{uid},
 		body = #{body}
 	</insert>
-
 </mapper>

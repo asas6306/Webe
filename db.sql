@@ -9,9 +9,9 @@ title CHAR(50) NOT NULL,
 `body` TEXT NOT NULL,
 regDate DATETIME DEFAULT NOW(),
 updateDate DATETIME DEFAULT NOW(),
-hit INT(10) UNSIGNED NOT NULL,
-`like` INT(10) UNSIGNED NOT NULL,
-board INT(5) UNSIGNED NOT NULL
+hit INT(10) UNSIGNED NOT NULL DEFAULT 0,
+`like` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+boardCode INT(5) UNSIGNED NOT NULL
 );
 
 CREATE TABLE `member`(
@@ -55,7 +55,7 @@ INSERT INTO board SET boardCode=1, boardName='공지사항';
 INSERT INTO board SET boardCode=2, boardName='자유게시판';
 
 /* article 테스트 데이터 생성 */
-/* insert into article (title, body, uid, tag) 
+/* insert into article (title, body, uid, boardCode) 
 select concat('제목_', floor(rand()*1000)+1), CONCAT('내용_', FLOOR(RAND()*1000)+1), 1, 0 from article;
 
 select count(*) from article; */

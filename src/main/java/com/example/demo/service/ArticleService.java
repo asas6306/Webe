@@ -27,10 +27,10 @@ public class ArticleService {
 	@Autowired
 	private LikeDao ld;
 
-	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int board) {
+	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int boardCode) {
 		page = (page - 1) * pageCnt;
 
-		return ad.getArticles(type, keyword, page, pageCnt, board);
+		return ad.getArticles(type, keyword, page, pageCnt, boardCode);
 	}
 
 	public Article getArticleById(int aid) {
