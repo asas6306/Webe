@@ -18,5 +18,7 @@ public interface ReplyDao {
 
 	public void delete(@Param(value="rid") int rid);
 
+	public void update(@Param(value="rid") int rid, @Param(value="body") String body);
+
 
 }

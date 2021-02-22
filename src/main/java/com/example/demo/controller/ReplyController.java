@@ -48,11 +48,25 @@ public class ReplyController {
 	@ResponseBody
 	public ResultData delete(Integer rid, HttpServletRequest req) {
 		if(rid == null)
-			return new ResultData("F-1", "댓글 id를 입력해주세요");
+			return new ResultData("F-1", "삭제할 댓글 id를 입력해주세요");
 		
 		Member m = (Member)req.getAttribute("m");
 		int uid = m.getUid();
 		
 		return rs.delete(rid, uid);
+	}
+	
+	@RequestMapping("/usr/reply/update")
+	@ResponseBody
+	public ResultData update(Integer rid, String body, HttpServletRequest req) {
+		if(rid == null)
+			return new ResultData("F-1", "수정할 댓글 id를 입력해주세요");
+		if(body == null)
+			return new ResultData("F-1", "수정할 댓글 내용을 입력해주세요");
+		
+		Member m = (Member)req.getAttribute("m");
+		int uid = m.getUid();
+		
+		return rs.update(rid, body, uid);
 	}
 }

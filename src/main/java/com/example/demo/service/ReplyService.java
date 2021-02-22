@@ -58,4 +58,17 @@ public class ReplyService {
 			return null;
 	}
 
+	public ResultData update(int rid, String body, int uid) {
+		Reply r = rd.getReplyById(rid);
+		if (r == null)
+			return new ResultData("F-2", "해당 댓글이 존재하지 않습니다.", "rid", rid);
+
+		if (this.authorityCheck(rid, uid) == null)
+			return new ResultData("F-3", "해당 댓글이 삭제권한이 없습니다.");
+
+		rd.update(rid, body);
+
+		return new ResultData("S-1", "해당 댓글이 수정되었습니다..", "rid", rid);
+	}
+
 }

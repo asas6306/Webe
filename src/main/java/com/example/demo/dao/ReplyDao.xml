@@ -24,4 +24,12 @@
 	<delete id="delete">
 		delete from reply where rid = #{rid}
 	</delete>
+	
+	<update id="update">
+	update reply
+	<set>
+		updateDate = now(), body = #{body}
+	</set>
+	where rid = #{rid}
+	</update>
 </mapper>
