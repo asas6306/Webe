@@ -14,10 +14,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Qualifier("beforeActionInterceptor")
 	HandlerInterceptor beforeActionInterceptor;
 
-	// needToLoginInterceptor 인터셉터 불러오기
+	// needLoginInterceptor 인터셉터 불러오기
+		@Autowired
+		@Qualifier("needAdminInterceptor")
+		HandlerInterceptor needAdminInterceptor;
+	
+	// needLoginInterceptor 인터셉터 불러오기
 	@Autowired
-	@Qualifier("needToLoginInterceptor")
-	HandlerInterceptor needToLoginInterceptor;
+	@Qualifier("needLoginInterceptor")
+	HandlerInterceptor needLoginInterceptor;
 
 	// needToLogoutInterceptor 인터셉터 불러오기
 	@Autowired
@@ -31,8 +36,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
 
 		// 로그인 없이도 접속할 수 있는 URI 기술
-		registry.addInterceptor(needToLoginInterceptor)
-			.addPathPatterns("/**")
+			registry.addInterceptor(needAdminInterceptor)
+				.addPathPatterns("/adm/**")
+				.excludePathPatterns("/adm/member/login")
+				;
+		
+		// 로그인 없이도 접속할 수 있는 URI 기술
+		registry.addInterceptor(needLoginInterceptor)
+			.addPathPatterns("/usr/**")
 			.excludePathPatterns("/")
 			.excludePathPatterns("/usr/main/*")
 			.excludePathPatterns("/usr/article/list")
@@ -41,13 +52,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.excludePathPatterns("/usr/member/login")
 			.excludePathPatterns("/usr/reply/list")
 			.excludePathPatterns("/usr/reply/delete")
-			.excludePathPatterns("/error");
+			.excludePathPatterns("/error")
+			;
 
 		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
 		registry.addInterceptor(needToLogoutInterceptor)
 			.addPathPatterns("/usr/member/login")
 			.addPathPatterns("/usr/member/signup")
 			.addPathPatterns("/usr/member/join")
-			.addPathPatterns("/usr/member/doJoin");
+			.addPathPatterns("/usr/member/doJoin")
+			;
 	}
 }

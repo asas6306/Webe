@@ -15,7 +15,7 @@ import com.example.demo.service.ArticleService;
 import com.example.demo.util.ResultData;
 
 @Controller
-public class ArticleController {
+public class UsrArticleController {
 	@Autowired
 	private ArticleService as;
 

@@ -13,7 +13,7 @@ import com.example.demo.service.ReplyService;
 import com.example.demo.util.ResultData;
 
 @Controller
-public class ReplyController {
+public class UsrReplyController {
 	@Autowired
 	ReplyService rs;
 	

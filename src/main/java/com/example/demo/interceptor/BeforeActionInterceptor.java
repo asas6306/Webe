@@ -19,7 +19,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		System.out.println("good?");
 
 		HttpSession session = request.getSession();
@@ -29,19 +29,22 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		boolean isAdmin = false;
 		int uid = 0;
 		Member loginedMember = null;
-
+		System.out.println("isAdmin : " + isAdmin);
+		
 		if (session.getAttribute("m") != null) {
-			uid = ((Member)session.getAttribute("m")).getUid();
+			uid = ((Member) session.getAttribute("m")).getUid();
 			isLogined = true;
 			loginedMember = ms.getMember(String.valueOf(uid), "uid");
 			isAdmin = ms.authorityCheck(uid);
 		}
-
+		System.out.println("isAdmin : " + isAdmin);
 		request.setAttribute("uid", uid);
 		request.setAttribute("isLogined", isLogined);
 		request.setAttribute("isAdmin", isAdmin);
 		request.setAttribute("m", loginedMember);
-
+		
+		isAdmin = Boolean.valueOf((Boolean)request.getAttribute("isAdmin"));
+		System.out.println("isAdmin : " + isAdmin);
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 }
