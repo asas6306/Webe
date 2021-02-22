@@ -81,6 +81,7 @@ public class MemberService {
 		return  new ResultData("S-1", "회원탈퇴 완료");
 	}
 
+	// 관리자 권한 정의
 	public boolean authorityCheck(int uid) {
 		return uid == 1;
 	}

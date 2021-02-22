@@ -30,7 +30,7 @@ public class ReplyController {
 	
 	@RequestMapping("/usr/reply/add")
 	@ResponseBody
-	public ResultData addComment(String relTypeCode, Integer relId, String body, HttpServletRequest req) {
+	public ResultData add(String relTypeCode, Integer relId, String body, HttpServletRequest req) {
 		if(relTypeCode == null)
 			return new ResultData("F-1", "relTypeCode를 입력해주세요");
 		if(relId == null)
@@ -42,5 +42,17 @@ public class ReplyController {
 		int uid = m.getUid();
 		
 		return rs.add(relTypeCode, relId, uid, body);
+	}
+	
+	@RequestMapping("/usr/reply/delete")
+	@ResponseBody
+	public ResultData delete(Integer rid, HttpServletRequest req) {
+		if(rid == null)
+			return new ResultData("F-1", "댓글 id를 입력해주세요");
+		
+		Member m = (Member)req.getAttribute("m");
+		int uid = m.getUid();
+		
+		return rs.delete(rid, uid);
 	}
 }

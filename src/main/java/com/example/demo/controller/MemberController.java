@@ -48,7 +48,7 @@ public class MemberController {
 
 	@RequestMapping("/usr/member/login")
 	@ResponseBody
-	public ResultData login(String ID, String PW, HttpServletRequest req) {
+	public ResultData login(String ID, String PW, HttpSession session) {
 		if (ID == null)
 			return new ResultData("F-1", "ID를 입력해주세요.");
 
@@ -64,7 +64,7 @@ public class MemberController {
 //		if(m == null || !m.getPW().equals(PW))
 //			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
 
-		req.setAttribute("m", m);
+		session.setAttribute("m", m);
 
 		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
 	}

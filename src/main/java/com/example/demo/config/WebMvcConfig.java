@@ -40,6 +40,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.excludePathPatterns("/usr/member/signup")
 			.excludePathPatterns("/usr/member/login")
 			.excludePathPatterns("/usr/reply/list")
+			.excludePathPatterns("/usr/reply/delete")
 			.excludePathPatterns("/error");
 
 		// 로그인 상태에서 접속할 수 없는 URI 전부 기술

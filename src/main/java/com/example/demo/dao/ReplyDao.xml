@@ -5,10 +5,14 @@
 
 <mapper namespace="com.example.demo.dao.ReplyDao">
 	<select id="getReplies" resultType="Reply">
-	select * from reply
-	left join member on reply.uid = member.uid
-	where relTypeCode = #{relTypeCode} and relId = #{relId}
-	order by rid desc
+		select * from reply
+		left join member on reply.uid = member.uid
+		where relTypeCode = #{relTypeCode} and relId = #{relId}
+		order by rid desc
+	</select>
+
+	<select id="getReplyById" resultType="Reply">
+		select * from reply where rid = #{rid}
 	</select>
 
 	<insert id="add">
@@ -16,4 +20,8 @@
 		relId = #{relId}, uid = #{uid},
 		body = #{body}
 	</insert>
+
+	<delete id="delete">
+		delete from reply where rid = #{rid}
+	</delete>
 </mapper>
