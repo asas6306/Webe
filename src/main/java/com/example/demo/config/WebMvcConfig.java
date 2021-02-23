@@ -57,6 +57,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
 		registry.addInterceptor(needToLogoutInterceptor)
+			.addPathPatterns("/adm/member/login")
 			.addPathPatterns("/usr/member/login")
 			.addPathPatterns("/usr/member/signup")
 			.addPathPatterns("/usr/member/join")

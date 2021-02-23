@@ -1,16 +1,30 @@
 server:
   port: 8023
 spring:
+#JSP 경로 추가
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+#/JSP 경로추가
   datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#     기본경로 
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/web?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
+#     /기본경로
+#    logback
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://localhost:3306/web?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
+#    /logback
     username: root
-    password: 
+    password:
+#    xml resultType 
 mybatis:
   type-aliases-package: com.example.demo.dto
+#    /xml resultTyp
+#    logback
 custom:
   logging:
     dir: LOG_PATH_IS_UNDEFINED
     level: debug
+#    /logback

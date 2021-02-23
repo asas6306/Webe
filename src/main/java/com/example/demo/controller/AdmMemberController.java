@@ -19,8 +19,13 @@ import com.example.demo.util.ResultData;
 public class AdmMemberController {
 	@Autowired
 	private MemberService ms;
-
+	
 	@RequestMapping("/adm/member/login")
+	public String login() {
+		return "adm/member/login";
+	}
+	
+	@RequestMapping("/adm/member/jlogin")
 	@ResponseBody
 	public ResultData login(String ID, String PW, HttpSession session) {
 		if (ID == null)
