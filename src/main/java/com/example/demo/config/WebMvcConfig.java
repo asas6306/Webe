@@ -39,6 +39,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			registry.addInterceptor(needAdminInterceptor)
 				.addPathPatterns("/adm/**")
 				.excludePathPatterns("/adm/member/login")
+				.excludePathPatterns("/adm/member/doLogin")
 				;
 		
 		// 로그인 없이도 접속할 수 있는 URI 기술

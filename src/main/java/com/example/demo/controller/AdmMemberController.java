@@ -25,7 +25,7 @@ public class AdmMemberController {
 		return "adm/member/login";
 	}
 	
-	@RequestMapping("/adm/member/jlogin")
+	@RequestMapping("/adm/member/doLogin")
 	@ResponseBody
 	public ResultData login(String ID, String PW, HttpSession session) {
 		if (ID == null)
