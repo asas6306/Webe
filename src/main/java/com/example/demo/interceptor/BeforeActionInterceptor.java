@@ -20,8 +20,6 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		System.out.println("good?");
-
 		HttpSession session = request.getSession();
 
 		// 로그인 여부에 관련된 정보를 request에 담는다.

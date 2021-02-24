@@ -59,3 +59,7 @@ INSERT INTO board SET boardCode=2, boardName='자유게시판';
 select concat('제목_', floor(rand()*1000)+1), CONCAT('내용_', FLOOR(RAND()*1000)+1), 1, 0 from article;
 
 select count(*) from article; */
+
+/* member테이블에 authKey칼럼 추가 및 초기화 */
+/* UUID()는 날짜기반 난수 생성이기 때문에 유추가 가능함 */
+ALTER TABLE MEMBER ADD authKey CHAR(130) UNIQUE KEY DEFAULT UUID() AFTER PW;
