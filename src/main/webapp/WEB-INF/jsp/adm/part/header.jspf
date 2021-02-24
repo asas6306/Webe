@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>관리자 로그인 페이지</title>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css" />
+<link rel="stylesheet" href="/resource/common.css" />
+<link rel="stylesheet" href="/resource/adm/common.css" />
+</head>
+<body class="bg-gray-200">
