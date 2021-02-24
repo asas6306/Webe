@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <title>관리자 로그인 페이지</title>
 
+<!-- 모바일에서 사이트가 PC에서의 픽셀크기 기준으로 작동하게 하기(반응형 하려면 필요) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css" />
 <link rel="stylesheet" href="/resource/common.css" />
