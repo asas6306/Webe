@@ -26,9 +26,11 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		boolean isLogined = false;
 		boolean isAdmin = false;
 		
-		String authKey = String.valueOf(request.getParameter("authKey"));
+		// String.valueOf(x) → 값이 null인 경우 해당 값에 'null'로 저장...
+		String authKey = request.getParameter("authKey");
 		
 		if (authKey != null && authKey.length() > 0) {
+			System.out.println("?");
 			loginedMember = ms.getMemberByAuthKey(authKey);
 			
 			if(loginedMember == null) {
@@ -37,10 +39,14 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 				request.setAttribute("authKey", "valid");
 			}
 		} else {
+			System.out.println("??");
 			HttpSession session = request.getSession();
 			request.setAttribute("authKeyState", "none");
 			
+			System.out.println("??1");
+			
 			if (session.getAttribute("m") != null) {
+				System.out.println("로그인되어있음.");
 				uid = ((Member) session.getAttribute("m")).getUid();
 				loginedMember = ms.getMember(String.valueOf(uid), "uid");
 			}

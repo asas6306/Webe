@@ -94,7 +94,7 @@ public class UsrMemberController {
 		if (authKey == null)
 			return new ResultData("F-1", "authKey를 입력해주세요.");
 
-		Member m = ms.getMember(authKey, "authKey");
+		Member m = ms.getMember(authKey, "a	uthKey");
 		
 		return new ResultData("S-1", "유효한 회원힙니다.", "Member", m);
 	}
