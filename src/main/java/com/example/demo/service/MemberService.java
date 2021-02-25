@@ -85,4 +85,9 @@ public class MemberService {
 	public boolean authorityCheck(int uid) {
 		return uid == 1;
 	}
+
+	public Member getMemberByAuthKey(String authKey) {
+		
+		return md.getMemberByAuthKey(authKey);
+	}
 }

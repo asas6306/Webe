@@ -24,6 +24,10 @@
 			</when>
 		</choose>
 	</select>
+	
+	<select id="getMemberByAuthKey" resultType="Member">
+		select * from member where authKey = #{authKey}
+	</select>
 
 	<update id="update">
 		update member set updateDate = now()
@@ -45,6 +49,4 @@
 	<delete id="signout">
 		delete from member where uid = #{uid}
 	</delete>
-	
-	
 </mapper>

@@ -19,4 +19,7 @@ public interface MemberDao {
 
 	public void signout(@Param(value = "uid") int uid);
 
+	public Member getMemberByAuthKey(@Param(value="authKey") String authKey);
+
+
 }
