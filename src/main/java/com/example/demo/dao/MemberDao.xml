@@ -22,6 +22,9 @@
 			<when test="itemIndex=='nickname'">
 				where nickname = #{item}
 			</when>
+			<when test="itemIndex=='authKey'">
+				where authKey = #{item}
+			</when>
 		</choose>
 	</select>
 	

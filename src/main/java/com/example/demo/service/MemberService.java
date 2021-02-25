@@ -65,6 +65,7 @@ public class MemberService {
 	}
 
 	public Member getMember(String item, String itemIndex) {
+		
 		return md.getMember(item, itemIndex);
 	}
 
