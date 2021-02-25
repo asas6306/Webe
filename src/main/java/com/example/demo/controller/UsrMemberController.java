@@ -68,6 +68,25 @@ public class UsrMemberController {
 
 		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
 	}
+	
+	@RequestMapping("/usr/member/authKey")
+	@ResponseBody
+	public ResultData showAuthKey(String ID, String PW) {
+		if (ID == null)
+			return new ResultData("F-1", "ID를 입력해주세요.");
+
+		if (PW == null)
+			return new ResultData("F-1", "PW를 입력해주세요.");
+		
+		Member m = ms.getMember(ID, "ID");
+
+		if (m == null)
+			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
+		else if (!m.getPW().equals(PW))
+			return new ResultData("F-2", "비밀번호가 일치하지 않습니다.");
+		
+		return new ResultData("S-1", String.format("%s님 authKey는 %s입니다.", m.getNickname(), m.getAuthKey()), "authKey", m.getAuthKey());
+	}
 
 	@RequestMapping("/usr/member/logout")
 	@ResponseBody

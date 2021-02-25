@@ -11,6 +11,7 @@ public class Member {
 	int uid;
 	String ID;
 	String PW;
+	String authKey;
 	String nickname;
 	String regDate;
 	String email;
