@@ -1,3 +1,11 @@
+초기 세팅 순서
+> Git 설정
+> 스프링 우상단 Java 우클릭 후 reset
+> Help - New Software Install...
+	 - add -  이클립스 'Emmet' : http://emmet.io/eclipse/updates
+> '포스트맨' 설치
+> 'JSON Formatter' Chrome에 추가
+
 게시판 코드 : article > boardCode
 1 : 공지사항
 2 : 자유게시판
