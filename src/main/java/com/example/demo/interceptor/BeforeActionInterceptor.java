@@ -39,11 +39,8 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 				request.setAttribute("authKey", "valid");
 			}
 		} else {
-			System.out.println("??");
 			HttpSession session = request.getSession();
 			request.setAttribute("authKeyState", "none");
-			
-			System.out.println("??1");
 			
 			if (session.getAttribute("m") != null) {
 				System.out.println("로그인되어있음.");

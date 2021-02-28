@@ -33,35 +33,48 @@
 </script>
 <section class="section-Login">
 	<div class="container mx-auto min-h-screen flex items-center justify-center">
-		<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4" action="doLogin" method="post"
-			onsubmit="LoginForm__checkAndSubmit(this); return false;">
-			<div class="flex flex-col md:flex-row"> <!-- md:flex-row 화면이 넓어지면 row배치 -->
-				<div class="w-20 md:flex md:items-center">
-					<span>아이디</span>
+		<div class="w-full">
+			<div class="logo-bar flex justify-center mb-4">
+				<a href="#"><span><i class="fas fa-seedling">GARDEN</i> </span></a></div>
+			<form class="bg-white shadow-md rounded px-8 py-6"
+				action="doLogin" method="post"
+				onsubmit="LoginForm__checkAndSubmit(this); return false;">
+				<div class="flex flex-col md:flex-row">
+					<!-- md:flex-row 화면이 넓어지면 row배치 -->
+					<div class="w-20 md:flex md:items-center">
+						<span>아이디</span>
+					</div>
+					<div class="md:flex-grow py-2">
+						<input
+							class="shadow apperance-non border rounded w-full py-2 px-3 text-grey-darker"
+							type="text" name="ID" placeholder="아이디를 입력해주세요." maxlength="20"
+							autofocus="autofocus" />
+					</div>
 				</div>
-				<div class="md:flex-grow py-2">
-					<input class="shadow apperance-non border rounded w-full py-2 px-3 text-grey-darker" type="text" name="ID"
-						placeholder="아이디를 입력해주세요." maxlength="20" autofocus="autofocus" />
+				<div class="flex flex-col md:flex-row">
+					<!-- md:flex-row 화면이 넓어지면 row배치 -->
+					<div class="w-20 md:flex md:items-center">
+						<span>비밀번호</span>
+					</div>
+					<div class="md:flex-grow py-2">
+						<input
+							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
+							type="password" name="PW" placeholder="비밀번호를 입력해주세요."
+							maxlength="20" autofocus="autofocus" />
+					</div>
 				</div>
-			</div>
-		<div class="flex flex-col md:flex-row"> <!-- md:flex-row 화면이 넓어지면 row배치 -->
-				<div class="w-20 md:flex md:items-center">
-					<span>비밀번호</span>
+				<div class="flex">
+					<div class="p-3">
+						<span></span>
+					</div>
+					<div class="flex-grow p-3" align="right">
+						<input
+							class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							type="submit" value="로그인" />
+					</div>
 				</div>
-				<div class="md:flex-grow py-2">
-					<input class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker" type="password" name="PW"
-						placeholder="비밀번호를 입력해주세요." maxlength="20" autofocus="autofocus" />
-				</div>
-			</div>
-			<div class="flex">
-				<div class="p-4">
-					<span></span>
-				</div>
-				<div class="flex-grow p-4" align="right">  
-					<input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="로그인" />
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </section>
 
