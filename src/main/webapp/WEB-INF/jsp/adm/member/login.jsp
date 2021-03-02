@@ -45,6 +45,7 @@
 			<form class="bg-white shadow-md rounded px-8 py-6" action="doLogin"
 				method="post"
 				onsubmit="LoginForm__checkAndSubmit(this); return false;">
+				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 				<div class="flex flex-col md:flex-row">
 					<!-- md:flex-row 화면이 넓어지면 row배치 -->
 					<div class="w-20 md:flex md:items-center">
