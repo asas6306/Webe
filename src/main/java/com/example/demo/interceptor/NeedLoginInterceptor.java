@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.example.demo.util.Util;
+
 @Component("needLoginInterceptor") // 컴포넌트 이름 설정
 public class NeedLoginInterceptor implements HandlerInterceptor {
 	@Override
@@ -37,7 +39,7 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 				response.getWriter().append("<script>");
 				response.getWriter().append("alert('" + resultMsg + "');");
 				response.getWriter().append("location.replace('/usr/member/login?redirectUrl="
-						+ request.getAttribute("encodedAfterLoginUrl") + "');");
+						+ Util.reqAttr(request, "encodeedAfterLoginUrl", "") + "');");
 				response.getWriter().append("</script>");
 				// 리턴 false;를 이후에 실행될 인터셉터와 액션이 실행되지 않음
 			} else {

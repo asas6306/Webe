@@ -43,12 +43,10 @@ public class AdmMemberController {
 			return Util.msgAndBack("접근 권한이 없는 계정입니다.");
 
 		session.setAttribute("m", m);
-
-		if (redirectUrl == null)
-			redirectUrl = "../home/main";
 		
 		String msg = String.format("%s님 환영합니다.", m.getNickname());
-
+		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
+		
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
