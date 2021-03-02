@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdmHomeController {
 	
 	@RequestMapping("/adm/home/main")
-	@ResponseBody
 	public String main() {
-		return "어드민 홈";
+		return "adm/home/main";
 	}
 }

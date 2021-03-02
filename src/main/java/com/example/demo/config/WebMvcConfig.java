@@ -15,7 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**");
 	}
-	
+
 	// beforeActionInterceptor 인터셉터 불러오기
 	@Autowired
 	@Qualifier("beforeActionInterceptor")
@@ -42,7 +42,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		// beforeActionInterceptor 인터셉터가 모든 액션 실행전에 실행되도록 처리
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
 
-		// 로그인 없이도 접속할 수 있는 URI 기술
+		// 관리자 로그인 없이도 접속할 수 있는 URI 기술
 		registry.addInterceptor(needAdminInterceptor).addPathPatterns("/adm/**")
 				.excludePathPatterns("/adm/member/login").excludePathPatterns("/adm/member/doLogin");
 

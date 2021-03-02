@@ -32,12 +32,18 @@
 	}
 </script>
 <section class="section-Login">
-	<div class="container mx-auto min-h-screen flex items-center justify-center">
+	<div
+		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mb-4">
-				<a href="#"><span><i class="fas fa-seedling">GARDEN</i> </span></a></div>
-			<form class="bg-white shadow-md rounded px-8 py-6"
-				action="doLogin" method="post"
+				<a href="#">
+					<span>
+						<i class="fas fa-seedling">GARDEN<i class="text-lg font-bold">ADMIN</i></i>
+					</span>
+				</a>
+			</div>
+			<form class="bg-white shadow-md rounded px-8 py-6" action="doLogin"
+				method="post"
 				onsubmit="LoginForm__checkAndSubmit(this); return false;">
 				<div class="flex flex-col md:flex-row">
 					<!-- md:flex-row 화면이 넓어지면 row배치 -->

@@ -23,12 +23,12 @@ public class AdmMemberController {
 	
 	@RequestMapping("/adm/member/login")
 	public String login() {
-		return "adm/member/login";
+		return "/adm/member/login";
 	}
 	
 	@RequestMapping("/adm/member/doLogin")
 	@ResponseBody
-	public String login(String ID, String PW, HttpSession session) {
+	public String doLogin(String ID, String PW, HttpSession session) {
 		
 		Member m = ms.getMember(ID, "ID");
 		
@@ -45,7 +45,17 @@ public class AdmMemberController {
 		session.setAttribute("m", m);
 		
 		String msg = String.format("%s님 환영합니다.", m.getNickname());
-		System.out.println("닉넴" + m.getNickname());
-		return Util.msgAndReplace(msg, "/adm/home/main");
+		
+		return Util.msgAndReplace(msg, "../home/main");
+	}
+	
+	@RequestMapping("/adm/member/doLogout")
+	@ResponseBody
+	public String doLogout(HttpSession session) {
+		session.removeAttribute("m");
+		
+		String msg = "로그아웃 되었습니다.";
+		
+		return Util.msgAndReplace(msg, "../member/login");
 	}
 }	
