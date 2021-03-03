@@ -87,5 +87,9 @@
 		</choose>
 		where aid = #{aid}
 	</update>
+	
+	<select id="getBoard" resultType="Board">
+		select * from board where boardCode = #{boardCode}
+	</select>
 </mapper>
  

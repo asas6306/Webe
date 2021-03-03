@@ -22,6 +22,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
 		// 기타 유용한 정보를 request에 담는다.
 		Map<String, Object> param = Util.getParamMap(request);
 		String paramJson = Util.toJsonStr(param);

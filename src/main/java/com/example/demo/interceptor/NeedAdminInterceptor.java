@@ -28,7 +28,7 @@ public class NeedAdminInterceptor implements HandlerInterceptor {
 				response.getWriter().append("<script>");
 				response.getWriter().append("alert('관리자 로그인 후 이용해주세요.');");
 				response.getWriter().append("location.replace('/adm/member/login?redirectUrl="
-						+ Util.reqAttr(request, "encodeedAfterLoginUrl", "") + "');");
+						+ Util.reqAttr(request, "encodedAfterLoginUrl", "") + "');");
 				response.getWriter().append("</script>");
 				// 리턴 false;를 이후에 실행될 인터셉터와 액션이 실행되지 않음
 			} else {

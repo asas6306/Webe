@@ -50,9 +50,9 @@ public class AdmMemberController {
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
-	@RequestMapping("/adm/member/doLogout")
+	@RequestMapping("/adm/member/logout")
 	@ResponseBody
-	public String doLogout(HttpSession session) {
+	public String logout(HttpSession session) {
 		session.removeAttribute("m");
 
 		String msg = "로그아웃 되었습니다.";

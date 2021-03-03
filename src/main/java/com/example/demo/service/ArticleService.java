@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.ArticleDao;
 import com.example.demo.dao.LikeDao;
 import com.example.demo.dto.Article;
+import com.example.demo.dto.Board;
 import com.example.demo.dto.Like;
 import com.example.demo.dto.Member;
 import com.example.demo.util.ResultData;
@@ -106,6 +107,11 @@ public class ArticleService {
 
 	public String a2() {
 		return ad.a2();
+	}
+
+	public Board getBoard(int boardCode) {
+		
+		return ad.getBoard(boardCode);
 	}
 
 }

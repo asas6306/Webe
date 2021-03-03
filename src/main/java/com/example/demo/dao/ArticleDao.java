@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.example.demo.dto.Article;
+import com.example.demo.dto.Board;
 
 @Mapper
 public interface ArticleDao {
@@ -27,4 +28,6 @@ public interface ArticleDao {
 	public void hitCnt(@Param(value = "aid") int aid);
 
 	public void like(@Param(value = "aid") int aid, @Param(value = "action") String action);
+
+	public Board getBoard(@Param(value = "boardCode") int boardCode);
 }
