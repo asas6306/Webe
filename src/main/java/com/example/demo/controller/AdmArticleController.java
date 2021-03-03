@@ -44,4 +44,11 @@ public class AdmArticleController extends _BaseController {
 		
 		return "adm/article/list";
 	}
+	
+	@RequestMapping("/adm/article/test")
+	public String test() {
+
+		
+		return "adm/article/NewFile";
+	}
 }

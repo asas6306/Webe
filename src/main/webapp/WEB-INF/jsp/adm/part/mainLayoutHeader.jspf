@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ include file="header.jspf"%>
+
 <header class="top-bar bg-white shadow-lg h-24 flex justify-center">
 	<div class="container flex items-center">
 		<div class="w-2/5"></div>
@@ -40,5 +42,3 @@
 		</nav>
 	</div>
 </header>
-
-<%@ include file="header.jspf"%>
