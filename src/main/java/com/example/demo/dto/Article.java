@@ -18,4 +18,5 @@ public class Article {
 	int hit;
 	int like;
 	int boardCode;
+	String boardName;
 }

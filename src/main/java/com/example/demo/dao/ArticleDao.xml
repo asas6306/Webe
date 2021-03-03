@@ -5,9 +5,11 @@
 
 <mapper namespace="com.example.demo.dao.ArticleDao">
 	<select id="getArticles" resultType="Article">
-		select article.*, `member`.nickname from article
-		left join member on
+		select article.*, `member`.nickname, board.boardName from article
+		left join `member` on
 		article.uid = `member`.uid
+		left join board on
+		article.boardCode = board.boardCode
 		where 1
 		<if test="keyword != null">
 			<choose>
@@ -26,10 +28,10 @@
 		</if>
 		<choose>
 			<when test="boardCode == 1">
-				and boardCode = 1
+				and article.boardCode = 1
 			</when>
 			<when test="boardCode == 2">
-				and boardCode = 2
+				and article.boardCode = 2
 			</when>
 		</choose>
 		order by aid desc
@@ -87,9 +89,10 @@
 		</choose>
 		where aid = #{aid}
 	</update>
-	
+
 	<select id="getBoard" resultType="Board">
-		select * from board where boardCode = #{boardCode}
+		select * from board where
+		boardCode = #{boardCode}
 	</select>
 </mapper>
  
