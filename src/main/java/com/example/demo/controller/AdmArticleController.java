@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.example.demo.dto.Article;
 import com.example.demo.dto.Board;
@@ -23,13 +25,14 @@ public class AdmArticleController extends _BaseController {
 	private ArticleService as;
 
 	@RequestMapping("/adm/article/list")
-	public String list(HttpServletRequest req, String type, String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int boardCode) {
+	public String list(HttpServletRequest req, String type, String keyword, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "0") int boardCode) {
 
 		Board b = as.getBoard(boardCode);
-		
-		if(boardCode != 0 && b == null)
+
+		if (boardCode != 0 && b == null)
 			return msgAndBack(req, "존재하지 않는 게시판입니다.");
-		
+
 		if (page < 1)
 			page = 1;
 
@@ -45,20 +48,26 @@ public class AdmArticleController extends _BaseController {
 
 		List<Article> articles = as.getArticles(type, keyword, page, pageCnt, boardCode);
 		req.setAttribute("articles", articles);
-		
+
 		return "adm/article/list";
 	}
-	
+
 	@RequestMapping("/adm/article/add")
 	public String add(HttpServletRequest req, int boardCode) {
 		req.setAttribute("boardCode", boardCode);
-		
+
 		return "adm/article/add";
 	}
-	
+
 	@RequestMapping("/adm/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			MultipartRequest multipartRequest) {
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		if (true)
+			return new ResultData("S-1", "테스트", "fileMap.keySet()", fileMap.keySet());
+
 		if (!param.containsKey("title"))
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		if (!param.containsKey("body"))

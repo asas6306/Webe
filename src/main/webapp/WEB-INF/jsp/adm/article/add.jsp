@@ -6,13 +6,13 @@
 		<div class="flex justify-center">
 			<div class="text-4xl font-extrabold">게시물 작성</div>
 		</div>
-		<form action="doAdd" method="post">
+		<form action="doAdd" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="boardCode" value="${boardCode}">
 			<div class="flex flex-col lg:flex-row m-4">
 				<div class="lg:flex lg:items-center lg:w-16">
 					<span class="lg:flex lg:justify-center font-bold">제목</span>
 				</div>
-				<div class="lg:flex-grow bg-black">
+				<div class="lg:flex-grow">
 					<input class="form-row-input w-full" type="text" name="title"
 						placeholder="제목을 입력해주세요" autofocus="autofocus" />
 				</div>
@@ -24,6 +24,14 @@
 				<div class="lg:flex-grow">
 					<textarea class="form-row-input w-full" name="body"
 						placeholder="내용을 입력해주세요"></textarea>
+				</div>
+			</div>
+			<div class="flex flex-col lg:flex-row m-4">
+				<div class="lg:flex lg:items-center lg:w-16">
+					<span class="lg:flex lg:justify-center font-bold">첨부파일</span>
+				</div>
+				<div class="lg:flex-grow">
+					<input class="form-row-input w-full" type="file" name="file__article__0__common__attachment__1" />
 				</div>
 			</div>
 			<div class="flex justify-center">
