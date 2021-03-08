@@ -28,3 +28,12 @@ html > body {
 .logo-bar {
 	font-size: 3rem;
 }
+
+.form-row-input {
+	padding: 12px;
+}
+
+textarea.form-row-input {
+	min-height: 100px;
+}
+

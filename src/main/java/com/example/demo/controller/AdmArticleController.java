@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Article;
 import com.example.demo.dto.Board;
+import com.example.demo.dto.Member;
 import com.example.demo.service.ArticleService;
+import com.example.demo.util.ResultData;
 
 @Controller
 public class AdmArticleController extends _BaseController {
@@ -45,10 +49,26 @@ public class AdmArticleController extends _BaseController {
 		return "adm/article/list";
 	}
 	
-	@RequestMapping("/adm/article/test")
-	public String test() {
-
+	@RequestMapping("/adm/article/add")
+	public String add(HttpServletRequest req, int boardCode) {
+		req.setAttribute("boardCode", boardCode);
 		
-		return "adm/article/NewFile";
+		return "adm/article/add";
+	}
+	
+	@RequestMapping("/adm/article/doAdd")
+	@ResponseBody
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		if (!param.containsKey("title"))
+			return new ResultData("F-1", "제목을 입력해주세요.");
+		if (!param.containsKey("body"))
+			return new ResultData("F-1", "내용을 입력해주세요.");
+		if (!param.containsKey("boardCode"))
+			return new ResultData("F-1", "게시판을 선택해주세요.");
+
+		Member m = (Member) req.getAttribute("m");
+		param.put("uid", m.getUid());
+
+		return as.add(param);
 	}
 }

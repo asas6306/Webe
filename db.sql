@@ -48,6 +48,26 @@ boardCode INT(3) NOT NULL,
 boardName CHAR(20) NOT NULL
 );
 
+CREATE TABLE `genFile` (
+`fid` INT(10) UNSIGNED PRIMARY KEY AUTO_INCREMENT, #번호
+`regDate` DATETIME DEFAULT NOW(), # 작성날짜
+`updateDate` DATETIME DEFAULT NOW(), # 갱신날짜
+`delDate` DATETIME DEFAULT NULL, # 삭제날짜
+`delStatus` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0, # 상태(0:미삭제, 1:삭제)
+`relTypeCode` CHAR(50) NOT NULL, # 관련 데이터 타입(article, member, etc...)
+`relId` INT(10) UNSIGNED NOT NULL, # 관련 데이터 번호
+`originFileName` VARCHAR(100) NOT NULL, # 업로드 당시 파일명
+`fileExt` CHAR(10) NOT NULL, # 확장자
+`typeCode` CHAR(20) NOT NULL, # 종류코드
+`type2Code` CHAR(20) NOT NULL, # 종류2코드 일종의 카테고리
+`fileSize` INT(10) UNSIGNED NOT NULL, # 파일크기
+`fileExtTypeCode` CHAR(10) NOT NULL, # 파일 규격 코드(ex. img)
+`fileExtType2Code` CHAR(10) NOT NULL, # 파일 규격2 코드(ex. jpg, png)
+`fileNo` SMALLINT(2) UNSIGNED NOT NULL, # 파일번호
+`fileDir` CHAR(20) NOT NULL, # 파일이 저장되는 폴더명
+KEY `relId` (`relId`, `relTypeCode`, `typeCode`, `type2Code`, `fileNo`)
+);
+
 INSERT INTO MEMBER SET ID = 'asas', PW = '1234', nickname = 'manager', email = 'asas6306@naver.com', phoneNo = '010-3372-3049';
 INSERT INTO MEMBER SET ID = 'as', PW = '1234', nickname = 'jung', email = 'asas6306@naver.com', phoneNo = '010-3372-3049';
 

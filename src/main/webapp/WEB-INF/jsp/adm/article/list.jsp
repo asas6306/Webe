@@ -9,18 +9,26 @@
 			<div class="flex justify-center">
 				<div class="text-4xl font-extrabold">게시판</div>
 			</div>
-			<div>
-				<select class="py-2 select-board">
-					<option value="1">공지사항</option>
-					<option value="2">자유게시판</option>
-				</select>
-				<script>
-					$('.section-1 .select-board').val(param.boardCode);
-					
-					$('.section-1 .select-board').change(function() {
-						location.href = '?boardCode=' + this.value;
-					});
-				</script>
+			<div class="flex">
+				<div>
+					<select class="py-2 select-board">
+						<option value="0" selected="selected">전체게시판</option>
+						<option value="1">공지사항</option>
+						<option value="2">자유게시판</option>
+					</select>
+					<script>
+						$('.section-1 .select-board').val(param.boardCode);
+
+						$('.section-1 .select-board').change(function() {
+							location.href = '?boardCode=' + this.value;
+						});
+					</script>
+				</div>
+
+				<div class="flex-grow"></div>
+
+				<a href="/adm/article/add?boardCode=${param.boardCode}"
+					class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4">글쓰기</a>
 			</div>
 			<div>
 				<c:forEach items='${articles}' var='article'>
