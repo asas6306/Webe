@@ -26,7 +26,7 @@ public class AdmArticleController extends _BaseController {
 	@Autowired
 	private ArticleService as;
 	@Autowired
-	private GenFileService gs;
+	private GenFileService fs;
 
 	@RequestMapping("/adm/article/list")
 	public String list(HttpServletRequest req, String type, String keyword, @RequestParam(defaultValue = "1") int page,
@@ -77,38 +77,19 @@ public class AdmArticleController extends _BaseController {
 
 		Member m = (Member) req.getAttribute("m");
 		param.put("uid", m.getUid());
-		
+
 		ResultData addArticleRd = as.add(param);
-		int newArticleId = (int)addArticleRd.getBody().get("aid");
-		
+		int newArticleId = (int) addArticleRd.getBody().get("aid");
+
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-		
-		for(String fileInputName : fileMap.keySet()) {
+
+		for (String fileInputName : fileMap.keySet()) {
 			MultipartFile multipartFile = fileMap.get(fileInputName);
-			String[] fileInputNameBits = fileInputName.split("__");
-			
-			if(fileInputNameBits[0].equals("file") == false) 
-				continue;
-			
-			int fileSize = (int)multipartFile.getSize();
-			
-			if(fileSize <= 0)
-				continue;
-			
-			String relTypeCode = fileInputNameBits[1];
-			int relId = newArticleId;
-			String typeCode = fileInputNameBits[3];
-			String type2Code = fileInputNameBits[4];
-			int fileNo = Integer.parseInt(fileInputNameBits[5]);
-			String originFileName = multipartFile.getOriginalFilename();
-			String fileExtTypeCode = Util.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
-			String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
-			String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
-			String fileDir = Util.getNowYearMonthDateStr();
-			
-			gs.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
+
+			if (multipartFile.isEmpty() == false)
+				fs.save(multipartFile, newArticleId);
 		}
-		
+
 		return addArticleRd;
 	}
 }

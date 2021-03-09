@@ -24,6 +24,7 @@ mybatis:
 #    /xml resultTyp
 #    logback
 custom:
+  genFileDirPath: C:/work/tq
   logging:
     dir: LOG_PATH_IS_UNDEFINED
     level: debug
