@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dao.GenFileDao;
+import com.example.demo.dto.GenFile;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
@@ -30,8 +31,8 @@ public class GenFileService {
 
 		fd.saveMeta(param);
 
-		int aid = Util.getAsInt(param.get("aid"), 0);
-		return new ResultData("S-1", "성공하였습니다.", "aid", aid);
+		int fid = Util.getAsInt(param.get("fid"), 0);
+		return new ResultData("S-1", "성공하였습니다.", "fid", fid);
 	}
 
 	public ResultData save(MultipartFile multipartFile, int relId) {
@@ -84,6 +85,11 @@ public class GenFileService {
 		}
 		
 		return new ResultData("S-1", "파일이 생성되었습니다.", "fid", newGenFileId, "fileRealPath", targetFilePath, "fileName", targetFileName);
+	}
+
+	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
+
+		return fd.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
 }

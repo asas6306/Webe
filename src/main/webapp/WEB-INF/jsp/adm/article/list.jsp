@@ -42,6 +42,11 @@
 							<a href="detail?id=${article.aid}"
 								class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 							<p class="mt-2 text-gray-600">${article.body}</p>
+							<div>
+							<c:if test="${article.extra__thumbImg != null}">
+								<img src="${article.extra__thumbImg}" />
+								</c:if>
+							</div>
 						</div>
 						<div class="flex justify-between items-center mt-4">
 							<a href="detail?id=${article.aid}"

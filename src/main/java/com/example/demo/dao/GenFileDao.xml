@@ -18,4 +18,13 @@
 		fileDir = #{fileDir},
 		fileExt = #{fileExt}
 	</insert>
+	
+	<select id="getGenFile" resultType="GenFile">
+		select * from genFile where
+		relTypeCode = #{relTypeCode}
+		and relId = #{relId}
+		and typeCode = #{typeCode}
+		and type2Code = #{type2Code}
+		and fileNo = #{fileNo}
+	</select>
 </mapper>

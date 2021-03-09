@@ -15,11 +15,11 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.example.demo.dto.Article;
 import com.example.demo.dto.Board;
+import com.example.demo.dto.GenFile;
 import com.example.demo.dto.Member;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.GenFileService;
 import com.example.demo.util.ResultData;
-import com.example.demo.util.Util;
 
 @Controller
 public class AdmArticleController extends _BaseController {
@@ -49,8 +49,16 @@ public class AdmArticleController extends _BaseController {
 
 		if (as.getArticles(type, keyword, page, pageCnt, boardCode).size() == 0)
 			return msgAndBack(req, "해당하는 게시물이 존재하지 않습니다.");
-
+		
 		List<Article> articles = as.getArticles(type, keyword, page, pageCnt, boardCode);
+		
+		for(Article a : articles) {
+			GenFile genFile = fs.getGenFile("article", a.getAid(), "common", "attachment", 1);
+			
+			if(genFile != null)
+				a.setExtra__thumbImg(genFile.getForPrintUrl());			
+		}
+		
 		req.setAttribute("articles", articles);
 
 		return "adm/article/list";
@@ -92,4 +100,16 @@ public class AdmArticleController extends _BaseController {
 
 		return addArticleRd;
 	}
+	
+	@RequestMapping("/adm/article/detail")
+	@ResponseBody
+	public ResultData detail(int aid) {
+		Article a = as.getArticleById(aid);
+		
+		GenFile genFile = fs.getGenFile("article", a.getAid(), "common", "attachment", 1);
+
+		a.setExtra__thumbImg(genFile.getForPrintUrl());
+		
+		return new ResultData("S-1", "성공", "aritlce", a);
+		}
 }

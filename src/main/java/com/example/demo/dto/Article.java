@@ -14,9 +14,11 @@ public class Article {
 	String regDate;
 	String updateDate;
 	int uid;
-	String nickname;
 	int hit;
 	int like;
 	int boardCode;
+	
+	String nickname;
 	String boardName;
+	String extra__thumbImg;
 }

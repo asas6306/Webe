@@ -68,7 +68,6 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 			request.setAttribute("authKeyState", "none");
 
 			if (session.getAttribute("m") != null) {
-				System.out.println("로그인되어있음.");
 				uid = ((Member) session.getAttribute("m")).getUid();
 				loginedMember = ms.getMember(String.valueOf(uid), "uid");
 			}
