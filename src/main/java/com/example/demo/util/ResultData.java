@@ -13,7 +13,7 @@ public class ResultData {
 	public ResultData(String resultCode, String msg, Object... args) {
 		this.resultCode = resultCode;
 		this.msg = msg;
-		this.body = Util.indexOf(args);
+		this.body = Util.mapOf(args);
 	}
 	
 	public boolean isSuccess() {
