@@ -10,6 +10,24 @@
 			<input type="hidden" name="boardCode" value="${boardCode}">
 			<div class="flex flex-col lg:flex-row m-4">
 				<div class="lg:flex lg:items-center lg:w-16">
+					<span class="lg:flex lg:justify-center font-bold">게시판</span>
+				</div>
+				<div>
+					<select class="py-2 select-board">
+						<option value="1">공지사항</option>
+						<option value="2">자유게시판</option>
+					</select>
+					<script>
+						$('.section-1 .select-board').val(${boardCode});
+
+						$('.section-1 .select-board').change(function() {
+							location.href = '?boardCode=' + this.value;
+						});
+					</script>
+				</div>
+			</div>
+			<div class="flex flex-col lg:flex-row m-4">
+				<div class="lg:flex lg:items-center lg:w-16">
 					<span class="lg:flex lg:justify-center font-bold">제목</span>
 				</div>
 				<div class="lg:flex-grow">
@@ -31,13 +49,16 @@
 					<span class="lg:flex lg:justify-center font-bold">첨부파일</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input class="form-row-input w-full" type="file" name="file__article__0__common__attachment__1" />
+					<input class="form-row-input w-full" type="file"
+						name="file__article__0__common__attachment__1" />
 				</div>
 			</div>
 			<div class="flex justify-center">
-					<input type="submit" class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4 m-2" value="입력" />
-					<input type="button" class="bg-red-500 hover:bg-red-900 text-white font-bold rounded py-2 px-4 m-2" value="취소"
-						onclick="history.back()" />
+				<input type="submit"
+					class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4 m-2"
+					value="입력" /> <input type="button"
+					class="bg-red-500 hover:bg-red-900 text-white font-bold rounded py-2 px-4 m-2"
+					value="취소" onclick="history.back()" />
 			</div>
 		</form>
 	</div>

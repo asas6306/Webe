@@ -32,9 +32,11 @@ public class AdmArticleController extends _BaseController {
 	public String list(HttpServletRequest req, String type, String keyword, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "0") int boardCode) {
 
-		Board b = as.getBoard(boardCode);
+		Board board = as.getBoard(boardCode);
+		req.setAttribute("boardCode", boardCode);
+		System.out.println("boardCode : " + boardCode);
 
-		if (boardCode != 0 && b == null)
+		if (boardCode != 0 && board == null)
 			return msgAndBack(req, "존재하지 않는 게시판입니다.");
 
 		if (page < 1)

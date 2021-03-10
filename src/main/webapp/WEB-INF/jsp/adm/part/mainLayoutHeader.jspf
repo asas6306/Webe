@@ -29,7 +29,7 @@
 					</a>
 				</li>
 				<li>
-					<a class="p-2 mx-1 hover:underline" href="/adm/article/list?boardCode=0">
+					<a class="p-2 mx-1 hover:underline" href="/adm/article/list">
 						<span>게시물 관리</span>
 					</a>
 				</li>

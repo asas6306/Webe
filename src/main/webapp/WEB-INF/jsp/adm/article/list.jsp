@@ -12,12 +12,12 @@
 			<div class="flex">
 				<div>
 					<select class="py-2 select-board">
-						<option value="0" selected="selected">전체게시판</option>
+						<option value="0">전체게시판</option>
 						<option value="1">공지사항</option>
 						<option value="2">자유게시판</option>
 					</select>
 					<script>
-						$('.section-1 .select-board').val(param.boardCode);
+						$('.section-1 .select-board').val(${boardCode});
 
 						$('.section-1 .select-board').change(function() {
 							location.href = '?boardCode=' + this.value;
@@ -26,9 +26,10 @@
 				</div>
 
 				<div class="flex-grow"></div>
-
-				<a href="/adm/article/add?boardCode=${param.boardCode}"
-					class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4">글쓰기</a>
+				<c:if test="${boardCode != 0}">
+					<a href="/adm/article/add?boardCode=${boardCode}"
+						class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4">글쓰기</a>
+				</c:if>
 			</div>
 			<div>
 				<c:forEach items='${articles}' var='article'>
@@ -43,8 +44,8 @@
 								class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 							<p class="mt-2 text-gray-600">${article.body}</p>
 							<div>
-							<c:if test="${article.extra__thumbImg != null}">
-								<img src="${article.extra__thumbImg}" />
+								<c:if test="${article.extra__thumbImg != null}">
+									<img src="${article.extra__thumbImg}" />
 								</c:if>
 							</div>
 						</div>
