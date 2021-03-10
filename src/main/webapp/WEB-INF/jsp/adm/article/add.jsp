@@ -7,22 +7,18 @@
 			<div class="text-4xl font-extrabold">게시물 작성</div>
 		</div>
 		<form action="doAdd" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="boardCode" value="${boardCode}">
 			<div class="flex flex-col lg:flex-row m-4">
 				<div class="lg:flex lg:items-center lg:w-16">
 					<span class="lg:flex lg:justify-center font-bold">게시판</span>
 				</div>
 				<div>
-					<select class="py-2 select-board">
+					<select class="py-2 select-board" name="boardCode" value="${boardCode}">
 						<option value="1">공지사항</option>
 						<option value="2">자유게시판</option>
 					</select>
 					<script>
 						$('.section-1 .select-board').val(${boardCode});
 
-						$('.section-1 .select-board').change(function() {
-							location.href = '?boardCode=' + this.value;
-						});
 					</script>
 				</div>
 			</div>

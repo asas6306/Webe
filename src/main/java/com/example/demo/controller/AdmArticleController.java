@@ -74,21 +74,19 @@ public class AdmArticleController extends _BaseController {
 	}
 
 	@RequestMapping("/adm/article/doAdd")
-	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
+	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
 
 		if (!param.containsKey("title"))
-			return new ResultData("F-1", "제목을 입력해주세요.");
+			return msgAndBack(req, "제목을 입력해주세요");
 		if (!param.containsKey("body"))
-			return new ResultData("F-1", "내용을 입력해주세요.");
-		if (!param.containsKey("boardCode"))
-			return new ResultData("F-1", "게시판을 선택해주세요.");
+			return msgAndBack(req, "내용을 입력해주세요.");
 
 		Member m = (Member) req.getAttribute("m");
 		param.put("uid", m.getUid());
 
 		ResultData addArticleRd = as.add(param);
+		
 		int newArticleId = (int) addArticleRd.getBody().get("aid");
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -100,18 +98,14 @@ public class AdmArticleController extends _BaseController {
 				fs.save(multipartFile, newArticleId);
 		}
 
-		return addArticleRd;
+		return msgAndReplace(req, "게시물이 작성되었습니다.", "../article/detail?aid=" + newArticleId);
 	}
 	
 	@RequestMapping("/adm/article/detail")
 	@ResponseBody
 	public ResultData detail(int aid) {
 		Article a = as.getArticleById(aid);
-		
-		GenFile genFile = fs.getGenFile("article", a.getAid(), "common", "attachment", 1);
 
-		a.setExtra__thumbImg(genFile.getForPrintUrl());
-		
 		return new ResultData("S-1", "성공", "aritlce", a);
 		}
 }
