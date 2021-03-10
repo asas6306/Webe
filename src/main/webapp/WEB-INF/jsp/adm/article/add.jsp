@@ -32,9 +32,42 @@ function ArticleAdd__checkAndSubmit(form) {
 			return;
 		}
 	}
-
-	form.submit();
+	
+	const startSubmitForm = function(data) {
+		let genFileIdsStr = '';
+		if (data && data.body && data.body.genFileIdsStr) {
+			genFileIdsStr = data.body.genFileIdsStr;
+		}
+		
+		form.genFileIdsStr.value = genFileIdsStr;
+		
+		form.file__article__0__common__attachment__1.value = '';
+		
+		form.submit();
+	};
+	const startUploadFiles = function(onSuccess) {
+		var needToUpload = form.file__article__0__common__attachment__1.value.length > 0;
+		
+		if (needToUpload == false) {
+			onSuccess();
+			return;
+		}
+		
+		var fileUploadFormData = new FormData(form);
+		
+		$.ajax({
+			url : '/common/genFile/doUpload',
+			data : fileUploadFormData,
+			processData : false,
+			contentType : false,
+			dataType : "json",
+			type : 'POST',
+			success : onSuccess
+		});
+	}
+	
 	ArticleAdd__submited = true;
+	startUploadFiles(startSubmitForm);
 }
 </script>
 
@@ -45,6 +78,7 @@ function ArticleAdd__checkAndSubmit(form) {
 		</div>
 		<form onsubmit="ArticleAdd__checkAndSubmit(this); return false;"
 			action="doAdd" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="genFileIdsStr" value="" />
 			<div class="flex m-4">
 				<div class="flex items-center w-16">
 					<span class="flex justify-center font-bold">게시판</span>
