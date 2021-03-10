@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../part/mainLayoutHeader.jspf"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="fileInputMaxCount" value="10" />
+<script>
+	ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
+</script>
 
 <script>
 ArticleAdd__submited = false;
@@ -22,17 +28,21 @@ function ArticleAdd__checkAndSubmit(form) {
 		form.body.focus();
 		return false;
 	}
-	var maxSizeMb = 50;
+	
+	var maxSizeMb = 0.01;
 	var maxSize = maxSizeMb * 1024 * 1024;
-	if (form.file__article__0__common__attachment__1.value) {
-		if (form.file__article__0__common__attachment__1.files[0].size > maxSize) {
-			alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
-			form.file__article__0__common__attachment__1.focus();
-			
-			return;
+	for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
+		const input = form["file__article__0__common__attachment__" + inputNo];
+		
+		if (input.value) {
+			if (input.files[0].size > maxSize) {
+				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+				input.focus();
+				
+				return;
+			}
 		}
 	}
-	
 	const startSubmitForm = function(data) {
 		let genFileIdsStr = '';
 		if (data && data.body && data.body.genFileIdsStr) {
@@ -40,13 +50,22 @@ function ArticleAdd__checkAndSubmit(form) {
 		}
 		
 		form.genFileIdsStr.value = genFileIdsStr;
-		
-		form.file__article__0__common__attachment__1.value = '';
+		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
+			const input = form["file__article__0__common__attachment__" + inputNo];
+			input.value = '';
+		}
 		
 		form.submit();
 	};
 	const startUploadFiles = function(onSuccess) {
-		var needToUpload = form.file__article__0__common__attachment__1.value.length > 0;
+		var needToUpload = false;
+		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
+			const input = form["file__article__0__common__attachment__" + inputNo];
+			if ( input.value.length > 0 ) {
+				needToUpload = true;
+				break;
+			}
+		}
 		
 		if (needToUpload == false) {
 			onSuccess();
@@ -70,6 +89,7 @@ function ArticleAdd__checkAndSubmit(form) {
 	startUploadFiles(startSubmitForm);
 }
 </script>
+
 
 <section class="section-1">
 	<div class="bg-white shadow-lg mt-4 container mx-auto rounded p-4">
@@ -113,15 +133,17 @@ function ArticleAdd__checkAndSubmit(form) {
 						placeholder="내용을 입력해주세요"></textarea>
 				</div>
 			</div>
-			<div class="flex flex-col lg:flex-row m-4">
-				<div class="lg:flex lg:items-center lg:w-16">
-					<span class="lg:flex lg:justify-center font-bold">첨부파일</span>
+			<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
+				<div class="flex flex-col lg:flex-row m-4">
+					<div class="lg:flex lg:items-center lg:w-20">
+						<span class="lg:flex lg:justify-center font-bold">첨부파일${inputNo}</span>
+					</div>
+					<div class="lg:flex-grow">
+						<input class="form-row-input w-full" type="file"
+							name="file__article__0__common__attachment__${inputNo}" />
+					</div>
 				</div>
-				<div class="lg:flex-grow">
-					<input class="form-row-input w-full" type="file"
-						name="file__article__0__common__attachment__1" />
-				</div>
-			</div>
+			</c:forEach>
 			<div class="flex justify-center">
 				<input type="submit"
 					class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4 m-2"
