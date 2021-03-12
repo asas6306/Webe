@@ -1,10 +1,9 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import com.example.demo.dao.LikeDao;
 import com.example.demo.dto.Article;
 import com.example.demo.dto.Board;
 import com.example.demo.dto.Like;
-import com.example.demo.dto.Member;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
@@ -27,6 +25,8 @@ public class ArticleService {
 	private MemberService ms;
 	@Autowired
 	private LikeDao ld;
+	@Autowired
+	private GenFileService fs;
 
 	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int boardCode) {
 		page = (page - 1) * pageCnt;
@@ -43,6 +43,17 @@ public class ArticleService {
 		ad.add(param);
 
 		int aid = Util.getAsInt(param.get("aid"), 0);
+		System.out.println("넘어간 젠파일아이디스스트링" + (String) param.get("genFileIdsStr"));
+		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
+		if (genFileIdsStr != null) {
+			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ", ");
+			System.out.println();
+			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
+			// 그것을 뒤늦게라도 이렇게 고처야 한다.
+			for (int genFileId : genFileIds) {
+				fs.changeRelId(genFileId, aid);
+			}
+		}
 
 		return new ResultData("S-1", "게시물이 등록되었습니다.", "aid", aid);
 	}
@@ -110,7 +121,7 @@ public class ArticleService {
 	}
 
 	public Board getBoard(int boardCode) {
-		
+
 		return ad.getBoard(boardCode);
 	}
 

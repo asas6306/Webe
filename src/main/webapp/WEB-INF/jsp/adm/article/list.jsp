@@ -34,24 +34,31 @@
 			<div>
 				<c:forEach items='${articles}' var='article'>
 					<div>
-						<div class="flex justify-between items-center mt-10">
+						<div class="flex items-center mt-10">
+							<span class="font-bold text-gray-600 mr-2">${article.aid}</span>
 							<span class="font-light text-gray-600">${article.regDate}</span>
-							<a href="list?boardId=${article.boardCode}"
+							<div class="flex-grow"></div>
+							<a href="list?boardCode=${article.boardCode}"
 								class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">${article.boardName}</a>
 						</div>
-						<div class="mt-2">
-							<a href="detail?id=${article.aid}"
+						<div class="">
+							<a href="detail?aid=${article.aid}"
 								class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
-							<p class="mt-2 text-gray-600">${article.body}</p>
+							<p class="text-gray-600">${article.body}</p>
 							<div>
 								<c:if test="${article.extra__thumbImg != null}">
 									<img src="${article.extra__thumbImg}" />
 								</c:if>
 							</div>
 						</div>
-						<div class="flex justify-between items-center mt-4">
-							<a href="detail?id=${article.aid}"
-								class="text-blue-500 hover:underline">자세히 보기</a>
+						<div class="flex items-center mt-4">
+							<a href="detail?aid=${article.aid}"
+								class="text-gray-500 hover:underline">자세히 보기</a> <a
+								href="detail?update=${article.aid}"
+								class="mx-2 text-blue-500 hover:underline">수정</a> <a
+								href="detail?delete=${article.aid}"
+								class="text-red-500 hover:underline">삭제</a>
+							<div class="flex-grow"></div>
 							<div>
 								<a href="detail?id=${article.aid}" class="flex items-center">
 									<img

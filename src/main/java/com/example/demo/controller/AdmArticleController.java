@@ -69,7 +69,6 @@ public class AdmArticleController extends _BaseController {
 	@RequestMapping("/adm/article/add")
 	public String add(HttpServletRequest req, int boardCode) {
 		req.setAttribute("boardCode", boardCode);
-
 		return "adm/article/add";
 	}
 
@@ -91,6 +90,7 @@ public class AdmArticleController extends _BaseController {
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 
+		// 파일 저장
 		for (String fileInputName : fileMap.keySet()) {
 			MultipartFile multipartFile = fileMap.get(fileInputName);
 

@@ -27,4 +27,13 @@
 		and type2Code = #{type2Code}
 		and fileNo = #{fileNo}
 	</select>
+	
+	<update id="changeRelId">
+		update genFile
+		<set>
+			updateDate = now(),
+			relId = #{relId}
+		</set>
+		where fid = #{fid}
+	</update>
 </mapper>

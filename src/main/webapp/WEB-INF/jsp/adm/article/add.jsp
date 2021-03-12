@@ -28,8 +28,7 @@ function ArticleAdd__checkAndSubmit(form) {
 		form.body.focus();
 		return false;
 	}
-	
-	var maxSizeMb = 0.01;
+	var maxSizeMb = 50;
 	var maxSize = maxSizeMb * 1024 * 1024;
 	for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
 		const input = form["file__article__0__common__attachment__" + inputNo];
@@ -44,12 +43,10 @@ function ArticleAdd__checkAndSubmit(form) {
 		}
 	}
 	const startSubmitForm = function(data) {
-		let genFileIdsStr = '';
 		if (data && data.body && data.body.genFileIdsStr) {
-			genFileIdsStr = data.body.genFileIdsStr;
+			form.genFileIdsStr.value = data.body.genFileIdsStr;
 		}
 		
-		form.genFileIdsStr.value = genFileIdsStr;
 		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
 			const input = form["file__article__0__common__attachment__" + inputNo];
 			input.value = '';
@@ -73,7 +70,6 @@ function ArticleAdd__checkAndSubmit(form) {
 		}
 		
 		var fileUploadFormData = new FormData(form);
-		
 		$.ajax({
 			url : '/common/genFile/doUpload',
 			data : fileUploadFormData,
@@ -84,7 +80,6 @@ function ArticleAdd__checkAndSubmit(form) {
 			success : onSuccess
 		});
 	}
-	
 	ArticleAdd__submited = true;
 	startUploadFiles(startSubmitForm);
 }

@@ -1,17 +1,23 @@
 package com.example.demo.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.example.demo.dao.GenFileDao;
 import com.example.demo.dto.GenFile;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
+import com.google.common.base.Joiner;
 
 @Service
 public class GenFileService {
@@ -57,11 +63,11 @@ public class GenFileService {
 		String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
 		String fileDir = Util.getNowYearMonthDateStr();
 
-		if(fileExt.equals("jpeg"))
+		if (fileExt.equals("jpeg"))
 			fileExt = "jpg";
-		if(fileExt.equals("htm"))
+		if (fileExt.equals("htm"))
 			fileExt = "html";
-		
+
 		ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
 		int newGenFileId = (int) saveMetaRd.getBody().get("fid");
@@ -76,15 +82,16 @@ public class GenFileService {
 
 		String targetFileName = newGenFileId + "." + fileExt;
 		String targetFilePath = targetDirPath + "/" + targetFileName;
-		
-		// 파일 생성(업로드된 파일을 지정된 경로로 옮김
+
+		// 파일 생성(업로드된 파일을 지정된 경로로 옮김)
 		try {
 			multipartFile.transferTo(new java.io.File(targetFilePath));
 		} catch (IllegalStateException | IOException e) {
 			return new ResultData("F-3", "파일저장에 실패하였습니다.");
 		}
-		
-		return new ResultData("S-1", "파일이 생성되었습니다.", "fid", newGenFileId, "fileRealPath", targetFilePath, "fileName", targetFileName);
+
+		return new ResultData("S-1", "파일이 생성되었습니다.", "fid", newGenFileId, "fileRealPath", targetFilePath, "fileName",
+				targetFileName);
 	}
 
 	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
@@ -92,4 +99,32 @@ public class GenFileService {
 		return fd.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
+	public ResultData saveFiles(MultipartRequest multipartRequest) {
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		Map<String, ResultData> filesResultData = new HashMap<>();
+		List<Integer> genFileIds = new ArrayList<>();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				ResultData fileResultData = this.save(multipartFile, 0);
+				int genFileId = (int) fileResultData.getBody().get("fid");
+				genFileIds.add(genFileId);
+
+				filesResultData.put(fileInputName, fileResultData);
+			}
+		}
+
+		String genFileIdsStr = Joiner.on(", ").join(genFileIds);
+		System.out.println("젠파일아이디스스트링" + genFileIdsStr);
+		return new ResultData("S-1", "파일을 업로드하였습니다.", "filesResultData", filesResultData, "genFileIdsStr",
+				genFileIdsStr);
+	}
+
+	public void changeRelId(int fid, int relId) {
+
+		fd.changeRelId(fid, relId);
+	}
 }
