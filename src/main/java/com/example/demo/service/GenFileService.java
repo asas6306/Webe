@@ -118,7 +118,6 @@ public class GenFileService {
 		}
 
 		String genFileIdsStr = Joiner.on(", ").join(genFileIds);
-		System.out.println("젠파일아이디스스트링" + genFileIdsStr);
 		return new ResultData("S-1", "파일을 업로드하였습니다.", "filesResultData", filesResultData, "genFileIdsStr",
 				genFileIdsStr);
 	}
@@ -126,5 +125,20 @@ public class GenFileService {
 	public void changeRelId(int fid, int relId) {
 
 		fd.changeRelId(fid, relId);
+	}
+	
+	public void deleteFiles(String relTypeCode, int relId) {
+		List<GenFile> genFiles = fd.getGenFiles(relTypeCode, relId);
+		
+		for(GenFile genFile : genFiles) {
+			this.deleteFile(genFile);
+		}
+	}
+
+	private void deleteFile(GenFile genFile) {
+		String filePath = genFile.getFilePath(genFileDirPath);
+		Util.deleteFile(filePath);
+		
+		fd.deleteFile(genFile.getFid());
 	}
 }

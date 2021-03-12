@@ -43,7 +43,6 @@ public class ArticleService {
 		ad.add(param);
 
 		int aid = Util.getAsInt(param.get("aid"), 0);
-		System.out.println("넘어간 젠파일아이디스스트링" + (String) param.get("genFileIdsStr"));
 		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
 		if (genFileIdsStr != null) {
 			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ", ");
@@ -75,7 +74,9 @@ public class ArticleService {
 		if (this.authorityCheck((int) aid, uid) == null)
 			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 		ad.delete(aid);
-
+		
+		fs.deleteFiles("article", aid);
+		
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
 	}
 

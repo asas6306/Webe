@@ -6,28 +6,35 @@
 <mapper namespace="com.example.demo.dao.GenFileDao">
 	<insert id="saveMeta" useGeneratedKeys="true" keyProperty="fid">
 		insert into genFile set
-		relTypeCode = #{relTypeCode}, 
-		relId = #{relId}, 
-		typeCode = #{typeCode}, 
-		type2Code = #{type2Code}, 
-		fileNo = #{fileNo}, 
-		originFileName = #{originFileName}, 
-		fileExtTypeCode = #{fileExtTypeCode}, 
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		typeCode = #{typeCode},
+		type2Code = #{type2Code},
+		fileNo = #{fileNo},
+		originFileName = #{originFileName},
+		fileExtTypeCode = #{fileExtTypeCode},
 		fileExtType2Code = #{fileExtType2Code},
 		fileSize = #{fileSize},
 		fileDir = #{fileDir},
 		fileExt = #{fileExt}
 	</insert>
-	
+
+	<select id="getGenFiles" resultType="GenFile">
+		select * from genFile where
+		relTypeCode = #{relTypeCode}
+		and relId = #{relId}
+	</select>
+
 	<select id="getGenFile" resultType="GenFile">
 		select * from genFile where
 		relTypeCode = #{relTypeCode}
 		and relId = #{relId}
-		and typeCode = #{typeCode}
+		and typeCode =
+		#{typeCode}
 		and type2Code = #{type2Code}
 		and fileNo = #{fileNo}
 	</select>
-	
+
 	<update id="changeRelId">
 		update genFile
 		<set>
@@ -36,4 +43,9 @@
 		</set>
 		where fid = #{fid}
 	</update>
+	
+	<delete id="deleteFile">
+		delete from genFile 
+		where fid = #{fid}		
+	</delete>
 </mapper>

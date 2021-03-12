@@ -54,9 +54,9 @@
 						<div class="flex items-center mt-4">
 							<a href="detail?aid=${article.aid}"
 								class="text-gray-500 hover:underline">자세히 보기</a> <a
-								href="detail?update=${article.aid}"
+								href="update?aid=${article.aid}"
 								class="mx-2 text-blue-500 hover:underline">수정</a> <a
-								href="detail?delete=${article.aid}"
+								href="delete?aid=${article.aid}"
 								class="text-red-500 hover:underline">삭제</a>
 							<div class="flex-grow"></div>
 							<div>

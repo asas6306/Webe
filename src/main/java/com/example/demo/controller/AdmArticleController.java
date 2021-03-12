@@ -51,16 +51,16 @@ public class AdmArticleController extends _BaseController {
 
 		if (as.getArticles(type, keyword, page, pageCnt, boardCode).size() == 0)
 			return msgAndBack(req, "해당하는 게시물이 존재하지 않습니다.");
-		
+
 		List<Article> articles = as.getArticles(type, keyword, page, pageCnt, boardCode);
-		
-		for(Article a : articles) {
+
+		for (Article a : articles) {
 			GenFile genFile = fs.getGenFile("article", a.getAid(), "common", "attachment", 1);
-			
-			if(genFile != null)
-				a.setExtra__thumbImg(genFile.getForPrintUrl());			
+
+			if (genFile != null)
+				a.setExtra__thumbImg(genFile.getForPrintUrl());
 		}
-		
+
 		req.setAttribute("articles", articles);
 
 		return "adm/article/list";
@@ -85,7 +85,7 @@ public class AdmArticleController extends _BaseController {
 		param.put("uid", m.getUid());
 
 		ResultData addArticleRd = as.add(param);
-		
+
 		int newArticleId = (int) addArticleRd.getBody().get("aid");
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -100,12 +100,22 @@ public class AdmArticleController extends _BaseController {
 
 		return msgAndReplace(req, "게시물이 작성되었습니다.", "../article/detail?aid=" + newArticleId);
 	}
-	
+
 	@RequestMapping("/adm/article/detail")
 	@ResponseBody
 	public ResultData detail(int aid) {
 		Article a = as.getArticleById(aid);
 
 		return new ResultData("S-1", "성공", "aritlce", a);
-		}
+	}
+	
+	@RequestMapping("/adm/article/delete")
+	@ResponseBody
+	public ResultData delete(Integer aid, HttpServletRequest req) {
+		if (aid == null)
+			return new ResultData("F-1", "게시물 id를 입력해주세요");
+		int uid = ((Member) req.getAttribute("m")).getUid();
+
+		return as.delete(aid, uid);
+	}
 }
