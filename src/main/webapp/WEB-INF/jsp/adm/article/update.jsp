@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../part/mainLayoutHeader.jspf"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.example.demo.util.Util" %>>
 
 <c:set var="fileInputMaxCount" value="10" />
 <script>
@@ -143,7 +144,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 								<div class="img-box img-box-auto">
 									<img src="${file.forPrintUrl}" alt="" />
 								</div>
-								<div>${file.fileName}(${file.fileSize}byte)</div>
+								<div>${file.fileName}(${Util.numberFormat(file.fileSize)}byte)</div>
 								<div>
 									<label> <input type="checkbox"
 										name="deleteFile__article__${article.aid}__common__attachment__${fileNo}"
