@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,12 +104,18 @@ public class AdmArticleController extends _BaseController {
 
 	@RequestMapping("/adm/article/detail")
 	@ResponseBody
-	public ResultData detail(int aid) {
-		Article a = as.getArticleById(aid);
+	public ResultData detail(Integer aid) {
+		if (aid == null)
+			new ResultData("F-1", "게시물 번호를 입력해주세요.");
 
-		return new ResultData("S-1", "성공", "aritlce", a);
+		Article article = as.getArticleById(aid);
+
+		if (article == null)
+			new ResultData("F-2", "존재하지 않는 게시물입니다.");
+
+		return new ResultData("S-1", "성공", "aritlce", article);
 	}
-	
+
 	@RequestMapping("/adm/article/delete")
 	@ResponseBody
 	public ResultData delete(Integer aid, HttpServletRequest req) {
@@ -117,5 +124,34 @@ public class AdmArticleController extends _BaseController {
 		int uid = ((Member) req.getAttribute("m")).getUid();
 
 		return as.delete(aid, uid);
+	}
+
+	@RequestMapping("/adm/article/update")
+	public String update(Integer aid, HttpServletRequest req) {
+		if (aid == null)
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
+
+		Article article = as.getArticleById(aid);
+		
+		if (article == null)
+			return msgAndBack(req, "존재하지 않는 게시물입니다.");
+		
+		List<GenFile> files = fs.getGenFiles("article", article.getAid(), "common", "attachment");
+		
+		Map<String, GenFile> filesMap = new HashMap<>();
+		
+		for(GenFile file : files)
+			filesMap.put(file.getFileNo() + "", file);
+
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("article", article);
+
+		return "adm/article/update";
+	}
+
+	@RequestMapping("/adm/article/doUpdate")
+	public String doUpdate(Integer aid, HttpServletRequest req) {
+
+		return "";
 	}
 }

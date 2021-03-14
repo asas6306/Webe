@@ -12,17 +12,28 @@
 		type2Code = #{type2Code},
 		fileNo = #{fileNo},
 		originFileName = #{originFileName},
-		fileExtTypeCode = #{fileExtTypeCode},
+		fileExtTypeCode =
+		#{fileExtTypeCode},
 		fileExtType2Code = #{fileExtType2Code},
-		fileSize = #{fileSize},
+		fileSize =
+		#{fileSize},
 		fileDir = #{fileDir},
 		fileExt = #{fileExt}
 	</insert>
 
 	<select id="getGenFiles" resultType="GenFile">
-		select * from genFile where
+		select * from
+		genFile where
 		relTypeCode = #{relTypeCode}
-		and relId = #{relId}
+		and relId =
+		#{relId}
+		<if test="typeCode != null">
+			and typeCode = #{typeCode}
+		</if>
+		<if test="typeCode != null">
+			and type2Code = #{type2Code}
+		</if>
+		order by typeCode, Type2Code, fileNo
 	</select>
 
 	<select id="getGenFile" resultType="GenFile">
@@ -43,9 +54,9 @@
 		</set>
 		where fid = #{fid}
 	</update>
-	
+
 	<delete id="deleteFile">
-		delete from genFile 
-		where fid = #{fid}		
+		delete from genFile
+		where fid = #{fid}
 	</delete>
 </mapper>

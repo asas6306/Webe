@@ -94,6 +94,11 @@ public class GenFileService {
 				targetFileName);
 	}
 
+	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
+		
+		return fd.getGenFiles(relTypeCode, relId, typeCode, type2Code);		
+	}
+	
 	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
 
 		return fd.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
