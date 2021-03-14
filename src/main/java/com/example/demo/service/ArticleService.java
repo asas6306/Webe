@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,27 +45,18 @@ public class ArticleService {
 		ad.add(param);
 
 		int aid = Util.getAsInt(param.get("aid"), 0);
-		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
-		if (genFileIdsStr != null) {
-			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ", ");
-			System.out.println();
-			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
-			// 그것을 뒤늦게라도 이렇게 고처야 한다.
-			for (int genFileId : genFileIds) {
-				fs.changeRelId(genFileId, aid);
-			}
-		}
+
+		workRelIds(param, aid);
 
 		return new ResultData("S-1", "게시물이 등록되었습니다.", "aid", aid);
 	}
 
-	public ResultData update(int aid, String title, String body, int uid) {
-		if (ad.getArticleById(aid) == null)
-			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
-		if (this.authorityCheck(aid, uid) == null)
-			return new ResultData("F-3", "해당 게시물 수정 권한이 없습니다.");
+	public ResultData update(Map<String, Object> param) {
+		ad.update(param);
+		
+		int aid = Util.getAsInt(param.get("aid"), 0);
 
-		ad.update(aid, title, body);
+		workRelIds(param, aid);
 
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
 	}
@@ -74,9 +67,9 @@ public class ArticleService {
 		if (this.authorityCheck((int) aid, uid) == null)
 			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 		ad.delete(aid);
-		
+
 		fs.deleteFiles("article", aid);
-		
+
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
 	}
 
@@ -87,7 +80,7 @@ public class ArticleService {
 		else if (a.getUid() == uid)
 			return new ResultData("S-2", "해당 기능 수행가능");
 		else
-			return null;
+			return new ResultData("F-1", "권한없음");
 	}
 
 	public void hitCnt(int aid) {
@@ -126,4 +119,17 @@ public class ArticleService {
 		return ad.getBoard(boardCode);
 	}
 
+	public void workRelIds(Map<String, Object> param, int id) {
+		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
+		
+		if (genFileIdsStr != null) {
+			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ", ");
+			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
+			// 그것을 뒤늦게라도 이렇게 고처야 한다.
+			
+			for (int genFileId : genFileIds) {
+				fs.changeRelId(genFileId, id);
+			}
+		}
+	}
 }

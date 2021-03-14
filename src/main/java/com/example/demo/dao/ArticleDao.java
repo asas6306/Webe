@@ -20,8 +20,7 @@ public interface ArticleDao {
 
 	public Article getArticleById(@Param(value = "aid") int aid);
 
-	public void update(@Param(value = "aid") int aid, @Param(value = "title") String title,
-			@Param(value = "body") String body);
+	public void update(Map<String, Object> param);
 
 	public void delete(@Param(value = "aid") int aid);
 

@@ -90,7 +90,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 <section class="section-1">
 	<div class="bg-white shadow-lg mt-4 container mx-auto rounded p-4">
 		<div class="mx-16 my-8">
-			<div class="flex justify-center text-4xl font-extrabold">게시물 작성</div>
+			<div class="flex justify-center text-4xl font-extrabold">게시물 수정</div>
 
 			<form onsubmit="ArticleUpdate__checkAndSubmit(this); return false;"
 				action="doUpdate" method="post" enctype="multipart/form-data">

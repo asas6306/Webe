@@ -21,6 +21,7 @@ import com.example.demo.dto.Member;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.GenFileService;
 import com.example.demo.util.ResultData;
+import com.example.demo.util.Util;
 
 @Controller
 public class AdmArticleController extends _BaseController {
@@ -150,8 +151,33 @@ public class AdmArticleController extends _BaseController {
 	}
 
 	@RequestMapping("/adm/article/doUpdate")
-	public String doUpdate(Integer aid, HttpServletRequest req) {
-
-		return "";
+	public String doUpdate(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		Member m = (Member)req.getAttribute("m");
+		int aid = Util.getAsInt(param.get("aid"), 0);
+		System.out.println("param : " + param);
+		if(aid == 0)
+			return msgAndBack(req, "게시물번호를 입력해주세요.");
+		
+		if(Util.isEmpty(param.get("title")))
+			return msgAndBack(req, "제목를 입력해주세요.");
+		
+		if(Util.isEmpty(param.get("body")))
+			return msgAndBack(req, "내용를 입력해주세요.");
+		
+		Article article = as.getArticleById(aid);
+		
+		if(article == null)
+			return msgAndBack(req, "존재하지 않는 게시물입니다.");
+		
+		ResultData actorCanUpdateRd = as.authorityCheck(aid, m.getUid());
+		
+		if(actorCanUpdateRd.isFail())
+			return msgAndBack(req, actorCanUpdateRd.getMsg());
+		
+		ResultData doUpdateRd = as.update(param);
+		if(doUpdateRd.isSuccess())
+			return msgAndReplace(req, "게시물이 수정되었습니다.", "../article/detail?aid=" + aid);
+		
+		return msgAndBack(req, "게시물 수정에 실패하였습니다.");
 	}
 }
