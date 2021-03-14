@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../part/mainLayoutHeader.jspf"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.example.demo.util.Util" %>>
+<%@ page import="com.example.demo.util.Util"%>>
 
 <c:set var="fileInputMaxCount" value="10" />
 <script>
@@ -142,9 +142,16 @@ function ArticleUpdate__checkAndSubmit(form) {
 						<div class="lg:flex-grow">
 							<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
 								<div class="img-box img-box-auto">
-									<img src="${file.forPrintUrl}" alt="" />
+									<a href="${file.forPrintUrl}" target="_blank" title="자세히 보기"> <img class="max-w-sm"
+										src="${file.forPrintUrl}" />
+									</a>
 								</div>
-								<div>${file.fileName}(${Util.numberFormat(file.fileSize)}byte)</div>
+								<div>
+									<a class="hover:underline" href="${file.forPrintUrl}"
+										target="_blank">${file.fileName} (
+										${Util.numberFormat(file.fileSize)} Byte )</a>
+
+								</div>
 								<div>
 									<label> <input type="checkbox"
 										name="deleteFile__article__${article.aid}__common__attachment__${fileNo}"
