@@ -139,15 +139,20 @@ function ArticleUpdate__checkAndSubmit(form) {
 						<span class="lg:flex lg:justify-center font-bold">첨부파일${inputNo}</span>
 					</div>
 					<div class="lg:flex-grow">
-						<c:choose>
-							<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
-								<div class="img-box img-box-auto">
-									<img src="${file.forPrintUrl}" alt="" />
-								</div>
-							</c:if>
-							<input class="form-row-input w-full" type="file"
-								name="file__article__0__common__attachment__${inputNo}" />
-						</c:choose>
+						<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
+							<div class="img-box img-box-auto">
+								<img src="${file.forPrintUrl}" alt="" />
+							</div>
+							<div>${file.fileName}(${file.fileSize}byte)</div>
+							<div>
+								<label> <input type="checkbox"
+									name="deleteFile__article__${article.aid}__common__attachment__${fileNo}"
+									value="Y" /> <span>삭제</span>
+								</label>
+							</div>
+						</c:if>
+						<input class="form-row-input w-full" type="file"
+							name="file__article__0__common__attachment__${inputNo}" />
 					</div>
 				</div>
 			</c:forEach>
