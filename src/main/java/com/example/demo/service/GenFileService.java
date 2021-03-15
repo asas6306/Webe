@@ -68,7 +68,13 @@ public class GenFileService {
 			fileExt = "jpg";
 		if (fileExt.equals("htm"))
 			fileExt = "html";
-
+		
+		GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+		
+		if(oldGenFile != null) {
+			this.deleteGenFile(oldGenFile);
+		}
+		
 		ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
 		int newGenFileId = (int) saveMetaRd.getBody().get("fid");
@@ -133,15 +139,15 @@ public class GenFileService {
 		fd.changeRelId(fid, relId);
 	}
 	
-	public void deleteFiles(String relTypeCode, int relId) {
+	public void deleteGenFiles(String relTypeCode, int relId) {
 		List<GenFile> genFiles = fd.getGenFiles(relTypeCode, relId, null, null);
 		// 오버라이드는 코딩상 오류는 없는데 동작 때 못찾아가네 ... 
 		for(GenFile genFile : genFiles) {
-			this.deleteFile(genFile);
+			this.deleteGenFile(genFile);
 		}	// 삭제부분 삭제날짜 적용? 데이터베이스에서도 동작없고 ,,, 
 	}
 
-	private void deleteFile(GenFile genFile) {
+	private void deleteGenFile(GenFile genFile) {
 		String filePath = genFile.getFilePath(genFileDirPath);
 		Util.deleteFile(filePath);
 		

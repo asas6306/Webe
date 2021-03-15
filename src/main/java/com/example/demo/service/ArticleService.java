@@ -66,7 +66,7 @@ public class ArticleService {
 			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 		ad.delete(aid);
 
-		fs.deleteFiles("article", aid);
+		fs.deleteGenFiles("article", aid);
 
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
 	}
