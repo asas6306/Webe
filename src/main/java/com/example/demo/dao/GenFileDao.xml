@@ -48,8 +48,8 @@
 	<update id="changeRelId">
 		update genFile
 		<set>
-			updateDate = now(),
-			relId = #{relId}
+			updateDate = now()
+			, relId = #{relId}
 		</set>
 		where fid = #{fid}
 	</update>

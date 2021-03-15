@@ -90,16 +90,6 @@ public class AdmArticleController extends _BaseController {
 
 		int newArticleId = (int) addArticleRd.getBody().get("aid");
 
-		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
-		// 파일 저장
-		for (String fileInputName : fileMap.keySet()) {
-			MultipartFile multipartFile = fileMap.get(fileInputName);
-
-			if (multipartFile.isEmpty() == false)
-				fs.save(multipartFile, newArticleId);
-		}
-
 		return msgAndReplace(req, "게시물이 작성되었습니다.", "../article/detail?aid=" + newArticleId);
 	}
 
@@ -154,7 +144,7 @@ public class AdmArticleController extends _BaseController {
 	public String doUpdate(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		Member m = (Member)req.getAttribute("m");
 		int aid = Util.getAsInt(param.get("aid"), 0);
-		System.out.println("param : " + param);
+		
 		if(aid == 0)
 			return msgAndBack(req, "게시물번호를 입력해주세요.");
 		
@@ -175,6 +165,7 @@ public class AdmArticleController extends _BaseController {
 			return msgAndBack(req, actorCanUpdateRd.getMsg());
 		
 		ResultData doUpdateRd = as.update(param);
+		
 		if(doUpdateRd.isSuccess())
 			return msgAndReplace(req, "게시물이 수정되었습니다.", "../article/detail?aid=" + aid);
 		

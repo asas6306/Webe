@@ -7,6 +7,7 @@
 <c:set var="fileInputMaxCount" value="10" />
 <script>
 	ArticleUpdate__fileInputMaxCount = parseInt("${fileInputMaxCount}");
+	const aid = parseInt("${article.aid}");
 </script>
 
 <script>
@@ -32,7 +33,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 	var maxSizeMb = 50;
 	var maxSize = maxSizeMb * 1024 * 1024;
 	for ( let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++ ) {
-		const input = form["file__article__0__common__attachment__" + inputNo];
+		const input = form["file__article__" + aid + "__common__attachment__" + inputNo];
 		
 		if (input.value) {
 			if (input.files[0].size > maxSize) {
@@ -49,7 +50,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 		}
 		
 		for ( let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++ ) {
-			const input = form["file__article__0__common__attachment__" + inputNo];
+			const input = form["file__article__" + aid + "__common__attachment__" + inputNo];
 			input.value = '';
 		}
 		
@@ -58,7 +59,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 	const startUploadFiles = function(onSuccess) {
 		var needToUpload = false;
 		for ( let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++ ) {
-			const input = form["file__article__0__common__attachment__" + inputNo];
+			const input = form["file__article__" + aid + "__common__attachment__" + inputNo];
 			if ( input.value.length > 0 ) {
 				needToUpload = true;
 				break;

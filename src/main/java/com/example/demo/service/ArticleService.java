@@ -46,7 +46,7 @@ public class ArticleService {
 
 		int aid = Util.getAsInt(param.get("aid"), 0);
 
-		workRelIds(param, aid);
+		this.workRelIds(param, aid);
 
 		return new ResultData("S-1", "게시물이 등록되었습니다.", "aid", aid);
 	}
