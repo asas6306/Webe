@@ -95,7 +95,7 @@ public class GenFileService {
 	}
 
 	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
-		
+
 		return fd.getGenFiles(relTypeCode, relId, typeCode, type2Code);		
 	}
 	
@@ -133,11 +133,11 @@ public class GenFileService {
 	}
 	
 	public void deleteFiles(String relTypeCode, int relId) {
-		List<GenFile> genFiles = fd.getGenFiles(relTypeCode, relId);
-		
+		List<GenFile> genFiles = fd.getGenFiles(relTypeCode, relId, null, null);
+		// 오버라이드는 코딩상 오류는 없는데 동작 때 못찾아가네 ... 
 		for(GenFile genFile : genFiles) {
 			this.deleteFile(genFile);
-		}
+		}	// 삭제부분 삭제날짜 적용? 데이터베이스에서도 동작없고 ,,, 
 	}
 
 	private void deleteFile(GenFile genFile) {

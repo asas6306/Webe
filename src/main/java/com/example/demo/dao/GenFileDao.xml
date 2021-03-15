@@ -25,13 +25,12 @@
 		select * from
 		genFile where
 		relTypeCode = #{relTypeCode}
-		and relId =
-		#{relId}
+		and relId = #{relId}
 		<if test="typeCode != null">
-			and typeCode = #{typeCode}
+		and typeCode = #{typeCode}
 		</if>
-		<if test="typeCode != null">
-			and type2Code = #{type2Code}
+		<if test="type2Code != null">
+		and type2Code = #{type2Code}
 		</if>
 		order by typeCode, Type2Code, fileNo
 	</select>
@@ -55,6 +54,7 @@
 		where fid = #{fid}
 	</update>
 
+	<!-- 삭제는 db를 삭제하는것이 맞는지 아니면 delDate업데이트가 맞는지 고민 -->
 	<delete id="deleteFile">
 		delete from genFile
 		where fid = #{fid}

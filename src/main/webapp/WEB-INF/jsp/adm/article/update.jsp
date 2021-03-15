@@ -160,7 +160,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 								</div>
 							</c:if>
 							<input class="form-row-input w-full" type="file"
-								name="file__article__0__common__attachment__${inputNo}" />
+								name="file__article__${article.aid}__common__attachment__${inputNo}" />
 						</div>
 					</div>
 				</c:forEach>

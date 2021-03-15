@@ -56,8 +56,6 @@ public class ArticleService {
 		
 		int aid = Util.getAsInt(param.get("aid"), 0);
 
-		workRelIds(param, aid);
-
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
 	}
 
