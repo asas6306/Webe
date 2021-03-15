@@ -49,13 +49,22 @@ function ArticleUpdate__checkAndSubmit(form) {
 			form.genFileIdsStr.value = data.body.genFileIdsStr;
 		}
 		
-		for ( let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++ ) {
+		for (let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++) {
 			const input = form["file__article__" + aid + "__common__attachment__" + inputNo];
 			input.value = '';
 		}
 		
+		for(let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++){
+			const input = form["deleteFile__article__" + aid + "__common__attachment__" + inputNo];
+			
+			if ( input ) {
+				input.checked = false;
+			}
+		}
+		
 		form.submit();
 	};
+	
 	const startUploadFiles = function(onSuccess) {
 		var needToUpload = false;
 		for ( let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++ ) {
@@ -63,6 +72,16 @@ function ArticleUpdate__checkAndSubmit(form) {
 			if ( input.value.length > 0 ) {
 				needToUpload = true;
 				break;
+			}
+		}
+		
+		if ( needToUpload == false ) {
+			for ( let inputNo = 1; inputNo <= ArticleUpdate__fileInputMaxCount; inputNo++ ) {
+				const input = form["deleteFile__article__" + aid + "__common__attachment__" + inputNo];
+				if ( input && input.checked ) {
+					needToUpload = true;
+					break;
+				}
 			}
 		}
 		
@@ -140,11 +159,11 @@ function ArticleUpdate__checkAndSubmit(form) {
 						<div class="lg:flex lg:items-center lg:w-20">
 							<span class="lg:flex lg:justify-center font-bold">첨부파일${inputNo}</span>
 						</div>
-						<div class="lg:flex-grow">
+						<div class="input-file-wrap lg:flex-grow">
 							<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
 								<div class="img-box img-box-auto">
-									<a href="${file.forPrintUrl}" target="_blank" title="자세히 보기"> <img class="max-w-sm"
-										src="${file.forPrintUrl}" />
+									<a href="${file.forPrintUrl}" target="_blank" title="자세히 보기">
+										<img class="max-w-sm" src="${file.forPrintUrl}" />
 									</a>
 								</div>
 								<div>
@@ -155,6 +174,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 								</div>
 								<div>
 									<label> <input type="checkbox"
+										onclick="$(this).closest('.input-file-wrap').find(' > input[type=file]').val('')"
 										name="deleteFile__article__${article.aid}__common__attachment__${fileNo}"
 										value="Y" /> <span>삭제</span>
 									</label>
@@ -168,7 +188,7 @@ function ArticleUpdate__checkAndSubmit(form) {
 				<div class="flex justify-center">
 					<input type="submit"
 						class="bg-blue-500 hover:bg-blue-900 text-white font-bold rounded py-2 px-4 m-2"
-						value="입력" /> <input type="button"
+						value="수정" /> <input type="button"
 						class="bg-red-500 hover:bg-red-900 text-white font-bold rounded py-2 px-4 m-2"
 						value="취소" onclick="history.back()" />
 				</div>
