@@ -23,6 +23,7 @@ public class AdmMemberController {
 
 	@RequestMapping("/adm/member/login")
 	public String login() {
+		
 		return "/adm/member/login";
 	}
 
@@ -58,5 +59,21 @@ public class AdmMemberController {
 		String msg = "로그아웃 되었습니다.";
 
 		return Util.msgAndReplace(msg, "../member/login");
+	}
+	
+	
+	@RequestMapping("/adm/member/signup")
+	public String signup() {
+		
+		return "/adm/member/signup";
+	}
+	
+	@RequestMapping("/adm/member/doSignup")
+	@ResponseBody
+	public String doSignup(String ID, String PW1, String nickname, String email1, String email2, String phoneNo) {
+		String email = email1 + "@" + email2;
+		
+		
+		return ID;
 	}
 }

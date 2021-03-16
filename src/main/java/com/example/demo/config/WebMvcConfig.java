@@ -51,7 +51,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		// 관리자 로그인 없이도 접속할 수 있는 URI 기술
 		registry.addInterceptor(needAdminInterceptor).addPathPatterns("/adm/**")
-				.excludePathPatterns("/adm/member/login").excludePathPatterns("/adm/member/doLogin")
+				.excludePathPatterns("/adm/member/login").excludePathPatterns("/adm/member/doLogin").excludePathPatterns("/adm/member/signup")
+				.excludePathPatterns("/adm/member/doSignup")
 				.excludePathPatterns("/adm/article/test");
 
 		// 로그인 없이도 접속할 수 있는 URI 기술
@@ -62,7 +63,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/usr/reply/list").excludePathPatterns("/usr/reply/delete")
 				.excludePathPatterns("/common/genFile/doDownload").excludePathPatterns("/error");
 
-		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
+		// 로그인 상태에서 접속할 수 없는 URI 전부 기술(로그아웃 상태에서 접속할 수 잇는 URI)
 		registry.addInterceptor(needToLogoutInterceptor).addPathPatterns("/adm/member/login")
 				.addPathPatterns("/usr/member/login").addPathPatterns("/usr/member/signup")
 				.addPathPatterns("/usr/member/join").addPathPatterns("/usr/member/doJoin");
