@@ -21,5 +21,5 @@ public interface GenFileDao {
 
 	public void deleteFile(@Param(value="fid") int fid);
 
-
+	public GenFile getGenFileById(@Param(value="fid") int fid);
 }

@@ -179,4 +179,9 @@ public class GenFileService {
 		
 		fd.deleteFile(genFile.getFid());
 	}
+
+	public GenFile getGenFile(int fid) {
+		
+		return fd.getGenFileById(fid);
+	}
 }

@@ -59,4 +59,8 @@
 		delete from genFile
 		where fid = #{fid}
 	</delete>
+	
+	<select id="getGenFileById" resultType="GenFile">
+	select * from genFile where fid = #{fid}
+	</select>
 </mapper>

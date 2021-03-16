@@ -167,9 +167,9 @@ function ArticleUpdate__checkAndSubmit(form) {
 									</a>
 								</div>
 								<div>
-									<a class="hover:underline" href="${file.forPrintUrl}"
-										target="_blank">${file.fileName} (
-										${Util.numberFormat(file.fileSize)} Byte )</a>
+									<a class="hover:underline" href="${file.downloadUrl}"
+										target="_blank">${file.originFileName}</a>
+									(${Util.numberFormat(file.fileSize)} Byte )
 
 								</div>
 								<div>
