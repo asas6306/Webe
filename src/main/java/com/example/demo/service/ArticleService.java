@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +15,7 @@ import com.example.demo.dao.ArticleDao;
 import com.example.demo.dao.LikeDao;
 import com.example.demo.dto.Article;
 import com.example.demo.dto.Board;
+import com.example.demo.dto.GenFile;
 import com.example.demo.dto.Like;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
@@ -32,8 +34,19 @@ public class ArticleService {
 
 	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int boardCode) {
 		page = (page - 1) * pageCnt;
-
-		return ad.getArticles(type, keyword, page, pageCnt, boardCode);
+		
+		List<Article> articles = ad.getArticles(type, keyword, page, pageCnt, boardCode);
+		List<Integer> aids = articles.stream().map(article -> article.getAid()).collect(Collectors.toList());
+		Map<Integer, Map<String, GenFile>> filesMap = fs.getFilesMapKeyRelIdAndFileNo("article", aids, "common", "attachment");
+		
+		for(Article article : articles) {
+			Map<String, GenFile> mapByFileNo = filesMap.get(article.getAid());
+			
+			if(mapByFileNo != null)
+				article.getExtraNotNull().put("file__common__attachment", mapByFileNo);
+		}
+		
+		return articles;
 	}
 
 	public Article getArticleById(int aid) {

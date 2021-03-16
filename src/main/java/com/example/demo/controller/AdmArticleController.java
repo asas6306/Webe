@@ -56,13 +56,6 @@ public class AdmArticleController extends _BaseController {
 
 		List<Article> articles = as.getArticles(type, keyword, page, pageCnt, boardCode);
 
-		for (Article a : articles) {
-			GenFile genFile = fs.getGenFile("article", a.getAid(), "common", "attachment", 1);
-
-			if (genFile != null)
-				a.setExtra__thumbImg(genFile.getForPrintUrl());
-		}
-
 		req.setAttribute("articles", articles);
 
 		return "adm/article/list";

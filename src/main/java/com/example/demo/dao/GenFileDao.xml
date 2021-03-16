@@ -63,4 +63,21 @@
 	<select id="getGenFileById" resultType="GenFile">
 	select * from genFile where fid = #{fid}
 	</select>
+	
+	<select
+		id="getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code"
+		resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relId IN
+		<foreach item="relId" index="index" collection="relIds"
+			open="(" separator="," close=")">
+			#{relId}
+		</foreach>
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+		ORDER BY relId, fileNo
+	</select>
 </mapper>
