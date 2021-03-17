@@ -77,10 +77,10 @@
 					</div>
 					<div class="flex-grow p-3" align="right">
 						<input
-							class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-1 rounded"
+							class="btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-1 rounded"
 							type="submit" value="로그인" />
 							<input
-							class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							class="ptn-info bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 							type="button" value="회원가입" onclick="location.href='signup'"/>
 					</div>
 				</div>

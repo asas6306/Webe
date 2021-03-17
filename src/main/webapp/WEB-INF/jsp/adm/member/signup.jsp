@@ -11,10 +11,6 @@
 		}
 
 		form.ID.value = form.ID.value.trim();
-		form.PW1.value = form.PW1.value.trim();
-		form.PW2.value = form.PW2.value.trim();
-		form.nickname.value = form.nickname.value.trim();
-		form.phoneNo.value = form.phoneNo.value.trim();
 
 		if (form.ID.value.length == 0) {
 			alert('아이디를 입력해주세요.');
@@ -23,6 +19,8 @@
 			return;
 		}
 
+		form.PW1.value = form.PW1.value.trim();
+		
 		if (form.PW1.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
 			form.PW1.focus();
@@ -30,6 +28,8 @@
 			return;
 		}
 
+		form.PW2.value = form.PW2.value.trim();
+		
 		if (form.PW2.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
 			form.PW2.focus();
@@ -43,6 +43,8 @@
 
 			return;
 		}
+		
+		form.nickname.value = form.nickname.value.trim();
 
 		if (form.nickname.value.length == 0) {
 			alert('닉네임을 입력해주세요.');
@@ -51,13 +53,17 @@
 			return;
 		}
 
+		form.email1.value = form.email1.value.trim();
+		
 		if (form.email1.value.length == 0) {
 			alert('이메일을 입력해주세요.');
 			form.email1.focus();
 
 			return;
 		}
-
+		
+		form.phoneNo.value = form.phoneNo.value.trim();
+		
 		if (form.phoneNo.value.length == 0) {
 			alert('휴대폰 번호를 입력해주세요.');
 			form.phoneNo.focus();

@@ -17,13 +17,13 @@ import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
 @Controller
-public class AdmMemberController extends _BaseController{
+public class AdmMemberController extends _BaseController {
 	@Autowired
 	private MemberService ms;
 
 	@RequestMapping("/adm/member/login")
 	public String login() {
-		
+
 		return "/adm/member/login";
 	}
 
@@ -44,10 +44,10 @@ public class AdmMemberController extends _BaseController{
 			return Util.msgAndBack("접근 권한이 없는 계정입니다.");
 
 		session.setAttribute("m", m);
-		
+
 		String msg = String.format("%s님 환영합니다.", m.getNickname());
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
-		
+
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
@@ -60,28 +60,61 @@ public class AdmMemberController extends _BaseController{
 
 		return Util.msgAndReplace(msg, "../member/login");
 	}
-	
-	
+
 	@RequestMapping("/adm/member/signup")
 	public String signup() {
-		
+
 		return "/adm/member/signup";
 	}
-	
+
 	@RequestMapping("/adm/member/doSignup")
 	public String doSignup(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		String email = param.get("email1") + "@" + param.get("email2");
-		param.put("PW", param.get("PW1"));
-		param.put("email", email);
+		String ID = (String) param.get("ID");
+		ID = ID.trim();
 		
+		if (ID == null) {
+			return msgAndBack(req, "아이디를 입력해주세요");
+		} else {
+			Member m = ms.getMember(ID, "ID");
+			if (m.getID().equals(ID))
+				return msgAndBack(req, "중복된 아이디입니다.");
+		}
+		
+		if (param.get("PW1") == null) 
+			return msgAndBack(req, "비밀번호를 입력해주세요");
+		
+		String nickname = (String) param.get("nickname");
+		nickname = nickname.trim();
+		
+		if (nickname == null) {
+			return msgAndBack(req, "닉네임을 입력해주세요");
+		} else {
+			Member m = ms.getMember(nickname, "nickname");
+			if (m.getNickname().equals(nickname))
+				return msgAndBack(req, "중복된 닉네임입니다.");
+		}
+		
+		if (param.get("email1") == null) 
+			return msgAndBack(req, "이메일을 입력해주세요");
+		
+		if (param.get("email2") == null) 
+			return msgAndBack(req, "이메일을 입력해주세요");
+		
+		if (param.get("phoneNo") == null) 
+			return msgAndBack(req, "전화번호를 입력해주세요");
+
+		param.put("PW", param.get("PW1"));
+		param.put("email", param.get("email1") + "@" + param.get("email2"));
+
 		param.remove("PW1");
 		param.remove("PW2");
 		param.remove("email1");
 		param.remove("email2");
-		
-		
+
 		ms.signup(param);
+
+		String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "login");
 		
-		return msgAndReplace(req, "회원가입이 완료되었습니다.", "login");
+		return Util.msgAndReplace("회원가입이 완료되었습니다.", redirectUrl);
 	}
 }
