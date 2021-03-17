@@ -36,7 +36,6 @@ public class AdmArticleController extends _BaseController {
 
 		Board board = as.getBoard(boardCode);
 		req.setAttribute("boardCode", boardCode);
-		System.out.println("boardCode : " + boardCode);
 
 		if (boardCode != 0 && board == null)
 			return msgAndBack(req, "존재하지 않는 게시판입니다.");

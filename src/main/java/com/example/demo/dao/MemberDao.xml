@@ -9,7 +9,43 @@
 		into member set ID=#{ID},PW=#{PW},
 		nickname=#{nickname},email=#{email}, phoneNo=#{phoneNo}
 	</insert>
-
+	
+	<select id="getMembers" resultType="Member">
+		select * from member
+		where 1
+		<if test="keyword != null">
+			<choose>
+				<when test="type == 'uid'">
+					and uid like concat('%', #{keyword}, '%')
+				</when>
+				<when test="type == 'ID'">
+					and ID like concat('%', #{keyword}, '%')
+				</when>
+				<when test="type == 'nickname'">
+					and nickname like concat('%', #{keyword}, '%')
+				</when>
+				<when test="type == 'email'">
+					and email like concat('%', #{keyword}, '%')
+				</when>
+				<when test="type == 'phoneNo'">
+					and phoneNo like concat('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					and (uid like concat('%', #{keyword}, '%') 
+					or ID like concat('%', #{keyword}, '%')
+					or nickname like concat('%', #{keyword}, '%')
+					or email like concat('%', #{keyword}, '%')
+					or phoneNo like concat('%', #{keyword}, '%'))
+				</otherwise>
+			</choose>
+		</if>
+		<if test="authLevel != 0">
+		and authLevel = #{authLevel}
+		</if>
+		order by uid desc
+		limit #{page}, 10;
+	</select>
+	
 	<select id="getMember" resultType="Member">
 		select * from member
 		<choose>

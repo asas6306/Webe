@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.dto.Article;
+import com.example.demo.dto.Board;
 import com.example.demo.dto.Member;
 import com.example.demo.service.MemberService;
 import com.example.demo.util.ResultData;
@@ -117,4 +120,32 @@ public class AdmMemberController extends _BaseController {
 		
 		return Util.msgAndReplace("회원가입이 완료되었습니다.", redirectUrl);
 	}
+	
+	@RequestMapping("/adm/member/list")
+	public String list(HttpServletRequest req, String type, String keyword, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "0") int authLevel) {
+		
+		req.setAttribute("authLevel", authLevel);
+
+		if (page < 1)
+			page = 1;
+
+		if (keyword != null) {
+			keyword.trim();
+			if (keyword.length() == 0)
+				keyword = null;
+		}
+		int pageCnt = 20;
+
+		if (ms.getMembers(type, keyword, page, pageCnt, authLevel).size() == 0)
+			return msgAndBack(req, "해당하는 회원이 존재하지 않습니다.");
+
+		List<Member> members = ms.getMembers(type, keyword, page, pageCnt, authLevel);
+
+		req.setAttribute("members", members);
+
+
+		return "/adm/member/list";
+	}
+
 }

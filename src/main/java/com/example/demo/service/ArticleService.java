@@ -32,18 +32,19 @@ public class ArticleService {
 
 	public List<Article> getArticles(String type, String keyword, int page, int pageCnt, int boardCode) {
 		page = (page - 1) * pageCnt;
-		
+
 		List<Article> articles = ad.getArticles(type, keyword, page, pageCnt, boardCode);
 		List<Integer> aids = articles.stream().map(article -> article.getAid()).collect(Collectors.toList());
-		Map<Integer, Map<String, GenFile>> filesMap = fs.getFilesMapKeyRelIdAndFileNo("article", aids, "common", "attachment");
-		
-		for(Article article : articles) {
+		Map<Integer, Map<String, GenFile>> filesMap = fs.getFilesMapKeyRelIdAndFileNo("article", aids, "common",
+				"attachment");
+
+		for (Article article : articles) {
 			Map<String, GenFile> mapByFileNo = filesMap.get(article.getAid());
-			
-			if(mapByFileNo != null)
+
+			if (mapByFileNo != null)
 				article.getExtraNotNull().put("file__common__attachment", mapByFileNo);
 		}
-		
+
 		return articles;
 	}
 
@@ -64,7 +65,7 @@ public class ArticleService {
 
 	public ResultData update(Map<String, Object> param) {
 		ad.update(param);
-		
+
 		int aid = Util.getAsInt(param.get("aid"), 0);
 
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
@@ -130,12 +131,12 @@ public class ArticleService {
 
 	public void workRelIds(Map<String, Object> param, int id) {
 		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
-		
+
 		if (genFileIdsStr != null) {
 			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ", ");
 			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
 			// 그것을 뒤늦게라도 이렇게 고처야 한다.
-			
+
 			for (int genFileId : genFileIds) {
 				fs.changeRelId(genFileId, id);
 			}

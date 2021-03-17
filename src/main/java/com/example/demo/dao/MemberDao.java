@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,6 +21,9 @@ public interface MemberDao {
 	public void signout(@Param(value = "uid") int uid);
 
 	public Member getMemberByAuthKey(@Param(value="authKey") String authKey);
+
+	public List<Member> getMembers(@Param(value = "type") String type, @Param(value = "keyword") String keyword,
+			@Param(value = "page") int page, @Param(value = "pageCnt") int pageCnt, @Param(value = "authLevel") int authLevel);
 
 
 }

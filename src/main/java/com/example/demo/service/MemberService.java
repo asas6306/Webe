@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,11 @@ public class MemberService {
 	public Member getMemberByAuthKey(String authKey) {
 		
 		return md.getMemberByAuthKey(authKey);
+	}
+
+	public List<Member> getMembers(String type, String keyword, int page, int pageCnt, int authLevel) {
+		page = (page - 1) * pageCnt;
+		
+		return md.getMembers(type, keyword, page, pageCnt, authLevel);
 	}
 }
