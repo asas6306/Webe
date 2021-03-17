@@ -105,9 +105,9 @@ public class AdmArticleController extends _BaseController {
 	public ResultData delete(Integer aid, HttpServletRequest req) {
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		int uid = ((Member) req.getAttribute("m")).getUid();
+		Member member = (Member)req.getAttribute("m");
 
-		return as.delete(aid, uid);
+		return as.delete(aid, member);
 	}
 
 	@RequestMapping("/adm/article/update")
@@ -116,15 +116,15 @@ public class AdmArticleController extends _BaseController {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 
 		Article article = as.getArticleById(aid);
-		
+
 		if (article == null)
 			return msgAndBack(req, "존재하지 않는 게시물입니다.");
-		
+
 		List<GenFile> files = fs.getGenFiles("article", article.getAid(), "common", "attachment");
-		
+
 		Map<String, GenFile> filesMap = new HashMap<>();
-		
-		for(GenFile file : files)
+
+		for (GenFile file : files)
 			filesMap.put(file.getFileNo() + "", file);
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
@@ -135,33 +135,33 @@ public class AdmArticleController extends _BaseController {
 
 	@RequestMapping("/adm/article/doUpdate")
 	public String doUpdate(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		Member m = (Member)req.getAttribute("m");
+		Member member = (Member) req.getAttribute("m");
 		int aid = Util.getAsInt(param.get("aid"), 0);
-		
-		if(aid == 0)
+
+		if (aid == 0)
 			return msgAndBack(req, "게시물번호를 입력해주세요.");
-		
-		if(Util.isEmpty(param.get("title")))
+
+		if (Util.isEmpty(param.get("title")))
 			return msgAndBack(req, "제목를 입력해주세요.");
-		
-		if(Util.isEmpty(param.get("body")))
+
+		if (Util.isEmpty(param.get("body")))
 			return msgAndBack(req, "내용를 입력해주세요.");
-		
+
 		Article article = as.getArticleById(aid);
-		
-		if(article == null)
+
+		if (article == null)
 			return msgAndBack(req, "존재하지 않는 게시물입니다.");
-		
-		ResultData actorCanUpdateRd = as.authorityCheck(aid, m.getUid());
-		
-		if(actorCanUpdateRd.isFail())
+
+		ResultData actorCanUpdateRd = as.authCheck(aid, member);
+
+		if (actorCanUpdateRd.isFail())
 			return msgAndBack(req, actorCanUpdateRd.getMsg());
-		
+
 		ResultData doUpdateRd = as.update(param);
-		
-		if(doUpdateRd.isSuccess())
+
+		if (doUpdateRd.isSuccess())
 			return msgAndReplace(req, "게시물이 수정되었습니다.", "../article/detail?aid=" + aid);
-		
+
 		return msgAndBack(req, "게시물 수정에 실패하였습니다.");
 	}
 }

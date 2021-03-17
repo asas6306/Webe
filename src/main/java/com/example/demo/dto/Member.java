@@ -15,6 +15,8 @@ public class Member {
 	@JsonIgnore
 	String PW;
 	@JsonIgnore
+	int authLevel;
+	@JsonIgnore
 	String authKey;
 	String nickname;
 	String regDate;

@@ -55,7 +55,6 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		String authKey = request.getParameter("authKey");
 
 		if (authKey != null && authKey.length() > 0) {
-			System.out.println("?");
 			loginedMember = ms.getMemberByAuthKey(authKey);
 
 			if (loginedMember == null) {
@@ -68,14 +67,13 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 			request.setAttribute("authKeyState", "none");
 
 			if (session.getAttribute("m") != null) {
-				uid = ((Member) session.getAttribute("m")).getUid();
-				loginedMember = ms.getMember(String.valueOf(uid), "uid");
+				loginedMember = ((Member) session.getAttribute("m"));
 			}
 		}
 
 		if (loginedMember != null) {
 			isLogined = true;
-			isAdmin = ms.authorityCheck(uid);
+			isAdmin = ms.authCheck(loginedMember);
 		}
 
 		request.setAttribute("uid", uid);

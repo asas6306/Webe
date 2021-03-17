@@ -83,3 +83,7 @@ select count(*) from article; */
 /* member테이블에 authKey칼럼 추가 및 초기화 */
 /* UUID()는 날짜기반 난수 생성이기 때문에 유추가 가능함 */
 ALTER TABLE MEMBER ADD authKey CHAR(130) UNIQUE KEY DEFAULT UUID() AFTER PW;
+
+#authLevel 생성 및 1번 uid 관리자 권한(3:일반회원, 7:관리자)
+ALTER TABLE `member` ADD authLevel TINYINT(2) UNSIGNED DEFAULT 3 AFTER PW;
+UPDATE `member` SET authLevel = 7 WHERE uid = 1;

@@ -1,12 +1,9 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +14,7 @@ import com.example.demo.dto.Article;
 import com.example.demo.dto.Board;
 import com.example.demo.dto.GenFile;
 import com.example.demo.dto.Like;
+import com.example.demo.dto.Member;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
@@ -72,10 +70,10 @@ public class ArticleService {
 		return new ResultData("S-1", "게시물이 수정되었습니다.");
 	}
 
-	public ResultData delete(int aid, int uid) {
+	public ResultData delete(int aid, Member member) {
 		if (ad.getArticleById(aid) == null)
 			return new ResultData("F-2", "해당 게시물이 존재하지 않습니다.", "aid", aid);
-		if (this.authorityCheck((int) aid, uid) == null)
+		if (this.authCheck((int) aid, member) == null)
 			return new ResultData("F-3", "해당 게시물 삭제 권한이 없습니다.");
 		ad.delete(aid);
 
@@ -84,11 +82,11 @@ public class ArticleService {
 		return new ResultData("S-1", "게시물이 삭제되었습니다.");
 	}
 
-	public ResultData authorityCheck(int aid, int uid) {
+	public ResultData authCheck(int aid, Member member) {
 		Article a = ad.getArticleById(aid);
-		if (ms.authorityCheck(uid))
+		if (ms.authCheck(member))
 			return new ResultData("S-1", "관리자 권한 수행가능");
-		else if (a.getUid() == uid)
+		else if (a.getUid() == member.getUid())
 			return new ResultData("S-2", "해당 기능 수행가능");
 		else
 			return new ResultData("F-1", "권한없음");

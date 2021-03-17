@@ -94,7 +94,7 @@ public class UsrArticleController extends _BaseController {
 		if(article == null)
 			return msgAndBack(req, "존재하지 않는 게시물입니다.");
 		
-		ResultData actorCanUpdateRd = as.authorityCheck(aid, m.getUid());
+		ResultData actorCanUpdateRd = as.authCheck(aid, m);
 		
 		if(actorCanUpdateRd.isFail())
 			return msgAndBack(req, actorCanUpdateRd.getMsg());
@@ -111,9 +111,9 @@ public class UsrArticleController extends _BaseController {
 	public ResultData delete(Integer aid, HttpServletRequest req) {
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		int uid = ((Member) req.getAttribute("m")).getUid();
+		Member member = ((Member) req.getAttribute("m"));
 
-		return as.delete(aid, uid);
+		return as.delete(aid, member);
 	}
 
 	@RequestMapping("/usr/article/like")

@@ -42,8 +42,8 @@ public class MemberService {
 	}
 
 	// 관리자 권한 정의
-	public boolean authorityCheck(int uid) {
-		return uid == 1;
+	public boolean authCheck(Member member) {
+		return member.getAuthLevel() == 7;
 	}
 
 	public Member getMemberByAuthKey(String authKey) {

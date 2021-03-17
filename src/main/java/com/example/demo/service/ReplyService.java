@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ReplyDao;
-import com.example.demo.dto.Article;
+import com.example.demo.dto.Member;
 import com.example.demo.dto.Reply;
 import com.example.demo.util.ResultData;
 
@@ -49,8 +49,9 @@ public class ReplyService {
 
 	// 통합? 어디로?
 	public ResultData authorityCheck(int rid, int uid) {
+		Member member = ms.getMember(String.valueOf(uid), "uid");
 		Reply r = rd.getReplyById(rid);
-		if (ms.authorityCheck(uid))
+		if (ms.authCheck(member))
 			return new ResultData("S-1", "관리자 권한 수행가능");
 		else if (r.getUid() == uid)
 			return new ResultData("S-2", "해당 기능 수행가능");
