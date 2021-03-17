@@ -16,47 +16,6 @@ public class MemberService {
 	private MemberDao md;
 
 	public ResultData signup(Map<String, Object> param) {
-		int lengthCnt = (int) (Math.random() * 3) + 8;
-		String email1 = "";
-
-		while (email1.length() <= lengthCnt) {
-			int asciiCode = (int) (Math.random() * 122);
-
-			if ((asciiCode >= 48 && asciiCode <= 57) || (asciiCode >= 65 && asciiCode <= 90)
-					|| (asciiCode >= 97 && asciiCode <= 122)) {
-				email1 += (char) asciiCode;
-			}
-		}
-
-		String email2 = "";
-		int emailIndex = (int) (Math.random() * 2);
-		if (emailIndex == 0) {
-			email2 = "naver.com";
-		} else if (emailIndex == 1) {
-			email2 = "gmail.com";
-		}
-		String email = email1 + "@" + email2;
-		param.put("email", email);
-
-		int phone1 = (int) (Math.random() * 10000);
-		int phone2 = (int) (Math.random() * 10000);
-		String phone3 = String.valueOf(phone1);
-		String phone4 = String.valueOf(phone2);
-		
-		if (phone3.length() != 4) {
-			int num = 4 - phone3.length();
-
-			for (int i = 0; i < num; i++) {
-				phone3 = "0" + phone3;
-			}
-		}
-		while (phone4.length() < 4) 
-			for (int i = 0; i < (4 - phone4.length()); i++) 
-				phone4 = "0" + phone4;
-
-		String phoneNo = "010-" + phone3 + "-" + phone4;
-		param.put("phoneNo", phoneNo);
-
 		md.signup(param);
 
 		int uid = Util.getAsInt(param.get("uid"), 0);

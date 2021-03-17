@@ -152,7 +152,7 @@
 					<div class="flex items-center flex-grow py-2">
 						<select
 							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
-							name="eamil2">
+							name="email2">
 							<option value="naver.com">naver.com</option>
 							<option value="google.com">google.com</option>
 							<option value="kakao.com">직접입력</option>

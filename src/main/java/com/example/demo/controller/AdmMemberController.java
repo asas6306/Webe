@@ -17,7 +17,7 @@ import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
 @Controller
-public class AdmMemberController {
+public class AdmMemberController extends _BaseController{
 	@Autowired
 	private MemberService ms;
 
@@ -69,11 +69,19 @@ public class AdmMemberController {
 	}
 	
 	@RequestMapping("/adm/member/doSignup")
-	@ResponseBody
-	public String doSignup(String ID, String PW1, String nickname, String email1, String email2, String phoneNo) {
-		String email = email1 + "@" + email2;
+	public String doSignup(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		String email = param.get("email1") + "@" + param.get("email2");
+		param.put("PW", param.get("PW1"));
+		param.put("email", email);
+		
+		param.remove("PW1");
+		param.remove("PW2");
+		param.remove("email1");
+		param.remove("email2");
 		
 		
-		return ID;
+		ms.signup(param);
+		
+		return msgAndReplace(req, "회원가입이 완료되었습니다.", "login");
 	}
 }
