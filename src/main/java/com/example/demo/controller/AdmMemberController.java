@@ -147,5 +147,15 @@ public class AdmMemberController extends _BaseController {
 
 		return "/adm/member/list";
 	}
-
+	
+	@RequestMapping("/adm/member/update")
+	public String list(HttpServletRequest req, Integer uid) {
+		if(uid == null)
+			msgAndBack(req, "수정 할 회원번호를 입력해주세요");
+		
+		Member member = ms.getMember(String.valueOf(uid), "uid");
+		req.setAttribute("member", member);
+		
+		return "adm/member/update";
+	}
 }
