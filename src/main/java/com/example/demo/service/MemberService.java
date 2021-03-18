@@ -16,6 +16,30 @@ public class MemberService {
 	@Autowired
 	private MemberDao md;
 
+	// static 시작
+	public static String getAuthLevelName(Member member) {
+		switch (member.getAuthLevel()) {
+		case 7:
+			return "관리자";
+		case 3:
+			return "일반회원";
+		default:
+			return "유형정보없음";
+		}
+	}
+
+	public static String getAuthLevelNameColor(Member member) {
+		switch (member.getAuthLevel()) {
+		case 7:
+			return "red";
+		case 3:
+			return "gray";
+		default:
+			return "";
+		}
+	}
+	// static 끝
+
 	public ResultData signup(Map<String, Object> param) {
 		md.signup(param);
 
@@ -25,7 +49,7 @@ public class MemberService {
 	}
 
 	public Member getMember(String item, String itemIndex) {
-		
+
 		return md.getMember(item, itemIndex);
 	}
 
@@ -35,11 +59,10 @@ public class MemberService {
 		return new ResultData("S-1", String.format("%s님의 회원정보가 수정되었습니다.", param.get("nickname")));
 	}
 
-
 	public ResultData signout(int uid) {
 		md.signout(uid);
-		
-		return  new ResultData("S-1", "회원탈퇴 완료");
+
+		return new ResultData("S-1", "회원탈퇴 완료");
 	}
 
 	// 관리자 권한 정의
@@ -48,13 +71,18 @@ public class MemberService {
 	}
 
 	public Member getMemberByAuthKey(String authKey) {
-		
+
 		return md.getMemberByAuthKey(authKey);
 	}
 
-	public List<Member> getMembers(String type, String keyword, int page, int pageCnt, int authLevel) {
+	public List<Member> getMembers(Map<String, Object> param, String type, String keyword, int page, int pageCnt, int authLevel) {
 		page = (page - 1) * pageCnt;
 		
-		return md.getMembers(type, keyword, page, pageCnt, authLevel);
+		param.put("type", type);
+		param.put("keyword", keyword);
+		param.put("page", page);
+		param.put("pageCnt", pageCnt);
+		param.put("authLevel", authLevel);
+		return md.getMembers(param);
 	}
 }

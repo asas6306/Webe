@@ -122,7 +122,7 @@ public class AdmMemberController extends _BaseController {
 	}
 	
 	@RequestMapping("/adm/member/list")
-	public String list(HttpServletRequest req, String type, String keyword, @RequestParam(defaultValue = "1") int page,
+	public String list(HttpServletRequest req, @RequestParam Map<String, Object> param, String type, String keyword, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "0") int authLevel) {
 		
 		req.setAttribute("authLevel", authLevel);
@@ -137,10 +137,10 @@ public class AdmMemberController extends _BaseController {
 		}
 		int pageCnt = 20;
 
-		if (ms.getMembers(type, keyword, page, pageCnt, authLevel).size() == 0)
+		if (ms.getMembers(param, type, keyword, page, pageCnt, authLevel).size() == 0)
 			return msgAndBack(req, "해당하는 회원이 존재하지 않습니다.");
 
-		List<Member> members = ms.getMembers(type, keyword, page, pageCnt, authLevel);
+		List<Member> members = ms.getMembers(param, type, keyword, page, pageCnt, authLevel);
 
 		req.setAttribute("members", members);
 

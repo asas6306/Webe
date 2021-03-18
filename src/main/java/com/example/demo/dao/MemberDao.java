@@ -22,8 +22,7 @@ public interface MemberDao {
 
 	public Member getMemberByAuthKey(@Param(value="authKey") String authKey);
 
-	public List<Member> getMembers(@Param(value = "type") String type, @Param(value = "keyword") String keyword,
-			@Param(value = "page") int page, @Param(value = "pageCnt") int pageCnt, @Param(value = "authLevel") int authLevel);
+	public List<Member> getMembers(Map<String, Object> param);
 
 
 }

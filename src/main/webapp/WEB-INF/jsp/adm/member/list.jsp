@@ -34,8 +34,8 @@
 						<a href="#" class="font-bold text-gray-600 mr-2">${member.uid}</a>
 						<span class="font-light text-gray-600">${member.regDate}</span>
 						<div class="flex-grow"></div>
-						<a href="list?boardCode=${member.authLevel}"
-							class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">${member.authLevel}</a>
+						<a href="list?authLevel=${member.authLevel}"
+							class="cursor-pointer px-2 py-1 bg-${member.authLevelNameColor}-600 text-${member.authLevelNameColor}-100 font-bold rounded hover:bg-${member.authLevelNameColor}-500">${member.authLevelName}</a>
 					</div>
 					<div class="${#}">
 						<a href="${#}"

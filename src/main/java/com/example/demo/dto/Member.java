@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.service.MemberService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -22,4 +23,12 @@ public class Member {
 	String regDate;
 	String email;
 	String phoneNo;
+	
+	public String getAuthLevelName() {
+		return MemberService.getAuthLevelName(this);
+	}
+
+	public String getAuthLevelNameColor() {
+		return MemberService.getAuthLevelNameColor(this);
+	}
 }
