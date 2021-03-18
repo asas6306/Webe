@@ -39,14 +39,19 @@
 					</div>
 					<div class="${#}">
 						<a href="${#}"
-							class="text-2xl text-gray-700 font-bold hover:underline">${member.ID}</a>
+							class="text-2xl text-gray-700 font-bold hover:underline rounded-full bg-green-500 px-2">${member.ID}</a>
 						<a class="text-gray-600 block" href="${#}">${member.nickname}</a>
 					</div>
 					<div class="flex items-center mt-4">
 						<a href="update?uid=${member.uid}"
-							class="mx-2 text-blue-500 hover:underline">수정</a> <a
-							href="delete?aid=${member.uid}"
-							class="text-red-500 hover:underline">삭제</a>
+							class="mx-2 text-blue-500 hover:underline"> <span> <i
+								class="fas fa-edit"></i> <span class="hidden sm:inline">수정</span>
+						</span>
+						</a> <a href="delete?aid=${member.uid}"
+							onclick="if(!confirm('삭제하시겠습니까?')) return false;"
+							class="text-red-500 hover:underline"> <i class="fas fa-trash"></i>
+							<span class="hidden sm:inline">삭제</span>
+						</a>
 						<div class="flex-grow"></div>
 						<div>
 							<a href="" class="flex items-center"> <img
