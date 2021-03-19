@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.dto.Article;
-import com.example.demo.dto.Board;
 import com.example.demo.dto.Member;
 import com.example.demo.service.MemberService;
-import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
 @Controller
@@ -83,7 +80,7 @@ public class AdmMemberController extends _BaseController {
 				return msgAndBack(req, "중복된 아이디입니다.");
 		}
 		
-		if (param.get("PW1") == null) 
+		if (param.get("PW") == null) 
 			return msgAndBack(req, "비밀번호를 입력해주세요");
 		
 		String nickname = (String) param.get("nickname");
@@ -106,11 +103,9 @@ public class AdmMemberController extends _BaseController {
 		if (param.get("phoneNo") == null) 
 			return msgAndBack(req, "전화번호를 입력해주세요");
 
-		param.put("PW", param.get("PW1"));
 		param.put("email", param.get("email1") + "@" + param.get("email2"));
 
-		param.remove("PW1");
-		param.remove("PW2");
+		param.remove("PWCheck");
 		param.remove("email1");
 		param.remove("email2");
 
@@ -149,7 +144,7 @@ public class AdmMemberController extends _BaseController {
 	}
 	
 	@RequestMapping("/adm/member/update")
-	public String list(HttpServletRequest req, Integer uid) {
+	public String update(HttpServletRequest req, Integer uid) {
 		if(uid == null)
 			msgAndBack(req, "수정 할 회원번호를 입력해주세요");
 		
@@ -157,5 +152,12 @@ public class AdmMemberController extends _BaseController {
 		req.setAttribute("member", member);
 		
 		return "adm/member/update";
+	}
+	
+	@RequestMapping("/adm/member/doUpdate")
+	public String doUpdate(@RequestParam Map<String, Object> param,  HttpServletRequest req) {
+		ms.update(param);
+		
+		return msgAndReplace(req, "회원정보가 수정되었습니다.", "list");
 	}
 }

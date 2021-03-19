@@ -9,13 +9,27 @@
 		if (MemberUpdateForm__checkAndSubmitDone) {
 			return;
 		}
-		form.PW1.value = form.PW1.value.trim();
-		form.PW2.value = form.PW2.value.trim();
+		form.PW.value = form.PW.value.trim();
+		form.PWCheck.value = form.PWCheck.value.trim();
 		
-		if (form.PW1.value != form.PW2.value) {
+		if (form.PW.value != form.PWCheck.value) {
 			alert('비밀번호가 일치하지 않습니다..');
-			form.PW1.focus();
+			form.PW.focus();
 
+			return;
+		}
+		
+		form.nickname.value = form.nickname.value.trim();
+		if (form.nickname.value.length == 0) {
+			alert('닉네임을 입력해주세요.');
+			form.nickname.focus();
+			return;
+		}
+		
+		form.phoneNo.value = form.phoneNo.value.trim();
+		if (form.phoneNo.value.length == 0) {
+			alert('전화번호를 입력해주세요.');
+			form.nickname.focus();
 			return;
 		}
 		
@@ -36,6 +50,7 @@
 			<form class="bg-white shadow-md rounded px-8 py-6" action="doUpdate"
 				method="post"
 				onsubmit="MemberUpdateForm__checkAndSubmit(this); return false;">
+				<input type="hidden" name="uid" value="${member.uid}">
 				<div class="flex">
 					<!--  화면이 넓어지면 row배치 -->
 					<div class="w-24 flex items-center">
@@ -52,7 +67,7 @@
 					<div class="flex-grow py-2">
 						<input
 							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
-							type="password" name="PW1" placeholder="비밀번호를 입력해주세요."
+							type="password" name="PW" placeholder="비밀번호를 입력해주세요."
 							maxlength="20" />
 					</div>
 				</div>
@@ -63,7 +78,7 @@
 					<div class="flex-grow py-2">
 						<input
 							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
-							type="password" name="PW2" placeholder="비밀번호를 입력해주세요."
+							type="password" name="PWCheck" placeholder="비밀번호를 입력해주세요."
 							maxlength="20" />
 					</div>
 				</div>

@@ -19,27 +19,27 @@
 			return;
 		}
 
-		form.PW1.value = form.PW1.value.trim();
+		form.PW.value = form.PW.value.trim();
 		
-		if (form.PW1.value.length == 0) {
+		if (form.PW.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
-			form.PW1.focus();
+			form.PW.focus();
 
 			return;
 		}
 
-		form.PW2.value = form.PW2.value.trim();
+		form.PWCheck.value = form.PWCheck.value.trim();
 		
-		if (form.PW2.value.length == 0) {
+		if (form.PWCheck.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
-			form.PW2.focus();
+			form.PWCheck.focus();
 
 			return;
 		}
 		
-		if (form.PW1.value != form.PW2.value) {
+		if (form.PW.value != form.PWCheck.value) {
 			alert('비밀번호가 일치하지 않습니다..');
-			form.PW1.focus();
+			form.PW.focus();
 
 			return;
 		}
@@ -112,7 +112,7 @@
 					<div class="flex-grow py-2">
 						<input
 							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
-							type="password" name="PW1" placeholder="비밀번호를 입력해주세요."
+							type="password" name="PW" placeholder="비밀번호를 입력해주세요."
 							maxlength="20" />
 					</div>
 				</div>
@@ -123,7 +123,7 @@
 					<div class="flex-grow py-2">
 						<input
 							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
-							type="password" name="PW2" placeholder="비밀번호를 입력해주세요."
+							type="password" name="PWCheck" placeholder="비밀번호를 입력해주세요."
 							maxlength="20" />
 					</div>
 				</div>
