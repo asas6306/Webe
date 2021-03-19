@@ -34,18 +34,18 @@ public class CommonGenFileController {
 	private String genFileDirPath;
 	@Autowired
 	private GenFileService fs;
-	
+
 	@RequestMapping("/common/genFile/doUpload")
 	@ResponseBody
 	public ResultData doUpload(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
 		return fs.saveFiles(param, multipartRequest);
 	}
-	
+
 	@GetMapping("/common/genFile/doDownload")
 	public ResponseEntity<Resource> downloadFile(int fid, HttpServletRequest request) throws IOException {
 		GenFile genFile = fs.getGenFile(fid);
 		String filePath = genFile.getFilePath(genFileDirPath);
-	
+
 		Resource resource = new InputStreamResource(new FileInputStream(filePath));
 
 		// Try to determine file's content type
@@ -56,6 +56,8 @@ public class CommonGenFileController {
 			contentType = "application/octet-stream";
 		}
 
-		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(resource);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + genFile.getOriginFileName() + "\"")
+				.contentType(MediaType.parseMediaType(contentType)).body(resource);
 	}
 }
