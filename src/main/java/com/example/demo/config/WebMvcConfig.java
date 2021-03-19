@@ -51,12 +51,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		// 관리자 로그인 없이도 접속할 수 있는 URI 기술
 		registry.addInterceptor(needAdminInterceptor).addPathPatterns("/adm/**")
-				.excludePathPatterns("/adm/member/login").excludePathPatterns("/adm/member/doLogin").excludePathPatterns("/adm/member/signup")
-				.excludePathPatterns("/adm/member/doSignup")
+				.excludePathPatterns("/adm/member/login").excludePathPatterns("/adm/member/doLogin")
+				.excludePathPatterns("/adm/member/signup").excludePathPatterns("/adm/member/doSignup")
 				.excludePathPatterns("/adm/article/test");
 
 		// 로그인 없이도 접속할 수 있는 URI 기술
 		registry.addInterceptor(needLoginInterceptor).addPathPatterns("/usr/**").excludePathPatterns("/")
+				.excludePathPatterns("/swagger-ui/**").excludePathPatterns("/swagger-resources/**")
+				.excludePathPatterns("/v2/api-docs").excludePathPatterns("/webjars/**")
 				.excludePathPatterns("/usr/main/*").excludePathPatterns("/usr/article/list")
 				.excludePathPatterns("/usr/article/detail").excludePathPatterns("/usr/member/signup")
 				.excludePathPatterns("/usr/member/login").excludePathPatterns("/usr/member/authKey")
