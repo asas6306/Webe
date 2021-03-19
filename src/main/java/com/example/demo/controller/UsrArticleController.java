@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +22,7 @@ public class UsrArticleController extends _BaseController {
 	@Autowired
 	private ArticleService as;
 
-	@RequestMapping("/usr/article/list")
+	@GetMapping("/usr/article/list")
 	@ResponseBody
 	public ResultData list(String type, String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int boardCode) {
 		if (page < 1)
@@ -41,7 +42,7 @@ public class UsrArticleController extends _BaseController {
 		return new ResultData("S-1", "성공", "Articles", as.getArticles(type, keyword, page, pageCnt, boardCode));
 	}
 
-	@RequestMapping("/usr/article/detail")
+	@GetMapping("/usr/article/detail")
 	@ResponseBody
 	public ResultData detail(int aid) {
 		if (as.getArticleById(aid) == null)
@@ -52,7 +53,7 @@ public class UsrArticleController extends _BaseController {
 		return new ResultData("S-1", "성공", "Article", as.getArticleById(aid));
 	}
 
-	@RequestMapping("/usr/article/add")
+	@PostMapping("/usr/article/add")
 	@ResponseBody
 	public ResultData add(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		if (!param.containsKey("title"))
@@ -68,14 +69,14 @@ public class UsrArticleController extends _BaseController {
 		return as.add(param);
 	}
 
-	@RequestMapping("/usr/article/update")
+	@GetMapping("/usr/article/update")
 	@ResponseBody
 	public String update() {
 		
 		return "";
 	}
 	 
-	@RequestMapping("/usr/article/doUpdate")
+	@PostMapping("/usr/article/doUpdate")
 	public String doUpdate(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		Member m = (Member)req.getAttribute("m");
 		int aid = Util.getAsInt(param.get("aid"), 0);
@@ -106,7 +107,7 @@ public class UsrArticleController extends _BaseController {
 		return msgAndBack(req, "게시물 수정에 실패하였습니다.");
 	}
 
-	@RequestMapping("/usr/article/delete")
+	@PostMapping("/usr/article/delete")
 	@ResponseBody
 	public ResultData delete(Integer aid, HttpServletRequest req) {
 		if (aid == null)
@@ -116,7 +117,7 @@ public class UsrArticleController extends _BaseController {
 		return as.delete(aid, member);
 	}
 
-	@RequestMapping("/usr/article/like")
+	@GetMapping("/usr/article/like")
 	@ResponseBody
 	public ResultData like(Integer aid, HttpServletRequest req) {
 		if (aid == null)
@@ -125,13 +126,13 @@ public class UsrArticleController extends _BaseController {
 		return as.like(aid, ((Member) req.getAttribute("m")).getUid());
 	}
 	
-	@RequestMapping("/usr/home/a1")
+	@GetMapping("/usr/home/a1")
 	@ResponseBody
 	public String a1() {
 		return "a1";
 	}
 
-	@RequestMapping("/usr/home/a2")
+	@GetMapping("/usr/home/a2")
 	@ResponseBody
 	public String a2() {
 		return as.a2();

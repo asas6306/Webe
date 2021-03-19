@@ -7,7 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +21,7 @@ public class UsrMemberController {
 	@Autowired
 	private MemberService ms;
 
-	@RequestMapping("/usr/member/signup")
+	@PostMapping("/usr/member/signup")
 	@ResponseBody
 	public ResultData signup(@RequestParam Map<String, Object> param) {
 		if (param.get("ID") == null)
@@ -38,7 +39,7 @@ public class UsrMemberController {
 		return ms.signup(param);
 	}
 
-	@RequestMapping("/usr/member/signout")
+	@PostMapping("/usr/member/signout")
 	@ResponseBody
 	public ResultData signout(HttpSession session) {
 		Member m = (Member) session.getAttribute("m");
@@ -46,7 +47,7 @@ public class UsrMemberController {
 		return ms.signout(m.getUid());
 	}
 
-	@RequestMapping("/usr/member/login")
+	@PostMapping("/usr/member/login")
 	@ResponseBody
 	public ResultData login(String ID, String PW, HttpSession session) {
 		if (ID == null)
@@ -69,7 +70,7 @@ public class UsrMemberController {
 		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
 	}
 	
-	@RequestMapping("/usr/member/getAuthKey")
+	@GetMapping("/usr/member/getAuthKey")
 	@ResponseBody
 	public ResultData getAuthKey(String ID, String PW) {
 		if (ID == null)
@@ -88,7 +89,7 @@ public class UsrMemberController {
 		return new ResultData("S-1", String.format("%s님 authKey는 %s입니다.", m.getNickname(), m.getAuthKey()), "authKey", m.getAuthKey());
 	}
 	
-	@RequestMapping("/usr/member/getMemberByAuthKey")
+	@GetMapping("/usr/member/getMemberByAuthKey")
 	@ResponseBody
 	public ResultData getMemberByAuthKey(String authKey) {
 		if (authKey == null)
@@ -99,14 +100,14 @@ public class UsrMemberController {
 		return new ResultData("S-1", "유효한 회원힙니다.", "Member", m);
 	}
 
-	@RequestMapping("/usr/member/logout")
+	@PostMapping("/usr/member/logout")
 	@ResponseBody
 	public ResultData logout(HttpSession session) {
 		session.removeAttribute("m");
 		return new ResultData("S-1", "로그아웃 되었습니다.");
 	}
 
-	@RequestMapping("/usr/member/update")
+	@PostMapping("/usr/member/update")
 	@ResponseBody
 	public ResultData update(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		if (param.isEmpty())

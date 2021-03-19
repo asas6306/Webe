@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Member;
@@ -17,7 +16,7 @@ public class UsrReplyController {
 	@Autowired
 	ReplyService rs;
 	
-	@RequestMapping("/usr/reply/list")
+	@GetMapping("/usr/reply/list")
 	@ResponseBody
 	public ResultData list(String relTypeCode, Integer relId) {
 		if(relTypeCode == null)
@@ -28,7 +27,7 @@ public class UsrReplyController {
 		return new ResultData("S-1", "성공", "replies", rs.getReplies(relTypeCode, relId));
 	}
 	
-	@RequestMapping("/usr/reply/add")
+	@PostMapping("/usr/reply/add")
 	@ResponseBody
 	public ResultData add(String relTypeCode, Integer relId, String body, HttpServletRequest req) {
 		if(relTypeCode == null)
@@ -44,7 +43,7 @@ public class UsrReplyController {
 		return rs.add(relTypeCode, relId, uid, body);
 	}
 	
-	@RequestMapping("/usr/reply/delete")
+	@PostMapping("/usr/reply/delete")
 	@ResponseBody
 	public ResultData delete(Integer rid, HttpServletRequest req) {
 		if(rid == null)
@@ -56,7 +55,7 @@ public class UsrReplyController {
 		return rs.delete(rid, uid);
 	}
 	
-	@RequestMapping("/usr/reply/update")
+	@PostMapping("/usr/reply/update")
 	@ResponseBody
 	public ResultData update(Integer rid, String body, HttpServletRequest req) {
 		if(rid == null)
