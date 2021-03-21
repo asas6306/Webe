@@ -15,6 +15,8 @@ import com.example.demo.util.Util;
 public class MemberService {
 	@Autowired
 	private MemberDao md;
+	@Autowired
+	private GenFileService fs;
 
 	// static 시작
 	public static String getAuthLevelName(Member member) {
@@ -44,6 +46,7 @@ public class MemberService {
 		md.signup(param);
 
 		int uid = Util.getAsInt(param.get("uid"), 0);
+		fs.workRelIds(param, uid);
 
 		return new ResultData("S-1", String.format("%s님의 회원가입이 완료되었습니다.", param.get("nickname")));
 	}
