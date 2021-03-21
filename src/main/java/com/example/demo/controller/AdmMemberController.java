@@ -32,6 +32,7 @@ public class AdmMemberController extends _BaseController {
 	@GetMapping("/adm/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String ID) {
+		System.out.println("ID : " + ID);
 		if(ID == null)
 			return new ResultData("F-1", "ID를 입력해주세요.");
 		
@@ -54,7 +55,7 @@ public class AdmMemberController extends _BaseController {
 		if(member != null)
 			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 아이디입니다.", ID));
 			
-		return new ResultData("S-1", String.format("%s(은)는 이미 사용가능한 아이디입니다.", ID), "ID", ID);
+		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 아이디입니다.", ID), "ID", ID);
 	}
 
 	@RequestMapping("/adm/member/doLogin")

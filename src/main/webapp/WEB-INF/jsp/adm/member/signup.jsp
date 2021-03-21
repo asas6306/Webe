@@ -5,6 +5,32 @@
 
 <script>
 	const SignupForm__checkAndSubmitDone = false;
+
+	//로그인 아이디 중복체크 함수
+	function SignupForm__checkIDDup(obj) {
+		const form = $(obj).closest('form').get(0);
+
+		form.ID.value = form.ID.value.trim();
+
+		if (form.ID.value.length == 0) {
+			alert('아이디를 입력해주세요.');
+			form.ID.focus();
+			return;
+		}
+
+		$.get('getLoginIdDup', {
+			ID : form.ID.value
+		}, function(data) {
+			alert(data.msg);
+
+			if (data.fail) {
+				form.ID.focus();
+			} else {
+				form.PW.focus();
+			}
+		}, 'json');
+	}
+
 	function SignupForm__checkAndSubmit(form) {
 		if (SignupForm__checkAndSubmitDone) {
 			return;
@@ -20,7 +46,7 @@
 		}
 
 		form.PW.value = form.PW.value.trim();
-		
+
 		if (form.PW.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
 			form.PW.focus();
@@ -29,21 +55,21 @@
 		}
 
 		form.PWCheck.value = form.PWCheck.value.trim();
-		
+
 		if (form.PWCheck.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
 			form.PWCheck.focus();
 
 			return;
 		}
-		
+
 		if (form.PW.value != form.PWCheck.value) {
 			alert('비밀번호가 일치하지 않습니다..');
 			form.PW.focus();
 
 			return;
 		}
-		
+
 		form.nickname.value = form.nickname.value.trim();
 
 		if (form.nickname.value.length == 0) {
@@ -54,16 +80,16 @@
 		}
 
 		form.email1.value = form.email1.value.trim();
-		
+
 		if (form.email1.value.length == 0) {
 			alert('이메일을 입력해주세요.');
 			form.email1.focus();
 
 			return;
 		}
-		
+
 		form.phoneNo.value = form.phoneNo.value.trim();
-		
+
 		if (form.phoneNo.value.length == 0) {
 			alert('휴대폰 번호를 입력해주세요.');
 			form.phoneNo.focus();
@@ -101,8 +127,9 @@
 					</div>
 					<div class="flex items-center pl-4">
 						<input
-							class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 font-bold rounded"
-							type="button" value="중복확인" onclick="alert('음... 중복검사 어떻게 하징ㅎㅎ');" />
+							class="btn-primary bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 font-bold rounded"
+							type="button" value="중복확인"
+							onclick="SignupForm__checkIDDup(this);" />
 					</div>
 				</div>
 				<div class="flex flex-row">
@@ -140,7 +167,7 @@
 					<div class="flex items-center pl-4">
 						<input
 							class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 font-bold rounded"
-							type="button" value="중복확인" onclick="alert('음... 중복검사 어떻게 하징ㅎㅎ');" />
+							type="button" value="중복확인" onclick="" />
 					</div>
 				</div>
 				<div class="flex flex-row">
