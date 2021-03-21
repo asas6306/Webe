@@ -11,18 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-	int uid;
-	String ID;
+	private int uid;
+	private String ID;
 	@JsonIgnore
-	String PW;
+	private String PW;
+	private int authLevel;
 	@JsonIgnore
-	int authLevel;
-	@JsonIgnore
-	String authKey;
-	String nickname;
-	String regDate;
-	String email;
-	String phoneNo;
+	private String authKey;
+	private String nickname;
+	private String regDate;
+	private String email;
+	private String phoneNo;
+	
+	private String extra__thumbImg;
 	
 	public String getAuthLevelName() {
 		return MemberService.getAuthLevelName(this);

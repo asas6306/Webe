@@ -27,7 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Qualifier("beforeActionInterceptor")
 	HandlerInterceptor beforeActionInterceptor;
 
-	// needLoginInterceptor 인터셉터 불러오기
+	// needLoginInterceptor 인터셉터 불러오기	
 	@Autowired
 	@Qualifier("needAdminInterceptor")
 	HandlerInterceptor needAdminInterceptor;
@@ -63,7 +63,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/usr/article/detail").excludePathPatterns("/usr/member/signup")
 				.excludePathPatterns("/usr/member/login").excludePathPatterns("/usr/member/authKey")
 				.excludePathPatterns("/usr/reply/list").excludePathPatterns("/usr/reply/delete")
-				.excludePathPatterns("/common/genFile/doDownload").excludePathPatterns("/error");
+				.excludePathPatterns("/common/**").excludePathPatterns("/error");
 
 		// 로그인 상태에서 접속할 수 없는 URI 전부 기술(로그아웃 상태에서 접속할 수 잇는 URI)
 		registry.addInterceptor(needToLogoutInterceptor).addPathPatterns("/adm/member/login")

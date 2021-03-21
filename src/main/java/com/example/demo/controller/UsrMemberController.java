@@ -42,9 +42,9 @@ public class UsrMemberController {
 	@PostMapping("/usr/member/signout")
 	@ResponseBody
 	public ResultData signout(HttpSession session) {
-		Member m = (Member) session.getAttribute("m");
+		Member member = (Member) session.getAttribute("m");
 
-		return ms.signout(m.getUid());
+		return ms.signout(member.getUid());
 	}
 
 	@PostMapping("/usr/member/login")
@@ -56,21 +56,21 @@ public class UsrMemberController {
 		if (PW == null)
 			return new ResultData("F-1", "PW를 입력해주세요.");
 
-		Member m = ms.getMember(ID, "ID");
+		Member member = ms.getMember(ID, "ID");
 
-		if (m == null)
+		if (member == null)
 			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
-		else if (!m.getPW().equals(PW))
+		else if (!member.getPW().equals(PW))
 			return new ResultData("F-2", "비밀번호가 일치하지 않습니다.");
 //		if(m == null || !m.getPW().equals(PW))
 //			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
 
-		session.setAttribute("m", m);
+		session.setAttribute("m", member);
 
-		return new ResultData("S-1", String.format("%s님 환영합니다.", m.getNickname()));
+		return new ResultData("S-1", String.format("%s님 환영합니다.", member.getNickname()));
 	}
 	
-	@GetMapping("/usr/member/getAuthKey")
+	@PostMapping("/usr/member/getAuthKey")
 	@ResponseBody
 	public ResultData getAuthKey(String ID, String PW) {
 		if (ID == null)
@@ -79,14 +79,14 @@ public class UsrMemberController {
 		if (PW == null)
 			return new ResultData("F-1", "PW를 입력해주세요.");
 		
-		Member m = ms.getMember(ID, "ID");
+		Member member = ms.getMember(ID, "ID");
 
-		if (m == null)
+		if (member == null)
 			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
-		else if (!m.getPW().equals(PW))
+		else if (!member.getPW().equals(PW))
 			return new ResultData("F-2", "비밀번호가 일치하지 않습니다.");
 		
-		return new ResultData("S-1", String.format("%s님 authKey는 %s입니다.", m.getNickname(), m.getAuthKey()), "authKey", m.getAuthKey());
+		return new ResultData("S-1", String.format("%s님 authKey는 %s입니다.", member.getNickname(), member.getAuthKey()), "authKey", member.getAuthKey(), "member", member);
 	}
 	
 	@GetMapping("/usr/member/getMemberByAuthKey")
@@ -95,7 +95,7 @@ public class UsrMemberController {
 		if (authKey == null)
 			return new ResultData("F-1", "authKey를 입력해주세요.");
 
-		Member m = ms.getMember(authKey, "a	uthKey");
+		Member m = ms.getMember(authKey, "authKey");
 		
 		return new ResultData("S-1", "유효한 회원힙니다.", "Member", m);
 	}

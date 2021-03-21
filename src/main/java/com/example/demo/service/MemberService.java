@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.MemberDao;
+import com.example.demo.dto.GenFile;
 import com.example.demo.dto.Member;
 import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
@@ -52,8 +53,20 @@ public class MemberService {
 	}
 
 	public Member getMember(String item, String itemIndex) {
-
-		return md.getMember(item, itemIndex);
+		Member member = md.getMember(item, itemIndex);
+		
+		if(itemIndex.equals("authKey")||itemIndex.equals("ID"))
+			updateForPrint(member);
+		return member;
+	}
+	
+	private void updateForPrint(Member member) {
+		GenFile genFile = fs.getGenFile("member", member.getUid(), "common", "attachment", 1);
+		
+		if(genFile != null) {
+			String imgUrl = genFile.getForPrintUrl();
+			member.setExtra__thumbImg(imgUrl);
+		}
 	}
 
 	public ResultData update(Map<String, Object> param) {
