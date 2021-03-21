@@ -8,12 +8,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Member;
 import com.example.demo.service.MemberService;
+import com.example.demo.util.ResultData;
 import com.example.demo.util.Util;
 
 @Controller
@@ -26,12 +28,40 @@ public class AdmMemberController extends _BaseController {
 
 		return "/adm/member/login";
 	}
+	
+	@GetMapping("/adm/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData getLoginIdDup(String ID) {
+		if(ID == null)
+			return new ResultData("F-1", "ID를 입력해주세요.");
+		
+		if(Util.allNumberString(ID))
+			return new ResultData("F-3", "아이디는 숫자로만 구성될 수 없습니다.");
+		
+		if(Util.startsWithNumber(ID))
+			return new ResultData("F-4", "아이디는 숫자로 시작될 수 없습니다.");
+		
+		if(Util.isStandardLoginIdCheck(ID) == false)
+			return new ResultData("F-5", "아이디는 영문과 숫자의 조합으로 구성되어야 합니다.");
+		
+		if(ID.length() < 5)
+			return new ResultData("F-6", "아이디를 5자 이상으로 입력하세요.");
+		if(ID.length() > 15)
+			return new ResultData("F-6", "아이디를 15자 이하로 입력하세요.");
+		
+		Member member = ms.getMember(ID, "ID", false);
+		
+		if(member != null)
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 아이디입니다.", ID));
+			
+		return new ResultData("S-1", String.format("%s(은)는 이미 사용가능한 아이디입니다.", ID), "ID", ID);
+	}
 
 	@RequestMapping("/adm/member/doLogin")
 	@ResponseBody
 	public String doLogin(String ID, String PW, String redirectUrl, HttpSession session) {
 
-		Member member = ms.getMember(ID, "ID");
+		Member member = ms.getMember(ID, "ID", true);
 
 		if (member == null)
 			return Util.msgAndBack("존재하지 않는 관리자입니다.");
@@ -75,7 +105,7 @@ public class AdmMemberController extends _BaseController {
 		if (ID == null) {
 			return msgAndBack(req, "아이디를 입력해주세요");
 		} else {
-			Member m = ms.getMember(ID, "ID");
+			Member m = ms.getMember(ID, "ID", false);
 			if (m.getID().equals(ID))
 				return msgAndBack(req, "중복된 아이디입니다.");
 		}
@@ -89,7 +119,7 @@ public class AdmMemberController extends _BaseController {
 		if (nickname == null) {
 			return msgAndBack(req, "닉네임을 입력해주세요");
 		} else {
-			Member m = ms.getMember(nickname, "nickname");
+			Member m = ms.getMember(nickname, "nickname", false);
 			if (m.getNickname().equals(nickname))
 				return msgAndBack(req, "중복된 닉네임입니다.");
 		}
@@ -148,7 +178,7 @@ public class AdmMemberController extends _BaseController {
 		if(uid == null)
 			msgAndBack(req, "수정 할 회원번호를 입력해주세요");
 		
-		Member member = ms.getMember(String.valueOf(uid), "uid");
+		Member member = ms.getMember(String.valueOf(uid), "uid", true);
 		req.setAttribute("member", member);
 		
 		return "adm/member/update";

@@ -31,9 +31,9 @@ public class UsrMemberController {
 		if (param.get("nickname") == null)
 			return new ResultData("F-1", "nickname을 입력해주세요.");
 
-		if (ms.getMember(String.valueOf(param.get("ID")), "ID") != null)
+		if (ms.getMember(String.valueOf(param.get("ID")), "ID", false) != null)
 			return new ResultData("F-2", "중복된 아이디입니다.");
-		else if (ms.getMember(String.valueOf(param.get("nickname")), "nickname") != null)
+		else if (ms.getMember(String.valueOf(param.get("nickname")), "nickname", false) != null)
 			return new ResultData("F-2", "중복된 닉네임입니다.");
 
 		return ms.signup(param);
@@ -56,7 +56,7 @@ public class UsrMemberController {
 		if (PW == null)
 			return new ResultData("F-1", "PW를 입력해주세요.");
 
-		Member member = ms.getMember(ID, "ID");
+		Member member = ms.getMember(ID, "ID", true);
 
 		if (member == null)
 			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
@@ -79,7 +79,7 @@ public class UsrMemberController {
 		if (PW == null)
 			return new ResultData("F-1", "PW를 입력해주세요.");
 		
-		Member member = ms.getMember(ID, "ID");
+		Member member = ms.getMember(ID, "ID", true);
 
 		if (member == null)
 			return new ResultData("F-2", "존재하지 않는 회원정보입니다.", "ID", ID);
@@ -95,7 +95,7 @@ public class UsrMemberController {
 		if (authKey == null)
 			return new ResultData("F-1", "authKey를 입력해주세요.");
 
-		Member m = ms.getMember(authKey, "authKey");
+		Member m = ms.getMember(authKey, "authKey", true);
 		
 		return new ResultData("S-1", "유효한 회원힙니다.", "Member", m);
 	}

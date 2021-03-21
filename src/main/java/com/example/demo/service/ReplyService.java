@@ -49,7 +49,7 @@ public class ReplyService {
 
 	// 통합? 어디로?
 	public ResultData authorityCheck(int rid, int uid) {
-		Member member = ms.getMember(String.valueOf(uid), "uid");
+		Member member = ms.getMember(String.valueOf(uid), "uid", false);
 		Reply r = rd.getReplyById(rid);
 		if (ms.authCheck(member))
 			return new ResultData("S-1", "관리자 권한 수행가능");

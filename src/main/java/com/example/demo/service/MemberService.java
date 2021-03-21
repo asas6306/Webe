@@ -52,18 +52,21 @@ public class MemberService {
 		return new ResultData("S-1", String.format("%s님의 회원가입이 완료되었습니다.", param.get("nickname")));
 	}
 
-	public Member getMember(String item, String itemIndex) {
-		Member member = md.getMember(item, itemIndex);
+	public Member getMember(String item, String itemIndex, boolean check) {
+		// check : 프로필 사진을 필요로 한다면 true
 		
-		if(itemIndex.equals("authKey")||itemIndex.equals("ID"))
+		Member member = md.getMember(item, itemIndex);
+
+		if (check && (itemIndex.equals("authKey") || itemIndex.equals("ID")))
 			updateForPrint(member);
+
 		return member;
 	}
-	
+
 	private void updateForPrint(Member member) {
 		GenFile genFile = fs.getGenFile("member", member.getUid(), "common", "attachment", 1);
-		
-		if(genFile != null) {
+
+		if (genFile != null) {
 			String imgUrl = genFile.getForPrintUrl();
 			member.setExtra__thumbImg(imgUrl);
 		}
@@ -86,14 +89,10 @@ public class MemberService {
 		return member.getAuthLevel() == 7;
 	}
 
-	public Member getMemberByAuthKey(String authKey) {
-
-		return md.getMemberByAuthKey(authKey);
-	}
-
-	public List<Member> getMembers(Map<String, Object> param, String type, String keyword, int page, int pageCnt, int authLevel) {
+	public List<Member> getMembers(Map<String, Object> param, String type, String keyword, int page, int pageCnt,
+			int authLevel) {
 		page = (page - 1) * pageCnt;
-		
+
 		param.put("type", type);
 		param.put("keyword", keyword);
 		param.put("page", page);

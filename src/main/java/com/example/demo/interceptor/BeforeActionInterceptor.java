@@ -55,7 +55,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		String authKey = request.getParameter("authKey");
 
 		if (authKey != null && authKey.length() > 0) {
-			loginedMember = ms.getMemberByAuthKey(authKey);
+			loginedMember = ms.getMember(authKey, "authKey", true);
 
 			if (loginedMember == null) {
 				request.setAttribute("authKeyState", "invalid");

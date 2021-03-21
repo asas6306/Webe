@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -236,5 +237,24 @@ public class Util {
 		DecimalFormat df = new DecimalFormat("###,###,###");
 
 		return df.format(num);
+	}
+
+	public static boolean allNumberString(String str) {
+		for(int i = 0; i<str.length(); i++)
+			if(Character.isDigit(str.charAt(i)) == false)
+				return false;
+		
+		return true;
+	}
+
+	public static boolean startsWithNumber(String str) {
+		
+		return Character.isDigit(str.charAt(0));
+	}
+
+	public static boolean isStandardLoginIdCheck(String str) {
+		
+		// 조건 : 5자 이상 15자 이하 / 숫자시작 금지 / _, 알파벳, 숫자
+		return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,14}$", str);
 	}
 }
