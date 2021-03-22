@@ -5,7 +5,8 @@
 
 <script>
 	const SignupForm__checkAndSubmitDone = false;
-
+	
+	let SignupForm__validID = '';
 	//로그인 아이디 중복체크 함수
 	function SignupForm__checkIDDup(obj) {
 		const form = $(obj).closest('form').get(0);
@@ -21,11 +22,18 @@
 		$.get('getLoginIdDup', {
 			ID : form.ID.value
 		}, function(data) {
-			alert(data.msg);
+			let colorClass = 'text-green-500';
+			
+			if(data.fail){
+				colorClass = 'text-red-500';
+			}
+			
+			$('.IDInputMsg').html("<span class='" + colorClass + "'>" + data.msg);
 
 			if (data.fail) {
 				form.ID.focus();
 			} else {
+				SignupForm__validID = data.body.ID;
 				form.PW.focus();
 			}
 		}, 'json');
@@ -44,7 +52,14 @@
 
 			return;
 		}
-
+		
+		if (form.ID.value != SignupForm__validID) {
+			alert('아이디 중복체크를 해주세요.');
+			$('.btnCheckIDDup').focus();
+			
+			return;
+		}
+		
 		form.PW.value = form.PW.value.trim();
 
 		if (form.PW.value.length == 0) {
@@ -127,11 +142,12 @@
 					</div>
 					<div class="flex items-center pl-4">
 						<input
-							class="btn-primary bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 font-bold rounded"
+							class="btnCheckIDDup btn-primary bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 font-bold rounded"
 							type="button" value="중복확인"
 							onclick="SignupForm__checkIDDup(this);" />
 					</div>
 				</div>
+				<div class="IDInputMsg pl-20"></div>
 				<div class="flex flex-row">
 					<div class="w-20 flex items-center">
 						<span>비밀번호</span>

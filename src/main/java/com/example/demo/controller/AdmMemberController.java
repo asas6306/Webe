@@ -32,7 +32,6 @@ public class AdmMemberController extends _BaseController {
 	@GetMapping("/adm/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String ID) {
-		System.out.println("ID : " + ID);
 		if(ID == null)
 			return new ResultData("F-1", "ID를 입력해주세요.");
 		
