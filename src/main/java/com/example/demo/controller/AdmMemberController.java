@@ -28,32 +28,32 @@ public class AdmMemberController extends _BaseController {
 
 		return "/adm/member/login";
 	}
-	
+
 	@GetMapping("/adm/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String ID) {
-		if(ID == null)
+		if (ID == null)
 			return new ResultData("F-1", "ID를 입력해주세요.");
-		
-		if(Util.allNumberString(ID))
+
+		if (Util.allNumberString(ID))
 			return new ResultData("F-3", "아이디는 숫자로만 구성될 수 없습니다.");
-		
-		if(Util.startsWithNumber(ID))
+
+		if (Util.startsWithNumber(ID))
 			return new ResultData("F-4", "아이디는 숫자로 시작될 수 없습니다.");
-		
-		if(Util.isStandardLoginIdCheck(ID) == false)
+
+		if (Util.isStandardLoginIdCheck(ID) == false)
 			return new ResultData("F-5", "아이디는 영문과 숫자의 조합으로 구성되어야 합니다.");
-		
-		if(ID.length() < 5)
+
+		if (ID.length() < 5)
 			return new ResultData("F-6", "아이디를 5자 이상으로 입력하세요.");
-		if(ID.length() > 15)
+		if (ID.length() > 15)
 			return new ResultData("F-6", "아이디를 15자 이하로 입력하세요.");
-		
+
 		Member member = ms.getMember(ID, "ID", false);
-		
-		if(member != null)
+
+		if (member != null)
 			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 아이디입니다.", ID));
-			
+
 		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 아이디입니다.", ID), "ID", ID);
 	}
 
@@ -98,40 +98,43 @@ public class AdmMemberController extends _BaseController {
 	}
 
 	@RequestMapping("/adm/member/doSignup")
+	@ResponseBody
 	public String doSignup(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		String ID = (String) param.get("ID");
 		ID = ID.trim();
-		
+
 		if (ID == null) {
-			return msgAndBack(req, "아이디를 입력해주세요");
+			return Util.msgAndBack("아이디를 입력해주세요");
 		} else {
 			Member m = ms.getMember(ID, "ID", false);
-			if (m.getID().equals(ID))
-				return msgAndBack(req, "중복된 아이디입니다.");
+			if (m != null)
+				if (m.getID().toLowerCase().equals(ID.toLowerCase()))
+					return Util.msgAndBack("중복된 아이디입니다.");
 		}
-		
-		if (param.get("PW") == null) 
-			return msgAndBack(req, "비밀번호를 입력해주세요");
-		
+
+		if (param.get("PW") == null)
+			return Util.msgAndBack("비밀번호를 입력해주세요");
+
 		String nickname = (String) param.get("nickname");
 		nickname = nickname.trim();
-		
+
 		if (nickname == null) {
-			return msgAndBack(req, "닉네임을 입력해주세요");
+			return Util.msgAndBack("닉네임을 입력해주세요");
 		} else {
 			Member m = ms.getMember(nickname, "nickname", false);
-			if (m.getNickname().equals(nickname))
-				return msgAndBack(req, "중복된 닉네임입니다.");
+			if (m != null)
+				if (m.getNickname().toLowerCase().equals(nickname.toLowerCase()))
+					return Util.msgAndBack("중복된 닉네임입니다.");
 		}
-		
-		if (param.get("email1") == null) 
-			return msgAndBack(req, "이메일을 입력해주세요");
-		
-		if (param.get("email2") == null) 
-			return msgAndBack(req, "이메일을 입력해주세요");
-		
-		if (param.get("phoneNo") == null) 
-			return msgAndBack(req, "전화번호를 입력해주세요");
+
+		if (param.get("email1") == null)
+			return Util.msgAndBack("이메일을 입력해주세요");
+
+		if (param.get("email2") == null)
+			return Util.msgAndBack("이메일을 입력해주세요");
+
+		if (param.get("phoneNo") == null)
+			return Util.msgAndBack("전화번호를 입력해주세요");
 
 		param.put("email", param.get("email1") + "@" + param.get("email2"));
 
@@ -141,15 +144,15 @@ public class AdmMemberController extends _BaseController {
 
 		ms.signup(param);
 
-		String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "login");
-		
+		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "login");
+
 		return Util.msgAndReplace("회원가입이 완료되었습니다.", redirectUrl);
 	}
-	
+
 	@RequestMapping("/adm/member/list")
-	public String list(HttpServletRequest req, @RequestParam Map<String, Object> param, String type, String keyword, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "0") int authLevel) {
-		
+	public String list(HttpServletRequest req, @RequestParam Map<String, Object> param, String type, String keyword,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int authLevel) {
+
 		req.setAttribute("authLevel", authLevel);
 
 		if (page < 1)
@@ -169,25 +172,24 @@ public class AdmMemberController extends _BaseController {
 
 		req.setAttribute("members", members);
 
-
 		return "/adm/member/list";
 	}
-	
+
 	@RequestMapping("/adm/member/update")
 	public String update(HttpServletRequest req, Integer uid) {
-		if(uid == null)
+		if (uid == null)
 			msgAndBack(req, "수정 할 회원번호를 입력해주세요");
-		
+
 		Member member = ms.getMember(String.valueOf(uid), "uid", true);
 		req.setAttribute("member", member);
-		
+
 		return "adm/member/update";
 	}
-	
+
 	@RequestMapping("/adm/member/doUpdate")
-	public String doUpdate(@RequestParam Map<String, Object> param,  HttpServletRequest req) {
+	public String doUpdate(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		ms.update(param);
-		
+
 		return msgAndReplace(req, "회원정보가 수정되었습니다.", "list");
 	}
 }

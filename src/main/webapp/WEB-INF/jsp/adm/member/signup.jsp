@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../part/header.jspf"%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
 <script>
 	const SignupForm__checkAndSubmitDone = false;
@@ -111,8 +112,37 @@
 			return;
 		}
 
-		form.submit();
-		SignupForm__checkAndSubmitDone = true;
+		const submitForm = function(data) {
+			if (data) {
+				form.genFileIdsStr.value = data.body.genFileIdsStr;
+			}
+
+			form.submit();
+			SignupForm__checkAndSubmitDone = true;
+		}
+
+		function startUpload(onSuccess) {
+			if (!form.file__member__0__common__attachment__1.value) {
+				onSuccess("");
+				return;
+			}
+
+			const formData = new FormData(form);
+
+			$.ajax({
+				url : '/common/genFile/doUpload',
+				data : formData,
+				processData : false,
+				contentType : false,
+				dataType : "json",
+				type : 'POST',
+				success : onSuccess
+			});
+
+			// 파일업로드 > 기다림 > 응답 > onSuccess
+		}
+		
+		startUpload(submitForm);
 	}
 
 	// 중복체크
@@ -121,7 +151,7 @@
 			SignupForm__checkIDDup();
 		});
 		$('.inputLoginId').keyup(_.debounce(SignupForm__checkIDDup, 1000));
-		
+
 	});
 </script>
 <section class="section-Login">
@@ -134,12 +164,12 @@
 				</span>
 				</a>
 			</div>
-			<form class="formLogin bg-white shadow-md rounded px-8 py-6" action="doSignup"
-				method="post"
+			<form class="formLogin bg-white shadow-md rounded px-8 py-6"
+				action="doSignup" method="post"
 				onsubmit="SignupForm__checkAndSubmit(this); return false;">
+				<input type="hidden" name="genFileIdsStr">
 				<div class="flex">
-					<!--  화면이 넓어지면 row배치 -->
-					<div class="w-20 flex items-center">
+					<div class="w-24 flex items-center">
 						<span>아이디</span>
 					</div>
 					<div class="flex-grow py-2">
@@ -151,7 +181,7 @@
 				</div>
 				<div class="IDInputMsg pl-20"></div>
 				<div class="flex flex-row">
-					<div class="w-20 flex items-center">
+					<div class="w-24 flex items-center">
 						<span>비밀번호</span>
 					</div>
 					<div class="flex-grow py-2">
@@ -162,7 +192,7 @@
 					</div>
 				</div>
 				<div class="flex flex-row">
-					<div class="w-20 flex items-center">
+					<div class="w-24 flex items-center">
 						<span>비밀번호 확인</span>
 					</div>
 					<div class="flex-grow py-2">
@@ -173,7 +203,7 @@
 					</div>
 				</div>
 				<div class="flex flex-row">
-					<div class="w-20 flex items-center">
+					<div class="w-24 flex items-center">
 						<span>닉네임</span>
 					</div>
 					<div class="flex-grow py-2">
@@ -189,7 +219,18 @@
 					</div>
 				</div>
 				<div class="flex flex-row">
-					<div class="w-20 flex items-center">
+					<div class="w-24 flex items-center">
+						<span>프로필이미지</span>
+					</div>
+					<div class="flex-grow py-2">
+						<input
+							class="shadow apperance-non border border-red rounded w-full py-2 px-3 text-grey-darker"
+							type="file" name="file__member__0__common__attachment__1"
+							accept="image/gif, image/jpeg, image/png" maxlength="20" />
+					</div>
+				</div>
+				<div class="flex flex-row">
+					<div class="w-24 flex items-center">
 						<span>이메일</span>
 					</div>
 					<div class="flex-grow py-2">
@@ -211,7 +252,7 @@
 					</div>
 				</div>
 				<div class="flex flex-row">
-					<div class="w-20 flex items-center">
+					<div class="w-24 flex items-center">
 						<span>연락처</span>
 					</div>
 					<div class="flex-grow py-2">
