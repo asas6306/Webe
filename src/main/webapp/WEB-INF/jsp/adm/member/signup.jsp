@@ -2,20 +2,19 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../part/header.jspf"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
 <script>
 	const SignupForm__checkAndSubmitDone = false;
-	
+
 	let SignupForm__validID = '';
 	//로그인 아이디 중복체크 함수
-	function SignupForm__checkIDDup(obj) {
-		const form = $(obj).closest('form').get(0);
+	function SignupForm__checkIDDup() {
+		const form = $('.formLogin').get(0);
 
 		form.ID.value = form.ID.value.trim();
 
 		if (form.ID.value.length == 0) {
-			alert('아이디를 입력해주세요.');
-			form.ID.focus();
 			return;
 		}
 
@@ -23,18 +22,18 @@
 			ID : form.ID.value
 		}, function(data) {
 			let colorClass = 'text-green-500';
-			
-			if(data.fail){
+
+			if (data.fail) {
 				colorClass = 'text-red-500';
 			}
-			
-			$('.IDInputMsg').html("<span class='" + colorClass + "'>" + data.msg);
+
+			$('.IDInputMsg').html(
+					"<span class='" + colorClass + "'>" + data.msg);
 
 			if (data.fail) {
 				form.ID.focus();
 			} else {
 				SignupForm__validID = data.body.ID;
-				form.PW.focus();
 			}
 		}, 'json');
 	}
@@ -52,14 +51,14 @@
 
 			return;
 		}
-		
+
 		if (form.ID.value != SignupForm__validID) {
 			alert('아이디 중복체크를 해주세요.');
-			$('.btnCheckIDDup').focus();
-			
+			form.ID.focus();
+
 			return;
 		}
-		
+
 		form.PW.value = form.PW.value.trim();
 
 		if (form.PW.value.length == 0) {
@@ -115,6 +114,15 @@
 		form.submit();
 		SignupForm__checkAndSubmitDone = true;
 	}
+
+	// 중복체크
+	$(function() {
+		$('.inputLoginId').change(function() {
+			SignupForm__checkIDDup();
+		});
+		$('.inputLoginId').keyup(_.debounce(SignupForm__checkIDDup, 1000));
+		
+	});
 </script>
 <section class="section-Login">
 	<div
@@ -126,7 +134,7 @@
 				</span>
 				</a>
 			</div>
-			<form class="bg-white shadow-md rounded px-8 py-6" action="doSignup"
+			<form class="formLogin bg-white shadow-md rounded px-8 py-6" action="doSignup"
 				method="post"
 				onsubmit="SignupForm__checkAndSubmit(this); return false;">
 				<div class="flex">
@@ -136,15 +144,9 @@
 					</div>
 					<div class="flex-grow py-2">
 						<input
-							class="shadow apperance-non border rounded w-full py-2 px-3 text-grey-darker"
+							class="inputLoginId shadow apperance-non border rounded w-full py-2 px-3 text-grey-darker"
 							type="text" name="ID" placeholder="아이디를 입력해주세요." maxlength="20"
 							autofocus="autofocus" />
-					</div>
-					<div class="flex items-center pl-4">
-						<input
-							class="btnCheckIDDup btn-primary bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 font-bold rounded"
-							type="button" value="중복확인"
-							onclick="SignupForm__checkIDDup(this);" />
 					</div>
 				</div>
 				<div class="IDInputMsg pl-20"></div>
