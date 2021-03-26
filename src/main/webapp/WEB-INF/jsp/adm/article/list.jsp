@@ -12,7 +12,7 @@
 			<div class="flex">
 				<div>
 					<select class="py-2 select-board">
-						<option value="0">전체게시판</option>
+						<option value="0">전체게시판(${articlesCnt})</option>
 						<option value="1">공지사항</option>
 						<option value="2">자유게시판</option>
 					</select>

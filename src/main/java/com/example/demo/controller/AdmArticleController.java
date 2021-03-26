@@ -56,6 +56,9 @@ public class AdmArticleController extends _BaseController {
 		List<Article> articles = as.getArticles(type, keyword, page, pageCnt, boardCode);
 
 		req.setAttribute("articles", articles);
+		
+		int articlesCnt = as.getArticlesCnt(type, keyword, boardCode);
+		req.setAttribute("articlesCnt", articlesCnt);
 
 		return "adm/article/list";
 	}
@@ -163,4 +166,5 @@ public class AdmArticleController extends _BaseController {
 
 		return msgAndBack(req, "게시물 수정에 실패하였습니다.");
 	}
+	
 }

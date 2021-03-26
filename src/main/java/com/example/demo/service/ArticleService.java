@@ -128,4 +128,9 @@ public class ArticleService {
 
 		return ad.getBoard(boardCode);
 	}
+
+	public int getArticlesCnt(String type, String keyword, int boardCode) {
+		
+		return ad.getArticlesCnt(type, keyword, boardCode);
+	}
 }

@@ -29,4 +29,6 @@ public interface ArticleDao {
 	public void like(@Param(value = "aid") int aid, @Param(value = "action") String action);
 
 	public Board getBoard(@Param(value = "boardCode") int boardCode);
+
+	public int getArticlesCnt(@Param(value = "type") String type, @Param(value = "keyword") String keyword, @Param(value = "boardCode") int boardCode);
 }
