@@ -56,7 +56,7 @@ public class AdmArticleController extends _BaseController {
 		List<Article> articles = as.getArticles(type, keyword, page, pageCnt, boardCode);
 
 		req.setAttribute("articles", articles);
-		
+
 		int articlesCnt = as.getArticlesCnt(type, keyword, boardCode);
 		req.setAttribute("articlesCnt", articlesCnt);
 
@@ -107,7 +107,7 @@ public class AdmArticleController extends _BaseController {
 	public ResultData delete(Integer aid, HttpServletRequest req) {
 		if (aid == null)
 			return new ResultData("F-1", "게시물 id를 입력해주세요");
-		Member member = (Member)req.getAttribute("m");
+		Member member = (Member) req.getAttribute("m");
 
 		return as.delete(aid, member);
 	}
@@ -166,5 +166,4 @@ public class AdmArticleController extends _BaseController {
 
 		return msgAndBack(req, "게시물 수정에 실패하였습니다.");
 	}
-	
 }

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../part/mainLayoutHeader.jspf"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.example.demo.util.Util"%>>
+<%@ page import="com.example.demo.util.Util"%>
 
 <c:set var="fileInputMaxCount" value="10" />
 <script>
@@ -113,8 +113,8 @@ function ArticleUpdate__checkAndSubmit(form) {
 			<div class="flex justify-center text-4xl font-extrabold">게시물 수정</div>
 			<form onsubmit="ArticleUpdate__checkAndSubmit(this); return false;"
 				action="doUpdate" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="genFileIdsStr" value="" /> <input
-					type="hidden" name="aid" value="${article.aid}" />
+				<input type="hidden" name="genFileIdsStr" value="" /> 
+				<input type="hidden" name="aid" value="${article.aid}" />
 				<div class="flex m-4">
 					<div class="flex items-center w-16">
 						<span class="flex justify-center font-bold">게시판</span>
@@ -169,7 +169,6 @@ function ArticleUpdate__checkAndSubmit(form) {
 									<a class="hover:underline" href="${file.downloadUrl}"
 										target="_blank">${file.originFileName}</a>
 									(${Util.numberFormat(file.fileSize)} Byte )
-
 								</div>
 								<div>
 									<label> <input type="checkbox"
